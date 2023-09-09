@@ -26,20 +26,20 @@ Kelas  : PBP C
 
 # Table of contents  
         
-[**Yu-Gi-Oh! Card Collection Project**](<#**Yu-Gi-Oh!-Card-Collection-Project**>)<br />
-&emsp;[**Task Checklist**](<#**Task-Checklist**>)<br />
-[**Table of contents**](<#**Table-of-contents**>)<br />
-[**Tugas 2: Implementasi Model-View-Template (MVT) pada Django**](<#**Tugas-2-Implementasi-Model-View-Template-(MVT)-pada-Django**>)<br />
-&emsp;[**Tugas 2 Checklist**](<#**Tugas-2-Checklist**>)<br />
+[**Yu-Gi-Oh! Card Collection Project**](<#Yu-Gi-Oh!-Card-Collection-Project>)<br />
+&emsp;[**Task Checklist**](<#Task-Checklist>)<br />
+[**Table of contents**](<#Table-of-contents>)<br />
+[**Tugas 2: Implementasi Model-View-Template (MVT) pada Django**](<#Tugas-2-Implementasi-Model-View-Template-(MVT)-pada-Django>)<br />
+&emsp;[**Tugas 2 Checklist**](<#Tugas-2-Checklist>)<br />
 &emsp;&emsp;[Membuat proyek Django](<#Membuat-proyek-Django>)<br />
-&emsp;&emsp;[Membuat aplikasi dengan nama `main`](<#Membuat-aplikasi-dengan-nama-`main`>)<br />
-&emsp;&emsp;[Melakukan *routing* pada proyek](<#Melakukan-*routing*-pada-proyek>)<br />
-&emsp;&emsp;[Membuat model pada aplikasi `main`](<#Membuat-model-pada-aplikasi-`main`>)<br />
-&emsp;&emsp;[Membuat sebuah fungsi pada `views.py` untuk menampilkan nama aplikasi serta nama dan kelas](<#Membuat-sebuah-fungsi-pada-`views.py`-untuk-menampilkan-nama-aplikasi-serta-nama-dan-kelas>)<br />
-&emsp;&emsp;[Membuat sebuah *routing* pada `urls.py` aplikasi `main` untuk `views.py`](<#Membuat-sebuah-*routing*-pada-`urls.py`-aplikasi-`main`-untuk-`views.py`>)<br />
-&emsp;&emsp;[Melakukan *deployment* ke Adaptable](<#Melakukan-*deployment*-ke-Adaptable>)<br />
+&emsp;&emsp;[Membuat aplikasi dengan nama `main`](<#Membuat-aplikasi-dengan-nama-main>)<br />
+&emsp;&emsp;[Melakukan *routing* pada proyek](<#Melakukan-routing-pada-proyek>)<br />
+&emsp;&emsp;[Membuat model pada aplikasi `main`](<#Membuat-model-pada-aplikasi-main>)<br />
+&emsp;&emsp;[Membuat sebuah fungsi pada `views.py` untuk menampilkan nama aplikasi serta nama dan kelas](<#Membuat-sebuah-fungsi-pada-views.py-untuk-menampilkan-nama-aplikasi-serta-nama-dan-kelas>)<br />
+&emsp;&emsp;[Membuat sebuah *routing* pada `urls.py` aplikasi `main` untuk `views.py`](<#Membuat-sebuah-routing-pada-urls.py-aplikasi-main-untuk-views.py>)<br />
+&emsp;&emsp;[Melakukan *deployment* ke Adaptable](<#Melakukan-deployment-ke-Adaptable>)<br />
 &emsp;&emsp;[Menjawab pertanyaan](<#Menjawab-pertanyaan>)<br />
-[**License**](<#**License**>)<br />
+[**License**](<#License>)<br />
 
 # Tugas 2: Implementasi Model-View-Template (MVT) pada Django
 Mengimplementasi Model-View-Template (MVT) Django pada 
