@@ -35,8 +35,8 @@ Kelas  : PBP C
 &emsp;&emsp;[Membuat aplikasi dengan nama `main`](<#Membuat-aplikasi-dengan-nama-main>)<br />
 &emsp;&emsp;[Melakukan *routing* pada proyek](<#Melakukan-routing-pada-proyek>)<br />
 &emsp;&emsp;[Membuat model pada aplikasi `main`](<#Membuat-model-pada-aplikasi-main>)<br />
-&emsp;&emsp;[Membuat sebuah fungsi pada `views.py` untuk menampilkan nama aplikasi serta nama dan kelas](<#Membuat-sebuah-fungsi-pada-views.py-untuk-menampilkan-nama-aplikasi-serta-nama-dan-kelas>)<br />
-&emsp;&emsp;[Membuat sebuah *routing* pada `urls.py` aplikasi `main` untuk `views.py`](<#Membuat-sebuah-routing-pada-urls.py-aplikasi-main-untuk-views.py>)<br />
+&emsp;&emsp;[Membuat sebuah fungsi pada `views.py` untuk menampilkan nama aplikasi serta nama dan kelas](<#Membuat-sebuah-fungsi-pada-viewspy-untuk-menampilkan-nama-aplikasi-serta-nama-dan-kelas>)<br />
+&emsp;&emsp;[Membuat sebuah *routing* pada `urls.py` aplikasi `main` untuk `views.py`](<#Membuat-sebuah-routing-pada-urlspy-aplikasi-main-untuk-viewspy>)<br />
 &emsp;&emsp;[Melakukan *deployment* ke Adaptable](<#Melakukan-deployment-ke-Adaptable>)<br />
 &emsp;&emsp;[Menjawab pertanyaan](<#Menjawab-pertanyaan>)<br />
 [**License**](<#License>)<br />
