@@ -110,6 +110,44 @@ urlpatterns = [
 Dengan ini, *routing* pada proyek `yugioh_card` untuk aplikasi `main` telah dilakukan.
 
 ### Membuat model pada aplikasi `main`
+Model `Item` pada aplikasi `main` dibuat dengan menambahkan sebuah *class* `Item` pada `main/models.py`. *Class* `Item` memiliki atribut wajib sebagai berikut:
+- `name` sebagai nama kartu dengan tipe `CharField`.
+- `amount` sebagai jumlah kartu dengan tipe `IntegerField`.
+- `description` sebagai deskripsi kartu dengan tipe `TextField`.
+
+Selanjutnya ada beberapa atribut lain yang ditambahkan agar *class* `Item` dapat berperan sebagai *yugioh card*, yaitu:
+- `card_type` sebagai jenis kartu dengan tipe `CharField`.
+- `passcode` sebagai kode kartu dengan tipe `IntegerField`.
+- `attribute` sebagai atribut kartu dengan tipe `CharField`.
+- `types` sebagai tipe kartu monster dengan tipe `CharField`.
+- `level` sebagai level kartu monster dengan tipe `IntegerField`.
+- `atk` sebagai nilai serangan kartu monster dengan tipe `IntegerField`.
+- `deff` sebagai nilai pertahanan kartu monster dengan tipe `IntegerField`.
+- `effect_type` sebagai jenis efek kartu dengan tipe `CharField`.
+- `card_property` sebagai sifat kartu dengan tipe `CharField`.
+- `rulings` sebagai aturan kartu dengan tipe `TextField`.
+- `image_url` sebagai URL gambar kartu dengan tipe `CharField`.
+
+Berikut ini adalah *class* `Item` yang telah dibuat:
+```
+class Item(models.Model):
+    name = models.CharField(max_length=200)
+    amount = models.IntegerField()
+    description = models.TextField()
+    card_type = models.CharField(max_length=200)
+    passcode = models.IntegerField()
+    attribute = models.CharField(max_length=200, null=True)
+    types = models.CharField(max_length=200, null=True)
+    level = models.IntegerField(null=True)
+    atk = models.IntegerField(null=True)
+    deff = models.IntegerField(null=True)
+    effect_type = models.CharField(max_length=200, null=True)
+    card_property = models.CharField(max_length=200, null=True)
+    rulings = models.TextField(null=True)
+    image_url = models.CharField(max_length=200, null=True)
+    
+```
+Setelah *class* `Item` dibuat, *migration* di-*skip* terlebih dahulu karena berkas `urls.py` belum dibuat. *Migration* dapat dilakukan setelah *routing* selesai dibuat.
 
 ### Membuat sebuah fungsi pada `views.py` untuk menampilkan nama aplikasi serta nama dan kelas
 
