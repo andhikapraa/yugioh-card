@@ -2,7 +2,6 @@ services:
   - type: web
     name: pras-yugioh-card
     runtime: python
-    repo: https://github.com/andhikapraa/yugioh_card.git
     region: singapore
     plan: free
     branch: main
