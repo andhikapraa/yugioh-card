@@ -1,6 +1,6 @@
 
 # Yu-Gi-Oh! Card Collection Project
-![Python version](https://img.shields.io/static/v1?label=Django&message=%20%3E=4.2.5&logo=django&color=092e20)
+![Django version](https://img.shields.io/static/v1?label=Django&message=%20%3E=4.2.5&logo=django&color=092e20)
 [![Official Website](https://img.shields.io/static/v1?label=Website&message=currently%20not%20available&logo=googlechrome&color=blue)]()
 [![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](https://choosealicense.com/licenses/mit/)
 
@@ -48,7 +48,7 @@ pertanyaan yang sudah dipelajari di kelas.
 
 ## Tugas 2 Checklist
 from [Tugas 2: Implementasi Model-View-Template (MVT) pada Django](https://pbp-fasilkom-ui.github.io/ganjil-2024/assignments/individual/assignment-2)
-- [ ] Membuat sebuah proyek Django baru.
+- [X] Membuat sebuah proyek Django baru.
 - [ ] Membuat aplikasi dengan nama `main` pada proyek tersebut.
 - [ ] Melakukan *routing* pada proyek agar dapat menjalankan aplikasi `main`.
 - [ ] Membuat model pada aplikasi `main` dengan nama `Item` dan memiliki atribut wajib sebagai berikut.
@@ -64,7 +64,19 @@ from [Tugas 2: Implementasi Model-View-Template (MVT) pada Django](https://pbp-f
     - Jelaskan mengapa kita menggunakan ***virtual environment***? Apakah kita tetap dapat membuat aplikasi web berbasis Django tanpa menggunakan ***virtual environment***?
     - Jelaskan apakah itu MVC, MVT, MVVM dan perbedaan dari ketiganya.
 
-### Membuat proyek Django
+### Membuat proyek Django dan konfigurasi proyek
+Proyek Django bernama `yugioh_card` dibuat dengan menggunakan perintah berikut:
+```
+django-admin startproject yugioh_card .
+```
+Lalu menambahkan wildcard `*` pada `ALLOWED_HOSTS` di `settings.py` untuk keperluan *deployment* seperti berikut ini:
+```
+...
+ALLOWED_HOSTS = ["*"]
+...
+```
+Ini diperlukan agar *deployment* dapat dilakukan dengan mudah,
+karena ini memungkinkan aplikasi diakses dari semua *host* yang tersedia.
 
 ### Membuat aplikasi dengan nama `main`
 
