@@ -172,6 +172,28 @@ def index(request):
 Setelah fungsi `index` dibuat, *routing* pada `urls.py` dapat dilakukan.
 
 ### Membuat sebuah *routing* pada `urls.py` aplikasi `main` untuk `views.py`
+*Routing* pada `urls.py` aplikasi `main` untuk `views.py` dilakukan dengan menambahkan sebuah *path* yang mengarah ke fungsi `index` pada `main/urls.py`. Namun sebelumnya, *import* terlebih dahulu `views` dari `main` dan `path` dari `django.urls`. Berikut ini adalah *import* yang telah dilakukan:
+```
+from django.urls import path
+from . import views
+```
+Setelah *import* dilakukan, *path* yang mengarah ke fungsi `index` pada `main/urls.py` dapat dibuat. Tak lupa untuk menambahkan `app_name` agar *path* dapat diakses dengan menggunakan *namespace* `main`. Berikut ini adalah *path* yang telah dibuat:
+```
+app_name = "main"
+
+urlpatterns = [
+    path("", views.index, name="index"),
+]
+```
+Setelah *path* dibuat, *migration* dapat dilakukan untuk membuat tabel `Item` pada basis data. *Migration* dilakukan dengan menggunakan perintah berikut:
+```
+py manage.py makemigrations
+```
+Setelah *migration* selesai dibuat, tabel `Item` dapat dibuat pada basis data dengan menggunakan perintah berikut:
+```
+py manage.py migrate
+```
+Setelah tabel `Item` dibuat, *routing* pada `urls.py` proyek `yugioh_card` dapat dilakukan. Dengan ini, *routing* pada proyek `yugioh_card` telah selesai dilakukan.
 
 ### Melakukan *deployment* ke Adaptable
 
