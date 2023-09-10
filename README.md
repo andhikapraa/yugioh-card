@@ -33,7 +33,7 @@ Kelas  : PBP C
 &emsp;[**Tugas 2 Checklist**](<#Tugas-2-Checklist>)<br />
 &emsp;&emsp;[Membuat proyek Django](<#Membuat-proyek-Django>)<br />
 &emsp;&emsp;[Membuat aplikasi dengan nama `main`](<#Membuat-aplikasi-dengan-nama-main>)<br />
-&emsp;&emsp;[Melakukan *routing* pada proyek](<#Melakukan-routing-pada-proyek>)<br />
+&emsp;&emsp;[Melakukan *routing* pada proyek untuk aplikasi `main`](<#Melakukan-routing-pada-proyek-untuk-aplikasi-main>)<br />
 &emsp;&emsp;[Membuat model pada aplikasi `main`](<#Membuat-model-pada-aplikasi-main>)<br />
 &emsp;&emsp;[Membuat sebuah fungsi pada `views.py` untuk menampilkan nama aplikasi serta nama dan kelas](<#Membuat-sebuah-fungsi-pada-viewspy-untuk-menampilkan-nama-aplikasi-serta-nama-dan-kelas>)<br />
 &emsp;&emsp;[Membuat sebuah *routing* pada `urls.py` aplikasi `main` untuk `views.py`](<#Membuat-sebuah-routing-pada-urlspy-aplikasi-main-untuk-viewspy>)<br />
@@ -49,8 +49,8 @@ pertanyaan yang sudah dipelajari di kelas.
 ## Tugas 2 Checklist
 from [Tugas 2: Implementasi Model-View-Template (MVT) pada Django](https://pbp-fasilkom-ui.github.io/ganjil-2024/assignments/individual/assignment-2)
 - [X] Membuat sebuah proyek Django baru.
-- [ ] Membuat aplikasi dengan nama `main` pada proyek tersebut.
-- [ ] Melakukan *routing* pada proyek agar dapat menjalankan aplikasi `main`.
+- [X] Membuat aplikasi dengan nama `main` pada proyek tersebut.
+- [X] Melakukan *routing* pada proyek agar dapat menjalankan aplikasi `main`.
 - [ ] Membuat model pada aplikasi `main` dengan nama `Item` dan memiliki atribut wajib sebagai berikut.
     - `name` sebagai nama *item* dengan tipe `CharField`.
     - `amount` sebagai jumlah *item* dengan tipe `IntegerField`.
@@ -94,7 +94,20 @@ INSTALLED_APPS = [
 ```
 Dengan ini, aplikasi `main` telah dibuat dan didaftarkan pada proyek `yugioh_card`
 
-### Melakukan *routing* pada proyek
+### Melakukan *routing* pada proyek untuk aplikasi `main`
+Routing pada proyek `yugioh_card` untuk aplikasi `main` dilakukan dengan menambahkan sebuah *path* pada `yugioh_card/urls.py` dengan mengimport `include` dari `django.urls` dan menambahkan *path* "" yang mengarah ke `main.urls` seperti berikut ini:
+1. Mengimport `include` dari `django.urls`
+```
+from django.urls import path, include
+```
+2. Menambahkan *path* "" yang mengarah ke `main.urls`
+```
+urlpatterns = [
+    ...,
+    path("", include("main.urls")),
+]
+```
+Dengan ini, *routing* pada proyek `yugioh_card` untuk aplikasi `main` telah dilakukan.
 
 ### Membuat model pada aplikasi `main`
 
