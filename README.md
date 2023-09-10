@@ -69,7 +69,7 @@ Proyek Django bernama `yugioh_card` dibuat dengan menggunakan perintah berikut:
 ```
 django-admin startproject yugioh_card .
 ```
-Lalu menambahkan wildcard `*` pada `ALLOWED_HOSTS` di `settings.py` untuk keperluan *deployment* seperti berikut ini:
+Lalu menambahkan wildcard `*` pada `ALLOWED_HOSTS` di `yugioh_card/settings.py` untuk keperluan *deployment* seperti berikut ini:
 ```
 ...
 ALLOWED_HOSTS = ["*"]
@@ -79,6 +79,20 @@ Ini diperlukan agar *deployment* dapat dilakukan dengan mudah,
 karena ini memungkinkan aplikasi diakses dari semua *host* yang tersedia.
 
 ### Membuat aplikasi dengan nama `main`
+Aplikasi baru bernama `main` dibuat dengan menggunakan perintah berikut:
+```
+py manage.py startapp main
+```
+Selanjutnya menambahkan `"main"` pada `INSTALLED_APPS` di `yugioh_card/settings.py` untuk mendaftarkan aplikasi pada proyek `yugioh_card` seperti berikut ini:
+```
+...
+INSTALLED_APPS = [
+    ...,
+    "main",
+]
+...
+```
+Dengan ini, aplikasi `main` telah dibuat dan didaftarkan pada proyek `yugioh_card`
 
 ### Melakukan *routing* pada proyek
 
