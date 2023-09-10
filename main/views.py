@@ -8,4 +8,4 @@ def index(request):
         "npm": "2206031302",
         "class": "PBP C",
     }
-    return render(request, "main/index.html", context)
+    return render(request, "main/templates/index.html", context)
