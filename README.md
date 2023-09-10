@@ -150,6 +150,26 @@ class Item(models.Model):
 Setelah *class* `Item` dibuat, *migration* di-*skip* terlebih dahulu karena berkas `urls.py` belum dibuat. *Migration* dapat dilakukan setelah *routing* selesai dibuat.
 
 ### Membuat sebuah fungsi pada `views.py` untuk menampilkan nama aplikasi serta nama dan kelas
+Sebelum membuat sebuah fungsi pada `views.py`, *template* `main/index.html` dibuat terlebih dahulu. *Template* `main/index.html` berisi *heading* yang menampilkan nama aplikasi serta nama dan kelas. Berikut ini adalah *template* `main/index.html` yang telah dibuat:
+```
+<h1><span style="color:orange">{{ project }}</span></h1>
+
+<h2>Name: <span style="color:blue">{{ name }}</span></h2>
+<h2>NPM: <span style="color:red">{{ npm }}</span></h2>
+<h2>Class: <span style="color:blue">{{ class }}</span></h2>
+```
+Setelah *template* `main/index.html` dibuat, sebuah fungsi bernama `index` dibuat pada `views.py` untuk mengembalikan *template* `main/index.html` yang telah dibuat. Berikut ini adalah fungsi `index` yang telah dibuat:
+```
+def index(request):
+    context = {
+        "title": "Yu-Gi-Oh! Card Collection",
+        "name": "Muhammad Andhika Prasetya",
+        "npm": "2206031302",
+        "class": "PBP C",
+    }
+    return render(request, "main/index.html", context)
+```
+Setelah fungsi `index` dibuat, *routing* pada `urls.py` dapat dilakukan.
 
 ### Membuat sebuah *routing* pada `urls.py` aplikasi `main` untuk `views.py`
 
