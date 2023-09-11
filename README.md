@@ -330,6 +330,7 @@ Dengan ini, unit *test* telah selesai dibuat dan berhasil dijalankan.
 2. Memudahkan dalam mengelola *dependencies* dari proyek yang sedang dikembangkan. Dengan menggunakan *virtual environment*, *dependencies* dari proyek yang sedang dikembangkan dapat di-*install* dan di-*uninstall* dengan mudah. Sehingga, *environment* dari proyek yang sedang dikembangkan dapat di-*setup* atau di-*reproduce* dengan mudah.
 3. Memudahkan dalam memindahkan proyek yang sedang dikembangkan ke *host* lain. Dengan menggunakan *virtual environment*, *dependencies* dari proyek yang sedang dikembangkan dapat di-*install* dengan mudah di *host* lain tanpa khawatir akan adanya benturan *dependencies*.
 4. Memudahkan untuk me-*manage* versi Python yang digunakan. Dengan menggunakan *virtual environment*, versi Python yang digunakan dapat berbeda-beda untuk setiap proyek yang sedang dikembangkan. Ini memungkinkan untuk menggunakan versi Python yang berbeda-beda sesuai dengan kebutuhan proyek yang sedang dikembangkan.
+
 Meskipun kita dapat membuat aplikasi web berbasis Django tanpa menggunakan *virtual environment*, namun akan lebih baik jika kita menggunakan *virtual environment* karena *virtual environment* memiliki banyak keuntungan seperti yang telah dijelaskan di atas. Hal ini akan membantu dalam menjaga kestabilan proyek yang sedang dikembangkan.
 
 #### Jelaskan apakah itu MVC, MVT, MVVM dan perbedaan dari ketiganya.
