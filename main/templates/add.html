@@ -1,14 +1,23 @@
 {% extends "base.html" %}
 
-{% block title %}Yu-Gi-Oh! Card Collection{% endblock %}
+{% block title %}Add Item{% endblock %}
 
-{% block description %}Yu-Gi-Oh! Card Collection is a website to collect Yu-Gi-Oh! cards.{% endblock %}
+{% block description %}Add a new item to the collection.{% endblock %}
 
 {% block content %}
-    <h2>Home</h2>
-    <a href="{% url "main:add" %}">
-        <button>Add Card</button>
-    </a>
+    <h2>Add Item</h2>
+    <a href="{% url "main:index" %}">Home</a>
+    <br></br>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <table>
+            {{ form.as_table }}
+            <tr>
+                <td></td>
+                <td><input type="submit" value="Add Item" /></td>
+        </table>
+    </form>
+    <br></br>
     {% for item in items %}
         <div style="border: 1px solid black; padding: 10px; margin: 10px;">
             <h3>{{ item.name }}</h3>

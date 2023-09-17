@@ -346,7 +346,7 @@ Mengimplementasi Form dan Data Delivery pada [Yu-Gi-Oh! Card Collection Project]
 
 ## Tugas 3 Checklist
 from [Tugas 3: Implementasi Form dan Data Delivery pada Django](https://pbp-fasilkom-ui.github.io/ganjil-2024/assignments/individual/assignment-3)
-- [ ] Membuat input `form` untuk menambahkan objek model pada app sebelumnya.
+- [X] Membuat input `form` untuk menambahkan objek model pada app sebelumnya.
 - [ ] Tambahkan 5 fungsi `views` untuk melihat objek yang sudah ditambahkan dalam format HTML, XML, JSON, XML *by ID*, dan JSON *by ID*.
 - [ ] Membuat routing URL untuk masing-masing `views` yang telah ditambahkan pada poin 2.
 - [ ] Menjawab beberapa pertanyaan berikut pada `README.md` pada *root folder*.
@@ -475,11 +475,163 @@ class ItemTestCase(TestCase):
             ),
         )
         ...,
-        self.assertEqual(item.image.name, "images/BlueEyesWhiteDragon.webp")
+        self.assertRegex(item.image.url, r"^/media/images/BlueEyesWhiteDragon.*.webp$")
         item.image.delete() # delete image after test to avoid cluttering the media folder
 ```
 
+### Membuat *form* untuk menambahkan objek *model* `Item`
+*Form* untuk menambahkan objek *model* `Item` dibuat dengan membuat berkas `main/forms.py` yang berisi *class* `ItemForm` yang merupakan *subclass* dari `forms.ModelForm`. *Class* `ItemForm` memiliki *field* `image` yang bertipe `forms.ImageField` agar dapat menyimpan gambar kartu yang di-*upload* oleh pengguna. Berikut ini adalah berkas `main/forms.py` yang telah dibuat:
+```
+from django.forms import ModelForm
+from .models import Item
 
+class ItemForm(ModelForm):
+    class Meta:
+        model = Item
+        fields = "__all__"
+```
+Setelah berkas `main/forms.py` dibuat, *form* untuk menambahkan objek *model* `Item` dapat dibuat pada `main/templates/add.html`. *Form* untuk menambahkan objek *model* `Item` dibuat dengan menggunakan *template* `main/templates/add.html` yang berisi *form* untuk menambahkan objek *model* `Item`. Selain itu, tambahkan pula *link* menuju *home* serta menambahkan *image* dari objek *model* `Item` yang telah ditambahkan dalam bentuk *card*. Berikut ini adalah *template* `main/templates/add.html` yang telah dimodifikasi:
+```
+{% extends "base.html" %}
+
+{% block title %}Add Item{% endblock %}
+
+{% block description %}Add a new item to the collection.{% endblock %}
+
+{% block content %}
+    <h2>Add Item</h2>
+    <a href="{% url "main:index" %}">Home</a>
+    <br></br>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <table>
+            {{ form.as_table }}
+            <tr>
+                <td></td>
+                <td><input type="submit" value="Add Item" /></td>
+        </table>
+    </form>
+    <br></br>
+    {% for item in items %}
+        <div style="border: 1px solid black; padding: 10px; margin: 10px;">
+            <h3>{{ item.name }}</h3>
+            <p>Amount: {{ item.amount }}</p>
+            <p>Description: {{ item.description }}</p>
+            <p>Card Type: {{ item.card_type }}</p>
+            <p>Passcode: {{ item.passcode }}</p>
+            <p>Attribute: {{ item.attribute }}</p>
+            <p>Types: {{ item.types }}</p>
+            <p>Level: {{ item.level }}</p>
+            <p>ATK: {{ item.atk }}</p>
+            <p>DEFF: {{ item.deff }}</p>
+            <p>Effect Type: {{ item.effect_type }}</p>
+            <p>Card Property: {{ item.card_property }}</p>
+            <p>Rulings: {{ item.rulings }}</p>
+            <img src="{{ item.image.url }}" alt="{{ item.name }}" width="200px">
+        </div>
+    {% endfor %}
+{% endblock %}
+```
+Setelah *form* untuk menambahkan objek *model* `Item` dibuat, fungsi `add` pada `main/views.py` perlu dibuat terlebih dahulu. Fungsi `add` dibuat dengan menambahkan sebuah fungsi bernama `add` pada `main/views.py` yang mengembalikan *template* `main/templates/add.html` dan menerima *request* sebagai parameter. Selain itu, fungsi `add` juga memiliki *conditional* yang mengecek apakah *request* yang diterima adalah *POST request* atau bukan. Jika *request* yang diterima adalah *POST request*, maka fungsi `add` akan meng-*handle* *POST request* tersebut dengan menggunakan *form* yang telah dibuat sebelumnya. Selain itu, tak lupa untuk meng-*import* `ItemForm` dari `.forms` pada `main/views.py` dan `redirect` dari `django.shortcuts` dan menambahkan *model* `Item` dari `.models` pada `main/views.py`. Berikut ini adalah fungsi `add` yang telah dibuat:
+```
+from django.shortcuts import render, redirect
+from .forms import ItemForm
+from .models import Item
+
+...
+
+def add(request):
+    if request.method == "POST":
+        form = ItemForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect("main:index")
+    else:
+        form = ItemForm()
+    context = {
+        "form": form,
+        "items": Item.objects.all(),
+    }
+    return render(request, "add.html", context)
+```
+Setelah fungsi `add` dibuat, *routing* pada `urls.py` aplikasi `main` untuk `views.py` perlu dibuat terlebih dahulu. *Routing* pada `urls.py` aplikasi `main` untuk `views.py` dilakukan dengan menambahkan sebuah *path* yang mengarah ke fungsi `add` pada `main/urls.py`. Berikut ini adalah *path* yang telah dibuat:
+```
+urlpatterns = [
+    ...,
+    path("add/", views.add, name="add"),
+]
+```
+Setelah *routing* pada `urls.py` aplikasi `main` untuk `views.py` dibuat, *template* `main/templates/index.html` perlu dimodifikasi terlebih dahulu. *Template* `main/templates/index.html` dimodifikasi dengan menambahkan *button* menuju *form* untuk menambahkan objek *model* `Item` serta menampilkan *image* dari objek *model* `Item` yang telah ditambahkan dalam bentuk *card*. Berikut ini adalah *template* `main/templates/index.html` yang telah dimodifikasi:
+```
+{% extends "base.html" %}
+
+{% block title %}Yu-Gi-Oh! Card Collection{% endblock %}
+
+{% block description %}Yu-Gi-Oh! Card Collection is a website to collect Yu-Gi-Oh! cards.{% endblock %}
+
+{% block content %}
+    <h2>Home</h2>
+    <a href="{% url "main:add" %}">
+        <button>Add Card</button>
+    </a>
+    {% for item in items %}
+        <div style="border: 1px solid black; padding: 10px; margin: 10px;">
+            <h3>{{ item.name }}</h3>
+            <p>Amount: {{ item.amount }}</p>
+            <p>Description: {{ item.description }}</p>
+            <p>Card Type: {{ item.card_type }}</p>
+            <p>Passcode: {{ item.passcode }}</p>
+            <p>Attribute: {{ item.attribute }}</p>
+            <p>Types: {{ item.types }}</p>
+            <p>Level: {{ item.level }}</p>
+            <p>ATK: {{ item.atk }}</p>
+            <p>DEFF: {{ item.deff }}</p>
+            <p>Effect Type: {{ item.effect_type }}</p>
+            <p>Card Property: {{ item.card_property }}</p>
+            <p>Rulings: {{ item.rulings }}</p>
+            <img src="{{ item.image.url }}" alt="{{ item.name }}" width="200px">
+        </div>
+    {% endfor %}
+{% endblock %}
+```
+Setelah *template* `main/templates/add.html` dimodifikasi, fungsi `index` pada `main/views.py` perlu dimodifikasi terlebih dahulu. Fungsi `index` dimodifikasi dengan menambahkan *model* `Item` dari `.models` pada `main/views.py`. Berikut ini adalah fungsi `index` yang telah dimodifikasi:
+```
+...
+def index(request):
+    context = {
+        "items": Item.objects.all(),
+    }
+    return render(request, "index.html", context)
+...
+```
+Setelah fungsi `index` dimodifikasi, berkas `settings.py` perlu dimodifikasi terlebih dahulu. Berkas `settings.py` dimodifikasi dengan menambahkan `MEDIA_ROOT` dan `MEDIA_URL` pada `settings.py` seperti berikut:
+```
+...
+# Media files (Images)
+# https://docs.djangoproject.com/en/4.2/topics/files/
+
+MEDIA_URL = "media/"
+MEDIA_ROOT = BASE_DIR / "media"
+```
+Selain itu, berkas `urls.py` perlu dimodifikasi dengan menambahkan `static` dan `settings` dari `django.conf` pada `urls.py` dan menambahkan `static` dan `media` pada `urlpatterns` pada `urls.py` seperti berikut:
+```
+...
+from django.conf import settings
+from django.conf.urls.static import static
+
+urlpatterns = [
+    ...,
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+```
+Setelah berkas `settings.py` dan `urls.py` dimodifikasi, *migration* perlu dilakukan untuk membuat tabel `Item` pada basis data. *Migration* dilakukan dengan menggunakan perintah berikut:
+```
+py manage.py makemigrations
+```
+Setelah *migration* selesai dibuat, tabel `Item` dapat dibuat pada basis data dengan menggunakan perintah berikut:
+```
+py manage.py migrate
+```
+Setelah tabel `Item` dibuat, *form* untuk menambahkan objek *model* `Item` telah selesai dibuat dan siap digunakan.
 
 # License  
 

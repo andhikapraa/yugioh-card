@@ -49,5 +49,5 @@ class ItemTestCase(TestCase):
         self.assertEqual(item.effect_type, "Normal")
         self.assertEqual(item.card_property, "Normal")
         self.assertEqual(item.rulings, "This card is treated as a 'Blue-Eyes' monster.")
-        self.assertEqual(item.image.name, "images/BlueEyesWhiteDragon.webp")
+        self.assertRegex(item.image.url, r"^/media/images/BlueEyesWhiteDragon.*.webp$")
         item.image.delete() # delete image after test to avoid cluttering the media folder
