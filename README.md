@@ -45,6 +45,16 @@ Screenshot:
 &emsp;&emsp;[Melakukan *deployment* ke ~~Adaptable~~ Render.com](<#Melakukan-deployment-ke-Adaptable-Rendercom>)<br />
 &emsp;&emsp;[Membuat Unit *Test* (bonus)](<#Membuat-Unit-Test-bonus>)<br />
 &emsp;&emsp;[Menjawab pertanyaan](<#Menjawab-pertanyaan>)<br />
+[**Tugas 3: Implementasi Form dan Data Delivery pada Django**](<#Tugas-3-Implementasi-Form-dan-Data-Delivery-pada-Django>)<br />
+&emsp;[**Tugas 3 Checklist**](<#Tugas-3-Checklist>)<br />
+&emsp;&emsp;[Penyesuaian *template* sebelum membuat *form*](<#Penyesuaian-template-sebelum-membuat-form>)<br />
+&emsp;&emsp;[Penyesuaian *model* `Item` sebelum membuat *form*](<#Penyesuaian-model-Item-sebelum-membuat-form>)<br />
+&emsp;&emsp;[Penyesuaian Unit *Test* sebelum membuat *form*](<#Penyesuaian-Unit-Test-sebelum-membuat-form>)<br />
+&emsp;&emsp;[Membuat *form* untuk menambahkan objek *model* `Item`](<#Membuat-form-untuk-menambahkan-objek-model-Item>)<br />
+&emsp;&emsp;[Menambahkan format XML, JSON, XML *by ID*, dan JSON *by ID*](<#Menambahkan-format-XML-JSON-XML-by-ID-dan-JSON-by-ID>)<br />
+&emsp;&emsp;[Menambahkan *routing* untuk format XML, JSON, XML *by ID*, dan JSON *by ID*](<#Menambahkan-routing-untuk-format-XML-JSON-XML-by-ID-dan-JSON-by-ID>)<br />
+&emsp;&emsp;[Mengakses URL menggunakan Postman](<#Mengakses-URL-menggunakan-Postman>)<br />
+&emsp;&emsp;[Menjawab beberapa pertanyaan](<#Menjawab-beberapa-pertanyaan>)<br />
 [**License**](<#License>)<br />
 
 # Tugas 2: Implementasi Model-View-Template (MVT) pada Django
@@ -349,13 +359,13 @@ from [Tugas 3: Implementasi Form dan Data Delivery pada Django](https://pbp-fasi
 - [X] Membuat input `form` untuk menambahkan objek model pada app sebelumnya.
 - [X] Tambahkan 5 fungsi `views` untuk melihat objek yang sudah ditambahkan dalam format HTML, XML, JSON, XML *by ID*, dan JSON *by ID*.
 - [X] Membuat routing URL untuk masing-masing `views` yang telah ditambahkan pada poin 2.
-- [ ] Menjawab beberapa pertanyaan berikut pada `README.md` pada *root folder*.
-    - [ ] Apa perbedaan antara form `POST` dan form `GET` dalam Django?
-    - [ ] Apa perbedaan utama antara XML, JSON, dan HTML dalam konteks pengiriman data?
-    - [ ] Mengapa JSON sering digunakan dalam pertukaran data antara aplikasi web modern?
-    - [ ] Jelaskan bagaimana cara kamu mengimplementasikan *checklist* di atas secara *step-by-step* (bukan hanya sekadar mengikuti tutorial).
-- [ ] Mengakses kelima URL di poin 2 menggunakan Postman, membuat *screenshot* dari hasil akses URL pada Postman, dan menambahkannya ke dalam `README.md`.
-- [ ] Melakukan `add`-`commit`-`push` ke GitHub.
+- [X] Menjawab beberapa pertanyaan berikut pada `README.md` pada *root folder*.
+    - [X] Apa perbedaan antara form `POST` dan form `GET` dalam Django?
+    - [X] Apa perbedaan utama antara XML, JSON, dan HTML dalam konteks pengiriman data?
+    - [X] Mengapa JSON sering digunakan dalam pertukaran data antara aplikasi web modern?
+    - [X] Jelaskan bagaimana cara kamu mengimplementasikan *checklist* di atas secara *step-by-step* (bukan hanya sekadar mengikuti tutorial).
+- [X] Mengakses kelima URL di poin 2 menggunakan Postman, membuat *screenshot* dari hasil akses URL pada Postman, dan menambahkannya ke dalam `README.md`.
+- [X] Melakukan `add`-`commit`-`push` ke GitHub.
 
 ### Penyesuaian *template* sebelum membuat *form*
 Sebelum membuat *form*, kerangka *views* perlu dibuat untuk memastikan adanya konsistensi dalam desain situs web yang dibuat serta memperkecil kemungkinan terjadinya redundansi kode. Langkah-langkah yang dilakukan adalah sebagai berikut:
@@ -776,6 +786,45 @@ Setelah *template* `main/templates/index.html` dimodifikasi, *template* `main/te
 {% endblock %}
 ```
 Setelah *template* `main/templates/add.html` dimodifikasi, maka format XML, JSON, XML *by ID*, dan JSON *by ID* telah berhasil ditambahkan.
+
+### Mengakses URL menggunakan Postman
+Setelah format XML, JSON, XML *by ID*, dan JSON *by ID* berhasil ditambahkan, URL dapat diakses menggunakan Postman. Berikut ini adalah *screenshot* dari hasil akses URL menggunakan Postman:
+- *Screenshot* dari hasil akses URL `/` menggunakan Postman
+![HTML](https://i.postimg.cc/jj5Q1qSc/html.png)
+- *Screenshot* dari hasil akses URL `/xml/` menggunakan Postman
+![XML](https://i.postimg.cc/L5dthzBQ/xml.png)
+- *Screenshot* dari hasil akses URL `/json/` menggunakan Postman
+![JSON](https://i.postimg.cc/nLPYf8sJ/json.png)
+- *Screenshot* dari hasil akses URL `/xml/1/` menggunakan Postman
+![XML by ID](https://i.postimg.cc/sxppWvTj/xmlid.png)
+- *Screenshot* dari hasil akses URL `/json/1/` menggunakan Postman
+![JSON by ID](https://i.postimg.cc/SsYLyZ8z/jsonid.png)
+
+### Menjawab beberapa pertanyaan
+#### Apa perbedaan antara form `POST` dan form `GET` dalam Django?
+Form `POST` dan `GET` merupakan dua metode HTTP yang paling umum digunakan untuk mengirimkan data dari *client* ke *server*. Perbedaan antara form `POST` dan form `GET` dalam Django adalah sebagai berikut:
+- Form `POST` digunakan untuk mengirimkan data dari *client* ke *server* dengan cara menyembunyikan data yang dikirimkan dari *client* ke *server*. Dalam Django, kita dapat mengakses data yang dikirimkan dari *client* ke *server* dengan menggunakan `request.POST`. Form `POST` digunakan untuk mengirimkan data yang bersifat sensitif seperti *password* dan data yang bersifat rahasia lainnya karena data yang dikirimkan dari *client* ke *server* tidak dapat dilihat oleh *client*, sehingga data yang dikirimkan dari *client* ke *server* tidak dapat disadap oleh pihak ketiga. Form `POST` juga digunakan untuk mengirimkan data yang berukuran besar dan dapat mengirimkan data dengan tipe *file*.
+- Form `GET` digunakan untuk mengambil data dari *server* dengan cara menampilkan data yang diambil dari *server* ke *client*. Dalam Django, kita dapat mengakses data yang diambil dari *server* ke *client* dengan menggunakan `request.GET`. Form `GET` digunakan untuk mengambil data yang bersifat publik seperti *search query* dan *filter* karena data yang diambil tampak pada *URL* dan dapat dilihat oleh *client*. Form `GET` juga digunakan untuk mengambil data yang berukuran kecil karena data yang diambil tidak dapat berukuran lebih dari 2048 karakter dan form ini tidak dapat mengirimkan data dengan tipe *file*.
+
+Dalam Django, baik form `POST` maupun form `GET` dapat digunakan untuk mengirimkan data dari *client* ke *server* dan mengambil data dari *server* ke *client*. Namun, form `POST` lebih sering digunakan untuk mengirimkan data dari *client* ke *server* karena form `POST` dapat mengirimkan data yang bersifat sensitif dan berukuran besar serta dapat mengirimkan data dengan tipe *file*. Sedangkan, form `GET` lebih sering digunakan untuk mengambil data dari *server* ke *client* karena form `GET` dapat mengambil data yang bersifat publik dan berukuran kecil.
+
+
+#### Apa perbedaan utama antara XML, JSON, dan HTML dalam konteks pengiriman data?
+XML (*eXtensible Markup Language*), JSON (*JavaScript Object Notation*), dan HTML (*HyperText Markup Language*) adalah format yang umum digunakan untuk menyimpan dan mengirimkan data. Perbedaan utama antara XML, JSON, dan HTML dalam konteks pengiriman data adalah sebagai berikut:
+- XML adalah format yang digunakan untuk menyimpan dan mengirimkan data di berbagai aplikasi atau platform dengan cara yang terstandarisasi. XML menyimpan data dalam struktur *tree* dengan *namespace* untuk kategori data berbeda yang dapat diakses dengan menggunakan *parser* XML sehingga dapat digunakan untuk menyimpan dan mengirimkan data yang bersifat kompleks dan memiliki struktur yang kompleks. XML juga dapat digunakan untuk menyimpan dan mengirimkan data yang bersifat publik dan bersifat rahasia. Penggunaan *parser* XML untuk mengakses data XML membutuhkan waktu yang lama sehingga XML tidak cocok digunakan untuk menyimpan dan mengirimkan data yang bersifat sederhana dan memiliki struktur yang sederhana. Namun XML mendukung semua tipe data JSON dan tipe data yang tidak didukung oleh JSON seperti *date* dan *time*.
+- JSON juga merupakan format serialisasi data yang memungkinkan pertukaran data di berbagai platform. JSON menggunakan struktur seperti *map* dengan *key* dan *value* sehingga dapat diuraikan dengan lebih mudah dan cepat dibandingkan XML. Pada umumnya, JSON merupakan pilihan yang lebih baik untuk API, *mobile application*, dan *web application* karena JSON lebih mudah dibaca dan lebih ringan dibandingkan XML. Namun, JSON tidak mendukung beberapa tipe data tertentu seperti *Boolean*, *date*, *time*, *image*, dan lain-lain.
+- HTML adalah bahasa yang digunakan untuk membuat struktur dan presentasi halaman web. HTML memiliki *tag* standar yang harus digunakan oleh semua orang, sehingga HTML sulit digunakan untuk menyimpan dan mengirimkan data yang bersifat kompleks dan memiliki struktur yang kompleks. HTML biasanya digunakan untuk menampilkan data yang telah disimpan dan dikirimkan menggunakan XML atau JSON. Berbeda dengan XML dan JSON yang menggunakan pengetikan statis, HTML menggunakan pengetikan dinamis sehingga HTML dapat digunakan untuk membuat halaman web yang interaktif.
+
+Dari penjelasan di atas, dapat disimpulkan bahwa XML, JSON, dan HTML memiliki perbedaan utama dalam konteks pengiriman data. XML digunakan untuk menyimpan dan mengirimkan data yang bersifat kompleks dan memiliki struktur yang kompleks, JSON digunakan untuk menyimpan dan mengirimkan data yang bersifat sederhana dan memiliki struktur yang sederhana, dan HTML digunakan untuk menampilkan data yang telah disimpan dan dikirimkan menggunakan XML atau JSON.
+
+#### Mengapa JSON sering digunakan dalam pertukaran data antara aplikasi web modern?
+JSON adalah format data berbasis teks yang paling populer dalam menyimpan dan mentransfer data. Beberapa alasan utama mengapa JSON sering digunakan dalam pertukaran data antara aplikasi web modern adalah sebagai berikut:
+- JSON memiliki struktur data yang sederhana dan mudah dipahami berdasarkan struktur *map* dengan *key* dan *value* sehingga JSON lebih mudah dibaca oleh manusia dan lebih mudah diuraikan oleh komputer dibandingkan XML.
+- JSON lebih ringkas dan efisien dibandingkan XML karena tidak memerlukan *tag* untuk menyimpan data. Ini menghasilkan ukuran berkas yang lebih kecil dan waktu *loading* yang lebih cepat.
+- JSON didukung oleh hampir semua bahasa pemrograman dan *framework* sehingga JSON dapat digunakan untuk menyimpan dan mentransfer data di berbagai aplikasi atau platform.
+- JSON mendukung tipe data yang paling umum digunakan seperti *string* dan *number* sehingga JSON dapat digunakan untuk menyimpan dan mentransfer data yang bersifat sederhana dan memiliki struktur yang sederhana.
+
+Namun, perlu diingat bahwa JSON memiliki beberapa keterbatasan seperti tidak mendukung beberapa tipe data tertentu, tidak memiliki skema sehingga tidak dapat memvalidasi data, dan tidak memiliki dukungan *namespace* sehingga tidak dapat mengelompokkan data. Oleh karena itu, JSON tidak cocok digunakan untuk menyimpan dan mentransfer data yang bersifat kompleks dan memiliki struktur yang kompleks.
 
 # License  
 
