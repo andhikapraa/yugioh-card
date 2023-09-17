@@ -347,8 +347,8 @@ Mengimplementasi Form dan Data Delivery pada [Yu-Gi-Oh! Card Collection Project]
 ## Tugas 3 Checklist
 from [Tugas 3: Implementasi Form dan Data Delivery pada Django](https://pbp-fasilkom-ui.github.io/ganjil-2024/assignments/individual/assignment-3)
 - [X] Membuat input `form` untuk menambahkan objek model pada app sebelumnya.
-- [ ] Tambahkan 5 fungsi `views` untuk melihat objek yang sudah ditambahkan dalam format HTML, XML, JSON, XML *by ID*, dan JSON *by ID*.
-- [ ] Membuat routing URL untuk masing-masing `views` yang telah ditambahkan pada poin 2.
+- [X] Tambahkan 5 fungsi `views` untuk melihat objek yang sudah ditambahkan dalam format HTML, XML, JSON, XML *by ID*, dan JSON *by ID*.
+- [X] Membuat routing URL untuk masing-masing `views` yang telah ditambahkan pada poin 2.
 - [ ] Menjawab beberapa pertanyaan berikut pada `README.md` pada *root folder*.
     - [ ] Apa perbedaan antara form `POST` dan form `GET` dalam Django?
     - [ ] Apa perbedaan utama antara XML, JSON, dan HTML dalam konteks pengiriman data?
@@ -632,6 +632,150 @@ Setelah *migration* selesai dibuat, tabel `Item` dapat dibuat pada basis data de
 py manage.py migrate
 ```
 Setelah tabel `Item` dibuat, *form* untuk menambahkan objek *model* `Item` telah selesai dibuat dan siap digunakan.
+
+### Menambahkan format XML, JSON, XML *by ID*, dan JSON *by ID*
+Untuk menambahkan format XML, JSON, XML *by ID*, dan JSON *by ID*, berkas `views.py` perlu dimodifikasi terlebih dahulu. Berkas `views.py` dimodifikasi dengan menambahkan `HttpResponse` dari `django.http` dan `serializers` dari `django.core` pada `views.py` dan menambahkan fungsi `show_xml`, `show_json`, `show_xml_by_id`, dan `show_json_by_id` pada `views.py`. Berikut ini adalah berkas `views.py` yang telah dimodifikasi:
+```
+from django.shortcuts import render, redirect
+from django.http import HttpResponse
+from django.core import serializers
+from .forms import ItemForm
+from .models import Item
+
+...
+
+def show_xml(request):
+    items = Item.objects.all()
+    data = serializers.serialize("xml", items)
+    return HttpResponse(data, content_type="application/xml")
+
+def show_json(request):
+    items = Item.objects.all()
+    data = serializers.serialize("json", items)
+    return HttpResponse(data, content_type="application/json")
+
+def show_xml_by_id(request, id):
+    item = Item.objects.get(id=id)
+    data = serializers.serialize("xml", [item])
+    return HttpResponse(data, content_type="application/xml")
+
+def show_json_by_id(request, id):
+    item = Item.objects.get(id=id)
+    data = serializers.serialize("json", [item])
+    return HttpResponse(data, content_type="application/json")
+```
+Dengan ini telah dibuat fungsi `show_xml`, `show_json`, `show_xml_by_id`, dan `show_json_by_id` yang mengembalikan *response* dalam format XML, JSON, XML *by ID*, dan JSON *by ID*.
+
+### Menambahkan *routing* untuk format XML, JSON, XML *by ID*, dan JSON *by ID*
+Setelah berkas `views.py` dimodifikasi, *routing* pada `urls.py` aplikasi `main` perlu dimodifikasi. *Routing* pada `urls.py` aplikasi `main` dilakukan dengan menambahkan beberapa *path* yang mengarah ke fungsi `show_xml`, `show_json`, `show_xml_by_id`, dan `show_json_by_id` pada `main/urls.py`. Berikut ini adalah *path* yang telah dibuat:
+```
+urlpatterns = [
+    ...,
+    path("xml/", views.show_xml, name="show_xml"),
+    path("json/", views.show_json, name="show_json"),
+    path("xml/<int:id>/", views.show_xml_by_id, name="show_xml_by_id"),
+    path("json/<int:id>/", views.show_json_by_id, name="show_json_by_id"),
+]
+```
+Setelah *routing* pada `urls.py` aplikasi `main` dibuat, *template* `main/templates/index.html` perlu dimodifikasi terlebih dahulu. *Template* `main/templates/index.html` dimodifikasi dengan menambahkan *link* menuju *page* untuk melihat objek yang telah ditambahkan dalam format XML, JSON, XML *by ID*, dan JSON *by ID*. Berikut ini adalah *template* `main/templates/index.html` yang telah dimodifikasi:
+```
+{% extends "base.html" %}
+
+{% block title %}Yu-Gi-Oh! Card Collection{% endblock %}
+
+{% block description %}Yu-Gi-Oh! Card Collection is a website to collect Yu-Gi-Oh! cards.{% endblock %}
+
+{% block content %}
+    <h2>Home</h2>
+    <a href="{% url "main:add" %}">
+        <button>Add Card</button>
+    </a>
+    <a href="{% url "main:show_xml" %}">
+        <button>Show XML</button>
+    </a>
+    <a href="{% url "main:show_json" %}">
+        <button>Show JSON</button>
+    </a>
+    {% for item in items %}
+        <div style="border: 1px solid black; padding: 10px; margin: 10px;">
+            <h3>{{ item.name }}</h3>
+            <p>Amount: {{ item.amount }}</p>
+            <p>Description: {{ item.description }}</p>
+            <p>Card Type: {{ item.card_type }}</p>
+            <p>Passcode: {{ item.passcode }}</p>
+            <p>Attribute: {{ item.attribute }}</p>
+            <p>Types: {{ item.types }}</p>
+            <p>Level: {{ item.level }}</p>
+            <p>ATK: {{ item.atk }}</p>
+            <p>DEFF: {{ item.deff }}</p>
+            <p>Effect Type: {{ item.effect_type }}</p>
+            <p>Card Property: {{ item.card_property }}</p>
+            <p>Rulings: {{ item.rulings }}</p>
+            <img src="{{ item.image.url }}" alt="{{ item.name }}" width="200px">
+            <a href="{% url "main:show_xml_by_id" item.id %}">
+                <button>Show XML by ID</button>
+            </a>
+            <a href="{% url "main:show_json_by_id" item.id %}">
+                <button>Show JSON by ID</button>
+            </a>
+        </div>
+    {% endfor %}
+{% endblock %}
+```
+Setelah *template* `main/templates/index.html` dimodifikasi, *template* `main/templates/add.html` juga perlu dimodifikasi. *Template* `main/templates/add.html` dimodifikasi dengan menambahkan *link* menuju *page* untuk melihat objek yang telah ditambahkan dalam format XML, JSON, XML *by ID*, dan JSON *by ID*. Berikut ini adalah *template* `main/templates/add.html` yang telah dimodifikasi:
+```
+{% extends "base.html" %}
+
+{% block title %}Add Item{% endblock %}
+
+{% block description %}Add a new item to the collection.{% endblock %}
+
+{% block content %}
+    <h2>Add Item</h2>
+    <a href="{% url "main:index" %}">Home</a>
+    <a href="{% url "main:show_xml" %}">
+        <button>Show XML</button>
+    </a>
+    <a href="{% url "main:show_json" %}">
+        <button>Show JSON</button>
+    </a>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <table>
+            {{ form.as_table }}
+            <tr>
+                <td></td>
+                <td><input type="submit" value="Add Item" /></td>
+        </table>
+    </form>
+    <br></br>
+    {% for item in items %}
+        <div style="border: 1px solid black; padding: 10px; margin: 10px;">
+            <h3>{{ item.name }}</h3>
+            <p>Amount: {{ item.amount }}</p>
+            <p>Description: {{ item.description }}</p>
+            <p>Card Type: {{ item.card_type }}</p>
+            <p>Passcode: {{ item.passcode }}</p>
+            <p>Attribute: {{ item.attribute }}</p>
+            <p>Types: {{ item.types }}</p>
+            <p>Level: {{ item.level }}</p>
+            <p>ATK: {{ item.atk }}</p>
+            <p>DEFF: {{ item.deff }}</p>
+            <p>Effect Type: {{ item.effect_type }}</p>
+            <p>Card Property: {{ item.card_property }}</p>
+            <p>Rulings: {{ item.rulings }}</p>
+            <img src="{{ item.image.url }}" alt="{{ item.name }}" width="200px">
+            <a href="{% url "main:show_xml_by_id" item.id %}">
+                <button>Show XML by ID</button>
+            </a>
+            <a href="{% url "main:show_json_by_id" item.id %}">
+                <button>Show JSON by ID</button>
+            </a>
+        </div>
+    {% endfor %}
+{% endblock %}
+```
+Setelah *template* `main/templates/add.html` dimodifikasi, maka format XML, JSON, XML *by ID*, dan JSON *by ID* telah berhasil ditambahkan.
 
 # License  
 

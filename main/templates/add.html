@@ -7,7 +7,12 @@
 {% block content %}
     <h2>Add Item</h2>
     <a href="{% url "main:index" %}">Home</a>
-    <br></br>
+    <a href="{% url "main:show_xml" %}">
+        <button>Show XML</button>
+    </a>
+    <a href="{% url "main:show_json" %}">
+        <button>Show JSON</button>
+    </a>
     <form method="POST" enctype="multipart/form-data">
         {% csrf_token %}
         <table>
@@ -34,6 +39,12 @@
             <p>Card Property: {{ item.card_property }}</p>
             <p>Rulings: {{ item.rulings }}</p>
             <img src="{{ item.image.url }}" alt="{{ item.name }}" width="200px">
+            <a href="{% url "main:show_xml_by_id" item.id %}">
+                <button>Show XML by ID</button>
+            </a>
+            <a href="{% url "main:show_json_by_id" item.id %}">
+                <button>Show JSON by ID</button>
+            </a>
         </div>
     {% endfor %}
 {% endblock %}
