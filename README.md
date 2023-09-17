@@ -341,6 +341,55 @@ MVC, MVT, dan MVVM adalah tiga pola arsitektur perangkat lunak yang umum digunak
 
 Secara umum, ketiganya memiliki fungsi yang sama, yaitu memisahkan logika aplikasi dari tampilan. Namun, perbedaan utama ketiganya adalah pada cara bagaimana komponen-komponen tersebut diorganisir dan berinteraksi satu sama lain.
 
+# Tugas 3: Implementasi Form dan Data Delivery pada Django
+Mengimplementasi Form dan Data Delivery pada [Yu-Gi-Oh! Card Collection Project](https://pras-yugioh-card.onrender.com/) serta menjawab beberapa pertanyaan serta menerapkan beberapa *best practice* yang sudah dipelajari di kelas.
+
+## Tugas 3 Checklist
+from [Tugas 3: Implementasi Form dan Data Delivery pada Django](https://pbp-fasilkom-ui.github.io/ganjil-2024/assignments/individual/assignment-3)
+- [ ] Membuat input `form` untuk menambahkan objek model pada app sebelumnya.
+- [ ] Tambahkan 5 fungsi `views` untuk melihat objek yang sudah ditambahkan dalam format HTML, XML, JSON, XML *by ID*, dan JSON *by ID*.
+- [ ] Membuat routing URL untuk masing-masing `views` yang telah ditambahkan pada poin 2.
+- [ ] Menjawab beberapa pertanyaan berikut pada `README.md` pada *root folder*.
+    - [ ] Apa perbedaan antara form `POST` dan form `GET` dalam Django?
+    - [ ] Apa perbedaan utama antara XML, JSON, dan HTML dalam konteks pengiriman data?
+    - [ ] Mengapa JSON sering digunakan dalam pertukaran data antara aplikasi web modern?
+    - [ ] Jelaskan bagaimana cara kamu mengimplementasikan *checklist* di atas secara *step-by-step* (bukan hanya sekadar mengikuti tutorial).
+- [ ] Mengakses kelima URL di poin 2 menggunakan Postman, membuat *screenshot* dari hasil akses URL pada Postman, dan menambahkannya ke dalam `README.md`.
+- [ ] Melakukan `add`-`commit`-`push` ke GitHub.
+
+### Penyesuaian *model* `Item` sebelum membuat *form*
+Sebelum membuat *form* untuk menambahkan objek *model* `Item`, *model* `Item` perlu disesuaikan terlebih dahulu. *Model* `Item` disesuaikan dengan mengganti atribut `image_url` dengan `image` yang bertipe `ImageField` pada *model* `Item`. Atribut `image` bertipe `ImageField` ditambahkan agar dapat menyimpan gambar kartu yang di-*upload* oleh pengguna. Berikut ini adalah *model* `Item` yang telah disesuaikan:
+```
+class Item(models.Model):
+    name = models.CharField(max_length=200)
+    amount = models.IntegerField()
+    description = models.TextField()
+    card_type = models.CharField(max_length=200)
+    passcode = models.IntegerField()
+    attribute = models.CharField(max_length=200, null=True)
+    types = models.CharField(max_length=200, null=True)
+    level = models.IntegerField(null=True)
+    atk = models.IntegerField(null=True)
+    deff = models.IntegerField(null=True)
+    effect_type = models.CharField(max_length=200, null=True)
+    card_property = models.CharField(max_length=200, null=True)
+    rulings = models.TextField(null=True)
+    image = models.ImageField(upload_to="images/", null=True)
+```
+Selain itu, *module* `PIL` perlu di-*install* terlebih dahulu agar dapat menggunakan `ImageField` dengan menambahkan `pillow` pada `requirements.txt`. Setelah `pillow` ditambahkan pada `requirements.txt`, *virtual environment* perlu di-*update* dengan menggunakan perintah berikut:
+```
+pip install -r requirements.txt
+```
+Setelah *virtual environment* di-*update*, *migration* perlu dilakukan untuk membuat tabel `Item` pada basis data. *Migration* dilakukan dengan menggunakan perintah berikut:
+```
+py manage.py makemigrations
+```
+Setelah *migration* selesai dibuat, tabel `Item` dapat dibuat pada basis data dengan menggunakan perintah berikut:
+```
+py manage.py migrate
+```
+Setelah tabel `Item` dibuat, *model* `Item` telah disesuaikan dan siap digunakan.
+
 
 # License  
 

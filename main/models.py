@@ -15,5 +15,5 @@ class Item(models.Model):
     effect_type = models.CharField(max_length=200, null=True)
     card_property = models.CharField(max_length=200, null=True)
     rulings = models.TextField(null=True)
-    image_url = models.CharField(max_length=200, null=True)
+    image = models.ImageField(upload_to='images/', null=True)
     
