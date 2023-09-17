@@ -357,6 +357,71 @@ from [Tugas 3: Implementasi Form dan Data Delivery pada Django](https://pbp-fasi
 - [ ] Mengakses kelima URL di poin 2 menggunakan Postman, membuat *screenshot* dari hasil akses URL pada Postman, dan menambahkannya ke dalam `README.md`.
 - [ ] Melakukan `add`-`commit`-`push` ke GitHub.
 
+### Penyesuaian *template* sebelum membuat *form*
+Sebelum membuat *form*, kerangka *views* perlu dibuat untuk memastikan adanya konsistensi dalam desain situs web yang dibuat serta memperkecil kemungkinan terjadinya redundansi kode. Langkah-langkah yang dilakukan adalah sebagai berikut:
+1. Membuat *base template* `/templates/base.html` yang berfungsi sebagai kerangka dari seluruh halaman situs web dengan isi sebagai berikut:
+```
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0"
+        >
+        <title>{% block title %}{% endblock %}</title>
+        <meta content="{% block description %}{% endblock %}" name="description">
+        {% block head %}{% endblock %}
+    </head>
+
+    <body>
+        <header>
+            <h1><span style="color:orange">Yu-Gi-Oh! Card Collection</span></h1>
+        </header>
+
+        <main>
+            {% block content %}{% endblock %}
+        </main>
+
+        <footer>
+            <p>&copy; 2023 Muhammad Andhika Prasetya - 2206031302 - PBP C</p>
+        </footer>
+    </body>
+</html>
+```
+2. Memodifikasi berkas `yugioh_card/settings.py` dengan memodifikasi `TEMPLATES` dan menambahkan `templates` pada `DIRS` seperti berikut:
+```
+...
+TEMPLATES = [
+    {
+        ...,
+        "DIRS": [BASE_DIR / "templates"],
+        ...
+    },
+]
+...
+```
+3. Memodifikasi berkas `main/views.py` dengan menghapus `context` pada fungsi `index` dan mengubah `render` menjadi `render(request, "index.html")` seperti berikut:
+```
+...
+def index(request):
+    return render(request, "index.html")
+...
+```
+4. Memodifikasi *template* `main/templates/index.html` dengan meng-*extend* *base template* `/templates/base.html` dan menghapus *heading* yang menampilkan nama aplikasi serta nama dan kelas. Berikut ini adalah *template* `main/templates/index.html` yang telah dimodifikasi:
+```
+{% extends "base.html" %}
+
+{% block title %}Yu-Gi-Oh! Card Collection{% endblock %}
+
+{% block description %}Yu-Gi-Oh! Card Collection is a website to collect Yu-Gi-Oh! cards.{% endblock %}
+
+{% block content %}
+    <h2>Home</h2>
+{% endblock %}
+```
+
 ### Penyesuaian *model* `Item` sebelum membuat *form*
 Sebelum membuat *form* untuk menambahkan objek *model* `Item`, *model* `Item` perlu disesuaikan terlebih dahulu. *Model* `Item` disesuaikan dengan mengganti atribut `image_url` dengan `image` yang bertipe `ImageField` pada *model* `Item`. Atribut `image` bertipe `ImageField` ditambahkan agar dapat menyimpan gambar kartu yang di-*upload* oleh pengguna. Berikut ini adalah *model* `Item` yang telah disesuaikan:
 ```
@@ -389,6 +454,31 @@ Setelah *migration* selesai dibuat, tabel `Item` dapat dibuat pada basis data de
 py manage.py migrate
 ```
 Setelah tabel `Item` dibuat, *model* `Item` telah disesuaikan dan siap digunakan.
+
+### Penyesuaian Unit *Test* sebelum membuat *form*
+Sebelum membuat *form* untuk menambahkan objek *model* `Item`, unit *test* perlu disesuaikan terlebih dahulu. Unit *test* disesuaikan dengan mengganti atribut `image_url` dengan `image` yang bertipe `ImageField` pada *class* `ItemTestCase`. Berikut ini adalah *class* `ItemTestCase` yang telah disesuaikan:
+```
+from django.core.files.uploadedfile import SimpleUploadedFile
+from django.test import TestCase, Client
+from .models import Item
+
+...
+
+class ItemTestCase(TestCase):
+    def test_item(self):
+        item = Item.objects.create(
+            ...,
+            image=SimpleUploadedFile(
+                name='BlueEyesWhiteDragon.webp',
+                content=open('static/images/BlueEyesWhiteDragon.webp', 'rb').read(),
+                content_type='image/webp'
+            ),
+        )
+        ...,
+        self.assertEqual(item.image.name, "images/BlueEyesWhiteDragon.webp")
+        item.image.delete() # delete image after test to avoid cluttering the media folder
+```
+
 
 
 # License  

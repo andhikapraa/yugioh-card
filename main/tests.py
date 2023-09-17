@@ -1,3 +1,4 @@
+from django.core.files.uploadedfile import SimpleUploadedFile
 from django.test import TestCase, Client
 from .models import Item
 
@@ -29,7 +30,11 @@ class ItemTestCase(TestCase):
             effect_type="Normal",
             card_property="Normal",
             rulings="This card is treated as a 'Blue-Eyes' monster.",
-            image_url="https://static.wikia.nocookie.net/yugioh/images/6/a0/BlueEyesWhiteDragon-MP22-EN-PScR-1E.png",
+            image=SimpleUploadedFile(
+                name='BlueEyesWhiteDragon.webp',
+                content=open('static/images/BlueEyesWhiteDragon.webp', 'rb').read(),
+                content_type='image/webp'
+            ),
         )
         self.assertEqual(item.name, "Blue-Eyes White Dragon")
         self.assertEqual(item.amount, 3)
@@ -44,5 +49,5 @@ class ItemTestCase(TestCase):
         self.assertEqual(item.effect_type, "Normal")
         self.assertEqual(item.card_property, "Normal")
         self.assertEqual(item.rulings, "This card is treated as a 'Blue-Eyes' monster.")
-        self.assertEqual(item.image_url, "https://static.wikia.nocookie.net/yugioh/images/6/a0/BlueEyesWhiteDragon-MP22-EN-PScR-1E.png")
-        
+        self.assertEqual(item.image.name, "images/BlueEyesWhiteDragon.webp")
+        item.image.delete() # delete image after test to avoid cluttering the media folder

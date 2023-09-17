@@ -1,5 +1,9 @@
-<h1><span style="color:orange">{{ project }}</span></h1>
+{% extends "base.html" %}
 
-<h2>Name: <span style="color:blue">{{ name }}</span></h2>
-<h2>NPM: <span style="color:red">{{ npm }}</span></h2>
-<h2>Class: <span style="color:blue">{{ class }}</span></h2>
+{% block title %}Yu-Gi-Oh! Card Collection{% endblock %}
+
+{% block description %}Yu-Gi-Oh! Card Collection is a website to collect Yu-Gi-Oh! cards.{% endblock %}
+
+{% block content %}
+    <h2>Home</h2>
+{% endblock %}
