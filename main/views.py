@@ -105,3 +105,35 @@ def login_user(request):
 def logout_user(request):
     logout(request)
     return redirect("main:index")
+
+@login_required(login_url="/login/")
+def add_amount(request, id):
+    item = Item.objects.get(id=id)
+    if item.user == request.user:
+        item.amount += 1
+        item.save()
+        return redirect("main:index")
+    return render(request, "index.html")
+
+@login_required(login_url="/login/")
+def reduce_amount(request, id):
+    item = Item.objects.get(id=id)
+    if item.user == request.user:
+        item.amount -= 1
+        item.save()
+        return redirect("main:index")
+    return render(request, "index.html")
+
+@login_required(login_url="/login/")
+def delete(request, id):
+    item = Item.objects.get(id=id)
+    if item.user == request.user:
+        item.delete()
+        return redirect("main:index")
+    return render(request, "index.html")
+
+@login_required(login_url="/login/")
+def delete_all(request):
+    items = Item.objects.filter(user=request.user)
+    items.delete()
+    return render(request, "index.html")

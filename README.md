@@ -1211,7 +1211,161 @@ Setelah itu, dua akun pengguna dengan masing-masing tiga *dummy data* perlu dibu
 - *Screenshot* dari hasil pembuatan akun pengguna dengan tiga *dummy data* kedua
 ![User 2](https://i.postimg.cc/d1rj62cT/user2.png)
 
+### Menambahkan tombol dan fungsi untuk menambahkan `amount` suatu objek sebanyak satu
+Sebelum melanjutkan, *template* `main/templates/index.html` perlu dimodifikasi terlebih dahulu. Berkas `main/templates/index.html` dimodifikasi dengan menambahkan *button* `Add Amount` yang mengarah ke *page* `main:add_amount` dan *button* `Reduce Amount` yang mengarah ke *page* `main:reduce_amount`. Berikut ini adalah *template* `main/templates/index.html` yang telah dimodifikasi:
+```
+...
+{% for item in items %}
+    <div style="border: 1px solid black; padding: 10px; margin: 10px;">
+        <h3>{{ item.name }}</h3>
+        <p>Amount: {{ item.amount }}</p>
+        <p>Description: {{ item.description }}</p>
+        <p>Card Type: {{ item.card_type }}</p>
+        <p>Passcode: {{ item.passcode }}</p>
+        <p>Attribute: {{ item.attribute }}</p>
+        <p>Types: {{ item.types }}</p>
+        <p>Level: {{ item.level }}</p>
+        <p>ATK: {{ item.atk }}</p>
+        <p>DEFF: {{ item.deff }}</p>
+        <p>Effect Type: {{ item.effect_type }}</p>
+        <p>Card Property: {{ item.card_property }}</p>
+        <p>Rulings: {{ item.rulings }}</p>
+        <img src="{{ item.image.url }}" alt="{{ item.name }}" width="200px">
+        <a href="{% url "main:show_xml_by_id" item.id %}">
+            <button>Show XML by ID</button>
+        </a>
+        <a href="{% url "main:show_json_by_id" item.id %}">
+            <button>Show JSON by ID</button>
+        </a>
+        {% if item.amount > 0 %}
+            <a href="{% url "main:add_amount" item.id %}">
+                <button>Add Amount</button>
+            </a>
+        {% endif %}
+        {% if item.amount > 1 %}
+            <a href="{% url "main:reduce_amount" item.id %}">
+                <button>Reduce Amount</button>
+            </a>
+        {% endif %}
+    </div>
+{% endfor %}
+...
+```
+> Hal ini juga dilakukan pada *template* `main/templates/add.html`.
 
+Selanjutnya, fungsi `add_amount` dan `reduce_amount` pada `main/views.py` perlu dibuat. Fungsi `add_amount` dan `reduce_amount` dibuat dengan menambahkan sebuah fungsi bernama `add_amount` dan `reduce_amount` pada `main/views.py` yang mengembalikan *template* `main/templates/index.html` serta menerima *request* dan `id` sebagai parameter. Selain itu, fungsi `add_amount` dan `reduce_amount` juga memiliki *conditional* yang mengecek apakah *user* sudah *login* atau belum. Jika *user* sudah *login*, maka fungsi `add_amount` dan `reduce_amount` akan meng-*handle* *request* tersebut dengan menambahkan atau mengurangi `amount` suatu objek sebanyak satu. Berikut ini adalah fungsi `add_amount` dan `reduce_amount` yang telah dibuat:
+```
+...
+@login_required(login_url="/login/")
+def add_amount(request, id):
+    item = Item.objects.get(id=id)
+    if item.user == request.user:
+        item.amount += 1
+        item.save()
+        return redirect("main:index")
+    return render(request, "index.html")
+
+@login_required(login_url="/login/")
+def reduce_amount(request, id):
+    item = Item.objects.get(id=id)
+    if item.user == request.user:
+        item.amount -= 1
+        item.save()
+        return redirect("main:index")
+    return render(request, "index.html")
+```
+Setelah fungsi `add_amount` dan `reduce_amount` pada `main/views.py` dibuat, *url* pada `main/urls.py` perlu dimodifikasi terlebih dahulu. *URL* pada `main/urls.py` dimodifikasi dengan menambahkan beberapa *path* yang mengarah ke fungsi `add_amount` dan `reduce_amount` pada `main/urls.py`. Berikut ini adalah *path* yang telah dibuat:
+```
+urlpatterns = [
+    ...,
+    path("add_amount/<int:id>", views.add_amount, name="add_amount"),
+    path("reduce_amount/<int:id>", views.reduce_amount, name="reduce_amount"),
+]
+```
+Dengan ini, tombol dan fungsi untuk menambahkan `amount` suatu objek sebanyak satu telah berhasil ditambahkan.
+
+### Menambahkan tombol dan fungsi untuk menghapus suatu objek dari inventori
+Sebelum melanjutkan, *template* `main/templates/index.html` perlu dimodifikasi terlebih dahulu. Berkas `main/templates/index.html` dimodifikasi dengan menambahkan *button* `Delete Card` yang mengarah ke *page* `main:delete` dan *button* `Delete All Cards` yang mengarah ke *page* `main:delete_all`. Berikut ini adalah *template* `main/templates/index.html` yang telah dimodifikasi:
+```
+...
+{% if items %}
+    <h3>Total Cards: {{ items|length }}</h3>
+    <a href="{% url "main:delete_all" %}">
+        <button>Delete All Cards</button>
+    </a>
+{% endif %}
+...
+{% for item in items %}
+    <div style="border: 1px solid black; padding: 10px; margin: 10px;">
+        <h3>{{ item.name }}</h3>
+        <p>Amount: {{ item.amount }}</p>
+        <p>Description: {{ item.description }}</p>
+        <p>Card Type: {{ item.card_type }}</p>
+        <p>Passcode: {{ item.passcode }}</p>
+        <p>Attribute: {{ item.attribute }}</p>
+        <p>Types: {{ item.types }}</p>
+        <p>Level: {{ item.level }}</p>
+        <p>ATK: {{ item.atk }}</p>
+        <p>DEFF: {{ item.deff }}</p>
+        <p>Effect Type: {{ item.effect_type }}</p>
+        <p>Card Property: {{ item.card_property }}</p>
+        <p>Rulings: {{ item.rulings }}</p>
+        <img src="{{ item.image.url }}" alt="{{ item.name }}" width="200px">
+        <a href="{% url "main:show_xml_by_id" item.id %}">
+            <button>Show XML by ID</button>
+        </a>
+        <a href="{% url "main:show_json_by_id" item.id %}">
+            <button>Show JSON by ID</button>
+        </a>
+        {% if item.amount > 0 %}
+            <a href="{% url "main:add_amount" item.id %}">
+                <button>Add Amount</button>
+            </a>
+        {% endif %}
+        {% if item.amount > 1 %}
+            <a href="{% url "main:reduce_amount" item.id %}">
+                <button>Reduce Amount</button>
+            </a>
+        {% endif %}
+        <a href="{% url "main:delete" item.id %}">
+            <button>Delete Card</button>
+        </a>
+    </div>
+{% endfor %}
+...
+```
+> Hal ini juga dilakukan pada *template* `main/templates/add.html`.
+
+Selanjutnya, fungsi `delete` dan `delete_all` pada `main/views.py` perlu dibuat. Fungsi `delete` dibuat dengan menambahkan sebuah fungsi bernama `delete` dan `delete_all` pada `main/views.py` yang mengembalikan *template* `main/templates/index.html`. Selain itu, fungsi `delete` dan `delete_all` juga memiliki *conditional* yang mengecek apakah *user* sudah *login* atau belum. Jika *user* sudah *login*, maka fungsi `delete` dan `delete_all` akan meng-*handle* *request* tersebut dengan menghapus objek *model* `Item` yang memiliki `id` yang sama dengan `id` yang diterima. Berikut ini adalah fungsi `delete` dan `delete_all` yang telah dibuat:
+```
+...
+@login_required(login_url="/login/")
+def delete(request, id):
+    item = Item.objects.get(id=id)
+    if item.user == request.user:
+        item.delete()
+        return redirect("main:index")
+    return render(request, "index.html")
+
+@login_required(login_url="/login/")
+def delete_all(request):
+    items = Item.objects.filter(user=request.user)
+    items.delete()
+    return render(request, "index.html")
+
+```
+Setelah fungsi `delete` dan `delete_all` pada `main/views.py` dibuat, *url* pada `main/urls.py` perlu dimodifikasi terlebih dahulu. *URL* pada `main/urls.py` dimodifikasi dengan menambahkan beberapa *path* yang mengarah ke fungsi `delete` dan `delete_all` pada `main/urls.py`. Berikut ini adalah *path* yang telah dibuat:
+```
+urlpatterns = [
+    ...,
+    path("delete/<int:id>", views.delete, name="delete"),
+    path("delete_all/", views.delete_all, name="delete_all"),
+]
+```
+Dengan ini, tombol dan fungsi untuk menghapus suatu objek dari inventori telah berhasil ditambahkan.
+
+### Menjawab beberapa pertanyaan terkait tugas 4
+#### 
 
 # License  
 

@@ -20,6 +20,9 @@
         </a>
         {% if items %}
             <h3>Total Cards: {{ items|length }}</h3>
+            <a href="{% url "main:delete_all" %}">
+                <button>Delete All Cards</button>
+            </a>
         {% endif %}
         {% for item in items %}
             <div style="border: 1px solid black; padding: 10px; margin: 10px;">
@@ -42,6 +45,19 @@
                 </a>
                 <a href="{% url "main:show_json_by_id" item.id %}">
                     <button>Show JSON by ID</button>
+                </a>
+                {% if item.amount > 0 %}
+                    <a href="{% url "main:add_amount" item.id %}">
+                        <button>Add Amount</button>
+                    </a>
+                {% endif %}
+                {% if item.amount > 1 %}
+                    <a href="{% url "main:reduce_amount" item.id %}">
+                        <button>Reduce Amount</button>
+                    </a>
+                {% endif %}
+                <a href="{% url "main:delete" item.id %}">
+                    <button>Delete Card</button>
                 </a>
             </div>
         {% endfor %}
