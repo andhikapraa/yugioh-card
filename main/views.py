@@ -7,6 +7,7 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.utils import timezone
 
 # Create your views here.
 def index(request):
@@ -90,6 +91,7 @@ def login_user(request):
             if user is not None:
                 login(request, user)
                 messages.info(request, "Successfully logged in as " + user.username)
+                request.session["last_login"] = str(timezone.now())
                 return redirect("main:index")
         else:
             messages.info(request, "Username OR password is incorrect")

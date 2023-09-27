@@ -1168,6 +1168,37 @@ def show_json_by_id(request, id):
 ```
 Dengan ini, model `Item` telah terhubung dengan `User`.
 
+### Menerapkan *cookies*
+Selanjutnya, *view* `login_user` pada `main/views.py` perlu dimodifikasi terlebih dahulu. *View* `login_user` dimodifikasi dengan menambahkan *cookies* `last_login` yang menampilkan waktu terakhir pengguna melakukan *login* pada *template* `main/templates/index.html`. Berikut ini adalah *view* `login_user` yang telah dimodifikasi:
+```
+from django.utils import timezone
+...
+def login_user(request):
+    if request.method == "POST":
+        form = AuthenticationForm(request, data=request.POST)
+        if form.is_valid():
+            user = form.cleaned_data.get("username")
+            password = form.cleaned_data.get("password")
+            user = authenticate(username=user, password=password)
+            if user is not None:
+                login(request, user)
+                messages.info(request, "Successfully logged in as " + user.username)
+                request.session["last_login"] = str(timezone.now())
+                return redirect("main:index")
+        else:
+            messages.info(request, "Username OR password is incorrect")
+    else:
+        form = AuthenticationForm()
+    context = {
+        "form": form,
+    }
+    return render(request, "login.html", context)
+```
+Lalu, *heading* yang menampilkan waktu terakhir pengguna melakukan *login* ditambahkan pada *template* `main/templates/index.html` dan `main/templates/add.html` dengan menggunakan kode berikut:
+```
+<h3>Last Login: {{ request.session.last_login }}</h3>
+```
+Dengan ini, *cookies* `last_login` telah berhasil ditambahkan.
 
 # License  
 

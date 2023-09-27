@@ -8,6 +8,7 @@
     <h2>Home</h2>
     {% if user.is_authenticated %}
         <h3>User: {{ user.username }}</h3>
+        <h3>Last Login: {{ request.session.last_login }}</h3>
         <a href="{% url "main:add" %}">
             <button>Add Card</button>
         </a>

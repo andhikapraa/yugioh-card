@@ -7,6 +7,7 @@
 {% block content %}
     <h2>Add Item</h2>
     <h3>User: {{ user.username }}</h3>
+    <h3>Last Login: {{ request.session.last_login }}</h3>
     <a href="{% url "main:show_xml" %}">
         <button>Show XML</button>
     </a>
