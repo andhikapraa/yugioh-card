@@ -27,7 +27,7 @@ Screenshot:
 ## Task Checklist 
 - [X] [Tugas 2: Implementasi Model-View-Template (MVT) pada Django](https://pbp-fasilkom-ui.github.io/ganjil-2024/assignments/individual/assignment-2)
 - [X] [Tugas 3: Implementasi Form dan Data Delivery pada Django](https://pbp-fasilkom-ui.github.io/ganjil-2024/assignments/individual/assignment-3)
-- [ ] [Tugas 4: Implementasi Autentikasi, Session, dan Cookies pada Django](https://pbp-fasilkom-ui.github.io/ganjil-2024/assignments/individual/assignment-4)
+- [X] [Tugas 4: Implementasi Autentikasi, Session, dan Cookies pada Django](https://pbp-fasilkom-ui.github.io/ganjil-2024/assignments/individual/assignment-4)
 
 # Table of contents  
         
@@ -56,6 +56,15 @@ Screenshot:
 &emsp;&emsp;[Menambahkan *routing* untuk format XML, JSON, XML *by ID*, dan JSON *by ID*](<#Menambahkan-routing-untuk-format-XML-JSON-XML-by-ID-dan-JSON-by-ID>)<br />
 &emsp;&emsp;[Mengakses URL menggunakan Postman](<#Mengakses-URL-menggunakan-Postman>)<br />
 &emsp;&emsp;[Menjawab beberapa pertanyaan](<#Menjawab-beberapa-pertanyaan>)<br />
+[**Tugas 4: Implementasi Autentikasi, Session, dan Cookies pada Django**](<#Tugas-4-Implementasi-Autentikasi-Session-dan-Cookies-pada-Django>)<br />
+&emsp;[**Tugas 4 Checklist**](<#Tugas-4-Checklist>)<br />
+&emsp;&emsp;[Mengimplementasikan fungsi registrasi, login, dan logout](<#Mengimplementasikan-fungsi-registrasi-login-dan-logout>)<br />
+&emsp;&emsp;[Menghubungkan model `Item` dengan `User`](<#Menghubungkan-model-Item-dengan-User>)<br />
+&emsp;&emsp;[Menerapkan *cookies*](<#Menerapkan-cookies>)<br />
+&emsp;&emsp;[Membuat **dua** akun pengguna dengan masing-masing **tiga** *dummy data*](<#Membuat-dua-akun-pengguna-dengan-masing-masing-tiga-dummy-data>)<br />
+&emsp;&emsp;[Menambahkan tombol dan fungsi untuk menambahkan `amount` suatu objek sebanyak satu](<#Menambahkan-tombol-dan-fungsi-untuk-menambahkan-amount-suatu-objek-sebanyak-satu>)<br />
+&emsp;&emsp;[Menambahkan tombol dan fungsi untuk menghapus suatu objek dari inventori](<#Menambahkan-tombol-dan-fungsi-untuk-menghapus-suatu-objek-dari-inventori>)<br />
+&emsp;&emsp;[Menjawab beberapa pertanyaan terkait tugas 4](<#Menjawab-beberapa-pertanyaan-terkait-tugas-4>)<br />
 [**License**](<#License>)<br />
 
 # Tugas 2: Implementasi Model-View-Template (MVT) pada Django
@@ -854,17 +863,17 @@ Mengimplementasikan autentikasi, session, dan cookies pada [Yu-Gi-Oh! Card Colle
 - [X] Membuat **dua** akun pengguna dengan masing-masing **tiga** *dummy data* menggunakan model yang telah dibuat pada aplikasi sebelumnya untuk setiap akun **di lokal**.
 - [X] Menghubungkan model `Item` dengan `User`.
 - [X] Menampilkan detail informasi pengguna yang sedang *logged in* seperti *username* dan menerapkan `cookies` seperti `last login` pada halaman utama aplikasi.
-- [ ] Menjawab beberapa pertanyaan berikut pada `README.md` pada *root folder* (silakan modifikasi `README.md` yang telah kamu buat sebelumnya; tambahkan subjudul untuk setiap tugas).
+- [X] Menjawab beberapa pertanyaan berikut pada `README.md` pada *root folder* (silakan modifikasi `README.md` yang telah kamu buat sebelumnya; tambahkan subjudul untuk setiap tugas).
 
-    - [ ] Apa itu Django `UserCreationForm`, dan jelaskan apa kelebihan dan kekurangannya?
-    - [ ] Apa perbedaan antara autentikasi dan otorisasi dalam konteks Django, dan mengapa keduanya penting?
-    - [ ] Apa itu *cookies* dalam konteks aplikasi web, dan bagaimana Django menggunakan *cookies* untuk mengelola data sesi pengguna?
-    - [ ] Apakah penggunaan *cookies* aman secara *default* dalam pengembangan web, atau apakah ada risiko potensial yang harus diwaspadai?
-    - [ ] Jelaskan bagaimana cara kamu mengimplementasikan *checklist* di atas secara *step-by-step* (bukan hanya sekadar mengikuti tutorial).
-- [ ] Melakukan `add`-`commit`-`push` ke GitHub.
-- [ ] **Bonus**
-    - [ ] Tambahkan tombol dan fungsi untuk menambahkan `amount` suatu objek sebanyak satu dan tombol untuk mengurangi jumlah stok suatu objek sebanyak satu.
-    - [ ] Tambahkan tombol dan fungsi untuk menghapus suatu objek dari inventori.
+    - [X] Apa itu Django `UserCreationForm`, dan jelaskan apa kelebihan dan kekurangannya?
+    - [X] Apa perbedaan antara autentikasi dan otorisasi dalam konteks Django, dan mengapa keduanya penting?
+    - [X] Apa itu *cookies* dalam konteks aplikasi web, dan bagaimana Django menggunakan *cookies* untuk mengelola data sesi pengguna?
+    - [X] Apakah penggunaan *cookies* aman secara *default* dalam pengembangan web, atau apakah ada risiko potensial yang harus diwaspadai?
+    - [X] Jelaskan bagaimana cara kamu mengimplementasikan *checklist* di atas secara *step-by-step* (bukan hanya sekadar mengikuti tutorial).
+- [X] Melakukan `add`-`commit`-`push` ke GitHub.
+- [X] **Bonus**
+    - [X] Tambahkan tombol dan fungsi untuk menambahkan `amount` suatu objek sebanyak satu dan tombol untuk mengurangi jumlah stok suatu objek sebanyak satu.
+    - [X] Tambahkan tombol dan fungsi untuk menghapus suatu objek dari inventori.
 
 ### Mengimplementasikan fungsi registrasi, login, dan logout
 Sebelum melanjutkan ke tugas berikutnya, berkas `main/templates/base.html` perlu dimodifikasi terlebih dahulu. Berkas `main/templates/base.html` dimodifikasi dengan menambahkan *link* menuju *page* untuk melakukan registrasi, login, dan logout. Berikut ini adalah *template* `main/templates/base.html` yang telah dimodifikasi:
@@ -1365,7 +1374,35 @@ urlpatterns = [
 Dengan ini, tombol dan fungsi untuk menghapus suatu objek dari inventori telah berhasil ditambahkan.
 
 ### Menjawab beberapa pertanyaan terkait tugas 4
-#### 
+#### Apa itu Django `UserCreationForm`, dan jelaskan apa kelebihan dan kekurangannya?
+Django `UserCreationForm` adalah formulir yang digunakan untuk membuat pengguna baru yang dapat menggunakan aplikasi web kita. Formulir ini memiliki tiga bidang: `username`, `password1`, dan `password2` (yang pada dasarnya digunakan untuk konfirmasi password). Untuk menggunakan `UserCreationForm`, kita perlu mengimpornya dari `django.contrib.auth.forms`.
+Kelebihan `UserCreationForm` diantaranya:
+- Formulir ini sudah disediakan oleh Django, sehingga kita tidak perlu membuatnya dari awal.
+- Formulir ini sudah memiliki validasi dan sanitasi data yang diperlukan, sehingga kita tidak perlu khawatir tentang keamanan dan integritas data.
+- Formulir ini sudah terintegrasi dengan sistem autentikasi Django, sehingga kita dapat dengan mudah membuat pengguna yang dapat login dan logout.
+- Formulir ini sudah memiliki *error handling* yang baik, sehingga kita dapat dengan mudah mengetahui kesalahan yang terjadi.
+
+Kekurangan `UserCreationForm` diantaranya:
+- Formulir ini hanya memiliki bidang username, password1, dan password2, sehingga kita tidak dapat menambahkan bidang lain yang mungkin dibutuhkan oleh aplikasi kita, seperti email, nama lengkap, atau foto profil.
+- Formulir ini menggunakan model pengguna bawaan Django, sehingga kita tidak dapat mengubah atau menyesuaikan atribut pengguna sesuai dengan kebutuhan kita.
+- Formulir ini mungkin tidak cocok dengan tampilan atau gaya aplikasi kita, sehingga kita perlu mengubah atau menyesuaikan template HTML dan CSS yang digunakan oleh formulir ini.
+
+#### Apa perbedaan antara autentikasi dan otorisasi dalam konteks Django, dan mengapa keduanya penting?
+Autentikasi adalah proses memverifikasi identitas pengguna, yaitu untuk mengidentifikasi siapa pengguna yang mencoba mengakses aplikasi web. Autentikasi digunakan untuk memeriksa apakah pengguna yang mencoba mengakses aplikasi adalah pengguna yang sah atau bukan. Sebagai contoh, proses login adalah contoh autentikasi. Ketika pengguna memasukkan kredensial mereka (seperti nama pengguna dan kata sandi), sistem memverifikasi apakah kredensial tersebut sesuai dengan yang ada dalam basis data. Jika cocok, pengguna dianggap terotentikasi dan dapat mengakses sumber daya yang terlindungi.
+
+Sementara itu, otorisasi adalah proses mengendalikan akses pengguna yang sudah terotentikasi ke sumber daya atau fungsi tertentu dalam aplikasi. Ini menentukan apa yang diizinkan atau tidak diizinkan untuk dilakukan oleh pengguna yang terotentikasi. Misalnya, seorang pengguna yang terotentikasi mungkin memiliki izin untuk mengedit profil mereka sendiri, tetapi tidak diberi izin untuk mengedit profil pengguna lain. Ini adalah contoh dari otorisasi yang mengatur apa yang dapat dilakukan pengguna setelah mereka masuk.
+
+Baik autentikasi maupun otorisasi sama-sama penting dalam aplikasi web. Autentikasi merupakan langkah pertama dalam proses keamanan. Autentikasi memastikan bahwa pengguna yang mencoba mengakses sumber daya adalah pengguna yang sah. Tanpa autentikasi, sistem tidak akan dapat membedakan antara pengguna sah dan aktor jahat yang mencoba mendapatkan akses. Jadi, autentikasi penting untuk memverifikasi identitas pengguna dan mencegah akses yang tidak sah. Setelah pengguna berhasil terotentikasi, langkah selanjutnya adalah menentukan apa yang pengguna tersebut diizinkan untuk lakukan. Ini adalah di mana otorisasi masuk. Otorisasi memungkinkan sistem untuk mengendalikan akses ke sumber daya atau fitur tertentu berdasarkan peran atau hak akses pengguna. Dengan otorisasi, aplikasi dapat memastikan bahwa pengguna hanya mengakses data atau fitur yang seharusnya mereka akses, dan mencegah akses yang tidak sah ke data atau fitur yang sensitif.
+
+#### Apa itu cookies dalam konteks aplikasi web, dan bagaimana Django menggunakan cookies untuk mengelola data sesi pengguna?
+Dalam konteks aplikasi web, cookies adalah potongan kecil data yang dikirim dari sebuah website dan disimpan di komputer pengguna oleh browser web pengguna saat pengguna berselancar. Cookie ini dirancang untuk menjadi mekanisme yang andal bagi website untuk mengingat informasi stateful atau untuk merekam aktivitas penelusuran pengguna.
+
+Django menggunakan cookies untuk mengelola data sesi pengguna dengan cara menyimpan ID sesi pengguna di cookie. Django kemudian menggunakan ID sesi ini untuk mengidentifikasi pengguna yang terotentikasi dan mengambil data sesi pengguna dari basis data sesi. Dengan menggunakan cookies, Django dapat mengelola data sesi pengguna tanpa menyimpan data sesi pengguna di cookie itu sendiri. Hal ini memungkinkan Django untuk mengelola data sesi pengguna dengan aman dan efisien.
+
+#### Apakah penggunaan cookies aman secara default dalam pengembangan web, atau apakah ada risiko potensial yang harus diwaspadai?
+Penggunaan cookie dalam pengembangan web memiliki manfaat dan risiko yang perlu dipertimbangkan. Secara default, cookie tidak dianggap sebagai ancaman untuk privasi dan keamanan website, karena tidak menyimpan data pribadi (tetapi terkadang mereka menyimpan nomor kartu kredit dan alamat IP) dan tidak bisa digunakan untuk mengirim malware atau virus. Namun, cookie dapat menimbulkan risiko keamanan bila digunakan secara tidak benar, misalnya dengan menyimpan informasi sensitif tanpa enkripsi atau dengan membiarkan cookie pihak ketiga mengakses data pengguna. Cookie juga dapat mempengaruhi kinerja situs web, karena meningkatkan data yang dikirim antara browser pengguna dan server web. Selain itu, cookie dapat menimbulkan masalah kompatibilitas, karena tidak semua browser menangani cookie dengan cara yang sama, dan beberapa pengguna mungkin memilih untuk menonaktifkan cookie sepenuhnya.
+
+Oleh karena itu, pengembang web perlu mengikuti praktik terbaik untuk mengelola cookie, seperti menggunakan cookie hanya untuk tujuan yang diperlukan, mengatur masa berlaku cookie yang sesuai, mengenkripsi data cookie yang sensitif, membatasi akses cookie pihak ketiga, dan memberikan informasi dan pilihan kepada pengguna tentang penggunaan cookie. Dengan demikian, penggunaan cookie dalam pengembangan web dapat memberikan manfaat bagi pengalaman pengguna tanpa mengorbankan privasi dan keamanan mereka.
 
 # License  
 
