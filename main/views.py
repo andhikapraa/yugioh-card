@@ -3,6 +3,9 @@ from django.http import HttpResponse
 from django.core import serializers
 from .forms import ItemForm
 from .models import Item
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.contrib.auth import authenticate, login, logout
+from django.contrib import messages
 
 # Create your views here.
 def index(request):
@@ -44,3 +47,42 @@ def show_json_by_id(request, id):
     item = Item.objects.get(id=id)
     data = serializers.serialize("json", [item])
     return HttpResponse(data, content_type="application/json")
+
+def register(request):
+    if request.method == "POST":
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            user = form.cleaned_data.get("username")
+            messages.success(request, "Account was created for " + user)
+            return redirect("main:index")
+    else:
+        form = UserCreationForm()
+    context = {
+        "form": form,
+    }
+    return render(request, "register.html", context)
+
+def login_user(request):
+    if request.method == "POST":
+        form = AuthenticationForm(request, data=request.POST)
+        if form.is_valid():
+            user = form.cleaned_data.get("username")
+            password = form.cleaned_data.get("password")
+            user = authenticate(username=user, password=password)
+            if user is not None:
+                login(request, user)
+                messages.info(request, "Successfully logged in as " + user.username)
+                return redirect("main:index")
+        else:
+            messages.info(request, "Username OR password is incorrect")
+    else:
+        form = AuthenticationForm()
+    context = {
+        "form": form,
+    }
+    return render(request, "login.html", context)
+
+def logout_user(request):
+    logout(request)
+    return redirect("main:index")

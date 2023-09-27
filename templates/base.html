@@ -18,6 +18,21 @@
         </header>
 
         <main>
+            <a href="{% url "main:index" %}">
+                <button>Home</button>
+            </a>
+            {% if user.is_authenticated %}
+                <a href="{% url "main:logout" %}">
+                    <button>Logout</button>
+                </a>
+            {% else %}
+                <a href="{% url "main:register" %}">
+                    <button>Register</button>
+                </a>
+                <a href="{% url "main:login" %}">
+                    <button>Login</button>
+                </a>
+            {% endif %}
             {% block content %}{% endblock %}
         </main>
 

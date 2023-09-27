@@ -6,6 +6,9 @@
 
 {% block content %}
     <h2>Home</h2>
+    {% if user.is_authenticated %}
+        <h3>User: {{ user.username }}</h3>
+    {% endif %}
     <a href="{% url "main:add" %}">
         <button>Add Card</button>
     </a>
@@ -15,6 +18,7 @@
     <a href="{% url "main:show_json" %}">
         <button>Show JSON</button>
     </a>
+    <h3>Total Cards: {{ items|length }}</h3>
     {% for item in items %}
         <div style="border: 1px solid black; padding: 10px; margin: 10px;">
             <h3>{{ item.name }}</h3>

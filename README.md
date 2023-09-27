@@ -26,7 +26,8 @@ Screenshot:
 ![Screenshot](https://i.postimg.cc/25stKj25/demo.jpg)
 ## Task Checklist 
 - [X] [Tugas 2: Implementasi Model-View-Template (MVT) pada Django](https://pbp-fasilkom-ui.github.io/ganjil-2024/assignments/individual/assignment-2)
-
+- [X] [Tugas 3: Implementasi Form dan Data Delivery pada Django](https://pbp-fasilkom-ui.github.io/ganjil-2024/assignments/individual/assignment-3)
+- [ ] [Tugas 4: Implementasi Autentikasi, Session, dan Cookies pada Django](https://pbp-fasilkom-ui.github.io/ganjil-2024/assignments/individual/assignment-4)
 
 # Table of contents  
         
@@ -36,7 +37,7 @@ Screenshot:
 [**Table of contents**](<#Table-of-contents>)<br />
 [**Tugas 2: Implementasi Model-View-Template (MVT) pada Django**](<#Tugas-2-Implementasi-Model-View-Template-(MVT)-pada-Django>)<br />
 &emsp;[**Tugas 2 Checklist**](<#Tugas-2-Checklist>)<br />
-&emsp;&emsp;[Membuat proyek Django](<#Membuat-proyek-Django>)<br />
+&emsp;&emsp;[Membuat proyek Django dan konfigurasi proyek](<#Membuat-proyek-Django-dan-konfigurasi-proyek>)<br />
 &emsp;&emsp;[Membuat aplikasi dengan nama `main`](<#Membuat-aplikasi-dengan-nama-main>)<br />
 &emsp;&emsp;[Melakukan *routing* pada proyek untuk aplikasi `main`](<#Melakukan-routing-pada-proyek-untuk-aplikasi-main>)<br />
 &emsp;&emsp;[Membuat model pada aplikasi `main`](<#Membuat-model-pada-aplikasi-main>)<br />
@@ -63,7 +64,7 @@ Mengimplementasi Model-View-Template (MVT) Django pada
 pertanyaan yang sudah dipelajari di kelas.
 
 ## Tugas 2 Checklist
-from [Tugas 2: Implementasi Model-View-Template (MVT) pada Django](https://pbp-fasilkom-ui.github.io/ganjil-2024/assignments/individual/assignment-2)
+*from* [Tugas 2: Implementasi Model-View-Template (MVT) pada Django](https://pbp-fasilkom-ui.github.io/ganjil-2024/assignments/individual/assignment-2)
 - [X] Membuat sebuah proyek Django baru.
 - [X] Membuat aplikasi dengan nama `main` pada proyek tersebut.
 - [X] Melakukan *routing* pada proyek agar dapat menjalankan aplikasi `main`.
@@ -355,7 +356,7 @@ Secara umum, ketiganya memiliki fungsi yang sama, yaitu memisahkan logika aplika
 Mengimplementasi Form dan Data Delivery pada [Yu-Gi-Oh! Card Collection Project](https://pras-yugioh-card.onrender.com/) serta menjawab beberapa pertanyaan serta menerapkan beberapa *best practice* yang sudah dipelajari di kelas.
 
 ## Tugas 3 Checklist
-from [Tugas 3: Implementasi Form dan Data Delivery pada Django](https://pbp-fasilkom-ui.github.io/ganjil-2024/assignments/individual/assignment-3)
+*from* [Tugas 3: Implementasi Form dan Data Delivery pada Django](https://pbp-fasilkom-ui.github.io/ganjil-2024/assignments/individual/assignment-3)
 - [X] Membuat input `form` untuk menambahkan objek model pada app sebelumnya.
 - [X] Tambahkan 5 fungsi `views` untuk melihat objek yang sudah ditambahkan dalam format HTML, XML, JSON, XML *by ID*, dan JSON *by ID*.
 - [X] Membuat routing URL untuk masing-masing `views` yang telah ditambahkan pada poin 2.
@@ -825,6 +826,182 @@ JSON adalah format data berbasis teks yang paling populer dalam menyimpan dan me
 - JSON mendukung tipe data yang paling umum digunakan seperti *string* dan *number* sehingga JSON dapat digunakan untuk menyimpan dan mentransfer data yang bersifat sederhana dan memiliki struktur yang sederhana.
 
 Namun, perlu diingat bahwa JSON memiliki beberapa keterbatasan seperti tidak mendukung beberapa tipe data tertentu, tidak memiliki skema sehingga tidak dapat memvalidasi data, dan tidak memiliki dukungan *namespace* sehingga tidak dapat mengelompokkan data. Oleh karena itu, JSON tidak cocok digunakan untuk menyimpan dan mentransfer data yang bersifat kompleks dan memiliki struktur yang kompleks.
+
+### Menambahkan pesan total kartu
+Sebelum melanjutkan ke tugas berikutnya, berkas `main/templates/index.html` perlu dimodifikasi terlebih dahulu. Berkas `main/templates/index.html` dimodifikasi dengan menambahkan *heading* yang menampilkan total kartu yang telah ditambahkan. Berikut ini adalah *template* `main/templates/index.html` yang telah dimodifikasi:
+```
+...
+    <h3>Total Cards: {{ items|length }}</h3>
+...
+```
+Setelah *template* `main/templates/index.html` dimodifikasi, *template* `main/templates/add.html` juga perlu dimodifikasi. Berkas `main/templates/add.html` dimodifikasi dengan menambahkan *heading* yang menampilkan total kartu yang telah ditambahkan. Berikut ini adalah *template* `main/templates/add.html` yang telah dimodifikasi:
+```
+...
+    <h3>Total Cards: {{ items|length }}</h3>
+...
+```
+
+# Tugas 4: Implementasi Autentikasi, Session, dan Cookies pada Django
+Mengimplementasikan autentikasi, session, dan cookies pada [Yu-Gi-Oh! Card Collection Project](https://pras-yugioh-card.onrender.com/) serta menjawab beberapa pertanyaan serta menerapkan beberapa *best practice* yang sudah dipelajari di kelas.
+
+## Tugas 4 Checklist
+*from* [Tugas 4: Implementasi Autentikasi, Session, dan Cookies pada Django](https://pbp-fasilkom-ui.github.io/ganjil-2024/assignments/individual/assignment-4)
+- [X] Mengimplementasikan fungsi registrasi, login, dan logout untuk memungkinkan pengguna untuk mengakses aplikasi sebelumnya dengan lancar.
+- [ ] Membuat **dua** akun pengguna dengan masing-masing **tiga** *dummy data* menggunakan model yang telah dibuat pada aplikasi sebelumnya untuk setiap akun **di lokal**.
+- [ ] Menghubungkan model `Item` dengan `User`.
+- [ ] Menampilkan detail informasi pengguna yang sedang *logged in* seperti *username* dan menerapkan `cookies` seperti `last login` pada halaman utama aplikasi.
+- [ ] Menjawab beberapa pertanyaan berikut pada `README.md` pada *root folder* (silakan modifikasi `README.md` yang telah kamu buat sebelumnya; tambahkan subjudul untuk setiap tugas).
+
+    - [ ] Apa itu Django `UserCreationForm`, dan jelaskan apa kelebihan dan kekurangannya?
+    - [ ] Apa perbedaan antara autentikasi dan otorisasi dalam konteks Django, dan mengapa keduanya penting?
+    - [ ] Apa itu *cookies* dalam konteks aplikasi web, dan bagaimana Django menggunakan *cookies* untuk mengelola data sesi pengguna?
+    - [ ] Apakah penggunaan *cookies* aman secara *default* dalam pengembangan web, atau apakah ada risiko potensial yang harus diwaspadai?
+    - [ ] Jelaskan bagaimana cara kamu mengimplementasikan *checklist* di atas secara *step-by-step* (bukan hanya sekadar mengikuti tutorial).
+- [ ] Melakukan `add`-`commit`-`push` ke GitHub.
+- [ ] **Bonus**
+    - [ ] Tambahkan tombol dan fungsi untuk menambahkan `amount` suatu objek sebanyak satu dan tombol untuk mengurangi jumlah stok suatu objek sebanyak satu.
+    - [ ] Tambahkan tombol dan fungsi untuk menghapus suatu objek dari inventori.
+
+### Mengimplementasikan fungsi registrasi, login, dan logout
+Sebelum melanjutkan ke tugas berikutnya, berkas `main/templates/base.html` perlu dimodifikasi terlebih dahulu. Berkas `main/templates/base.html` dimodifikasi dengan menambahkan *link* menuju *page* untuk melakukan registrasi, login, dan logout. Berikut ini adalah *template* `main/templates/base.html` yang telah dimodifikasi:
+```
+...
+<a href="{% url "main:index" %}">
+    <button>Home</button>
+</a>
+{% if user.is_authenticated %}
+    <a href="{% url "main:logout" %}">
+        <button>Logout</button>
+    </a>
+{% else %}
+    <a href="{% url "main:register" %}">
+        <button>Register</button>
+    </a>
+    <a href="{% url "main:login" %}">
+        <button>Login</button>
+    </a>
+{% endif %}
+...
+```
+Setelah *template* `main/templates/base.html` dimodifikasi, *template* `main/templates/register.html` perlu dibuat terlebih dahulu. *Template* `main/templates/register.html` dibuat dengan menggunakan *template* `main/templates/base.html` yang telah dibuat sebelumnya. Selain itu, tambahkan pula *form* untuk melakukan registrasi. Berikut ini adalah *template* `main/templates/register.html` yang telah dibuat:
+```
+{% extends "base.html" %}
+
+{% block title %}Register{% endblock %}
+
+{% block description %}Register to Yu-Gi-Oh! Card Collection.{% endblock %}
+
+{% block content %}
+    <h2>Register</h2>
+    <form method="POST">
+        {% csrf_token %}
+        <table>
+            {{ form.as_table }}
+            <tr>
+                <td></td>
+                <td><input type="submit" value="Register" /></td>
+        </table>
+    </form>
+
+    <p>Already have an account? <a href="{% url "main:login" %}">Login</a></p>
+{% endblock %}
+```
+Selanjutnya, *template* `main/templates/login.html` perlu dibuat terlebih dahulu. *Template* `main/templates/login.html` dibuat dengan menggunakan *template* `main/templates/base.html` yang telah dibuat sebelumnya. Selain itu, tambahkan pula *form* untuk melakukan login. Berikut ini adalah *template* `main/templates/login.html` yang telah dibuat:
+```
+{% extends "base.html" %}
+
+{% block title %}Login{% endblock %}
+
+{% block description %}Login to Yu-Gi-Oh! Card Collection.{% endblock %}
+
+{% block content %}
+    <h2>Login</h2>
+    <form method="POST">
+        {% csrf_token %}
+        <table>
+            {{ form.as_table }}
+            <tr>
+                <td></td>
+                <td><input type="submit" value="Login" /></td>
+        </table>
+    </form>
+
+    {% if messages %}
+        {% for message in messages %}
+            <p>{{ message }}</p>
+        {% endfor %}
+    {% endif %}
+
+    <p>Don't have an account? <a href="{% url "main:register" %}">Register</a></p>
+{% endblock %}
+```
+Setelah *template* `main/templates/login.html` dibuat, fungsi `register`, `login_user`, dan `logout_user` pada `main/views.py` perlu dibuat terlebih dahulu. Fungsi `register`, `login_user`, dan `logout_user` dibuat dengan menambahkan sebuah fungsi bernama `register`, `login_user`, dan `logout_user` pada `main/views.py` yang mengembalikan *template* `main/templates/register.html`, `main/templates/login.html`, dan `main/templates/index.html` serta menerima *request* sebagai parameter. Selain itu, fungsi `register`, `login_user`, dan `logout_user` juga memiliki *conditional* yang mengecek apakah *request* yang diterima adalah *POST request* atau bukan. Jika *request* yang diterima adalah *POST request*, maka fungsi `register`, `login_user`, dan `logout_user` akan meng-*handle* *POST request* tersebut dengan menggunakan *form* yang telah dibuat sebelumnya. Selain itu, tak lupa untuk meng-*import* `UserCreationForm` dari `django.contrib.auth.forms` pada `main/views.py` dan `redirect` dari `django.shortcuts` dan menambahkan `authenticate` dan `login_user` dari `django.contrib.auth` pada `main/views.py`. Berikut ini adalah fungsi `register`, `login_user`, dan `logout_user` yang telah dibuat:
+```
+...
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.contrib.auth import authenticate, login, logout
+from django.contrib import messages
+
+...
+
+def register(request):
+    if request.method == "POST":
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            user = form.cleaned_data.get("username")
+            messages.success(request, "Account was created for " + user)
+            return redirect("main:index")
+    else:
+        form = UserCreationForm()
+    context = {
+        "form": form,
+    }
+    return render(request, "register.html", context)
+
+def login_user(request):
+    if request.method == "POST":
+        form = AuthenticationForm(request, data=request.POST)
+        if form.is_valid():
+            user = form.cleaned_data.get("username")
+            password = form.cleaned_data.get("password")
+            user = authenticate(username=user, password=password)
+            if user is not None:
+                login(request, user)
+                messages.info(request, "Successfully logged in as " + user.username)
+                return redirect("main:index")
+        else:
+            messages.info(request, "Username OR password is incorrect")
+    else:
+        form = AuthenticationForm()
+    context = {
+        "form": form,
+    }
+    return render(request, "login.html", context)
+
+def logout_user(request):
+    logout(request)
+    return redirect("main:index")
+```
+Selanjutnya, *url* pada `main/urls.py` perlu dimodifikasi terlebih dahulu. *URL* pada `main/urls.py` dimodifikasi dengan menambahkan beberapa *path* yang mengarah ke fungsi `register`, `login_user`, dan `logout_user` pada `main/urls.py`. Berikut ini adalah *path* yang telah dibuat:
+```
+urlpatterns = [
+    ...,
+    path("register/", views.register, name="register"),
+    path("login/", views.login_user, name="login"),
+    path("logout/", views.logout_user, name="logout"),
+]
+```
+Setelah *url* pada `main/urls.py` dimodifikasi, *template* `main/templates/index.html` perlu dimodifikasi terlebih dahulu. *Template* `main/templates/index.html` dimodifikasi dengan menambahkan *heading* yang menampilkan *username* dari pengguna yang sedang *logged in*. Berikut ini adalah *template* `main/templates/index.html` yang telah dimodifikasi:
+```
+...
+{% if user.is_authenticated %}
+    <h3>User: {{ user.username }}</h3>
+{% endif %}
+...
+```
+Dengan ini, implementasi fungsi registrasi, login, dan logout telah selesai dilakukan.
+
 
 # License  
 

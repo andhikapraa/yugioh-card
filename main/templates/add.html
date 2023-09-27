@@ -23,6 +23,7 @@
         </table>
     </form>
     <br></br>
+    <h3>Total Cards: {{ items|length }}</h3>
     {% for item in items %}
         <div style="border: 1px solid black; padding: 10px; margin: 10px;">
             <h3>{{ item.name }}</h3>
