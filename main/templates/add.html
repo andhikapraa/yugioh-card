@@ -6,7 +6,7 @@
 
 {% block content %}
     <h2>Add Item</h2>
-    <a href="{% url "main:index" %}">Home</a>
+    <h3>User: {{ user.username }}</h3>
     <a href="{% url "main:show_xml" %}">
         <button>Show XML</button>
     </a>
@@ -23,7 +23,9 @@
         </table>
     </form>
     <br></br>
-    <h3>Total Cards: {{ items|length }}</h3>
+    {% if items %}
+        <h3>Total Cards: {{ items|length }}</h3>
+    {% endif %}
     {% for item in items %}
         <div style="border: 1px solid black; padding: 10px; margin: 10px;">
             <h3>{{ item.name }}</h3>

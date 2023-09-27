@@ -6,45 +6,62 @@ from .models import Item
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 def index(request):
+    if request.user.is_authenticated:
+        items = Item.objects.filter(user=request.user)
+    else:
+        items = []
     context = {
-        "items": Item.objects.all(),
+        "items": items,
     }
     return render(request, "index.html", context)
 
+@login_required(login_url="/login/")
 def add(request):
     if request.method == "POST":
         form = ItemForm(request.POST, request.FILES)
         if form.is_valid():
-            form.save()
+            item = form.save(commit=False)
+            item.user = request.user
+            item.save()
             return redirect("main:index")
     else:
         form = ItemForm()
     context = {
         "form": form,
-        "items": Item.objects.all(),
+        "items": Item.objects.filter(user=request.user),
+        "user": request.user,
     }
     return render(request, "add.html", context)
 
+@login_required(login_url="/login/")
 def show_xml(request):
-    items = Item.objects.all()
+    items = Item.objects.filter(user=request.user)
     data = serializers.serialize("xml", items)
     return HttpResponse(data, content_type="application/xml")
 
+@login_required(login_url="/login/")
 def show_json(request):
-    items = Item.objects.all()
+    items = Item.objects.filter(user=request.user)
     data = serializers.serialize("json", items)
     return HttpResponse(data, content_type="application/json")
 
+@login_required(login_url="/login/")
 def show_xml_by_id(request, id):
     item = Item.objects.get(id=id)
+    if item.user != request.user:
+        return redirect("main:index")
     data = serializers.serialize("xml", [item])
     return HttpResponse(data, content_type="application/xml")
 
+@login_required(login_url="/login/")
 def show_json_by_id(request, id):
     item = Item.objects.get(id=id)
+    if item.user != request.user:
+        return redirect("main:index")
     data = serializers.serialize("json", [item])
     return HttpResponse(data, content_type="application/json")
 
@@ -55,7 +72,7 @@ def register(request):
             form.save()
             user = form.cleaned_data.get("username")
             messages.success(request, "Account was created for " + user)
-            return redirect("main:index")
+            return redirect("main:login")
     else:
         form = UserCreationForm()
     context = {

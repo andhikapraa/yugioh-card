@@ -831,13 +831,17 @@ Namun, perlu diingat bahwa JSON memiliki beberapa keterbatasan seperti tidak men
 Sebelum melanjutkan ke tugas berikutnya, berkas `main/templates/index.html` perlu dimodifikasi terlebih dahulu. Berkas `main/templates/index.html` dimodifikasi dengan menambahkan *heading* yang menampilkan total kartu yang telah ditambahkan. Berikut ini adalah *template* `main/templates/index.html` yang telah dimodifikasi:
 ```
 ...
-    <h3>Total Cards: {{ items|length }}</h3>
+    {% if items %}
+        <h3>Total Cards: {{ items|length }}</h3>
+    {% endif %}
 ...
 ```
 Setelah *template* `main/templates/index.html` dimodifikasi, *template* `main/templates/add.html` juga perlu dimodifikasi. Berkas `main/templates/add.html` dimodifikasi dengan menambahkan *heading* yang menampilkan total kartu yang telah ditambahkan. Berikut ini adalah *template* `main/templates/add.html` yang telah dimodifikasi:
 ```
 ...
-    <h3>Total Cards: {{ items|length }}</h3>
+    {% if items %}
+        <h3>Total Cards: {{ items|length }}</h3>
+    {% endif %}
 ...
 ```
 
@@ -848,7 +852,7 @@ Mengimplementasikan autentikasi, session, dan cookies pada [Yu-Gi-Oh! Card Colle
 *from* [Tugas 4: Implementasi Autentikasi, Session, dan Cookies pada Django](https://pbp-fasilkom-ui.github.io/ganjil-2024/assignments/individual/assignment-4)
 - [X] Mengimplementasikan fungsi registrasi, login, dan logout untuk memungkinkan pengguna untuk mengakses aplikasi sebelumnya dengan lancar.
 - [ ] Membuat **dua** akun pengguna dengan masing-masing **tiga** *dummy data* menggunakan model yang telah dibuat pada aplikasi sebelumnya untuk setiap akun **di lokal**.
-- [ ] Menghubungkan model `Item` dengan `User`.
+- [X] Menghubungkan model `Item` dengan `User`.
 - [ ] Menampilkan detail informasi pengguna yang sedang *logged in* seperti *username* dan menerapkan `cookies` seperti `last login` pada halaman utama aplikasi.
 - [ ] Menjawab beberapa pertanyaan berikut pada `README.md` pada *root folder* (silakan modifikasi `README.md` yang telah kamu buat sebelumnya; tambahkan subjudul untuk setiap tugas).
 
@@ -1001,6 +1005,168 @@ Setelah *url* pada `main/urls.py` dimodifikasi, *template* `main/templates/index
 ...
 ```
 Dengan ini, implementasi fungsi registrasi, login, dan logout telah selesai dilakukan.
+
+
+### Menghubungkan model `Item` dengan `User`
+Selanjutnya, model `Item` perlu dimodifikasi terlebih dahulu. Model `Item` dimodifikasi dengan menambahkan *field* `user` yang merupakan *foreign key* dari `User` pada `main/models.py`. Berikut ini adalah model `Item` yang telah dimodifikasi:
+```
+from django.db import models
+from django.contrib.auth.models import User
+
+class Item(models.Model):
+    ...
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+```
+Setelah model `Item` dimodifikasi, *migration* perlu dilakukan untuk membuat tabel `Item` pada basis data. *Migration* dilakukan dengan menggunakan perintah berikut:
+```
+py manage.py makemigrations
+```
+Setelah *migration* selesai dibuat, tabel `Item` dapat dibuat pada basis data dengan menggunakan perintah berikut:
+```
+py manage.py migrate
+```
+Setelah tabel `Item` dibuat, *form* untuk menambahkan objek *model* `Item` perlu dimodifikasi terlebih dahulu. *Form* untuk menambahkan objek *model* `Item` dimodifikasi dengan menambahkan *field* `user` yang merupakan *foreign key* dari `User` pada `main/forms.py`. Berikut ini adalah *form* untuk menambahkan objek *model* `Item` yang telah dimodifikasi:
+```
+...
+class ItemForm(ModelForm):
+    class Meta:
+        model = Item
+        fields = "__all__"
+        exclude = ["user"]
+```
+Setelah *form* untuk menambahkan objek *model* `Item` dimodifikasi, fungsi `add` pada `main/views.py` perlu dimodifikasi terlebih dahulu. Fungsi `add` dimodifikasi dengan menambahkan *field* `user` yang merupakan *foreign key* dari `User` pada `main/views.py` dan di-*restrict* hanya untuk pengguna yang sedang *logged in*. Berikut ini adalah fungsi `add` yang telah dimodifikasi:
+```
+from django.contrib.auth.decorators import login_required
+...
+@login_required(login_url="/login/")
+def add(request):
+    if request.method == "POST":
+        form = ItemForm(request.POST, request.FILES)
+        if form.is_valid():
+            item = form.save(commit=False)
+            item.user = request.user
+            item.save()
+            return redirect("main:index")
+    else:
+        form = ItemForm()
+    context = {
+        "form": form,
+        "items": Item.objects.all(),
+        "user": request.user,
+    }
+    return render(request, "add.html", context)
+```
+Setelah fungsi `add` pada `main/views.py` dimodifikasi, *template* `main/templates/add.html` perlu dimodifikasi terlebih dahulu. *Template* `main/templates/add.html` dimodifikasi dengan menambahkan *heading* yang menampilkan *username* dari pengguna yang sedang *logged in*. Berikut ini adalah *template* `main/templates/add.html` yang telah dimodifikasi:
+```
+...
+<h3>User: {{ user.username }}</h3>
+...
+```
+Selain itu, *template* `main/templates/index.html` juga perlu dimodifikasi agar pengguna yang belum *login* tidak dapat melihat *button* `Add Card` dan *table* `Item`. *Template* `main/templates/index.html` dimodifikasi dengan menambahkan *conditional* yang mengecek apakah pengguna yang sedang mengakses *page* tersebut sudah *login* atau belum. Jika pengguna yang sedang mengakses *page* tersebut belum *login*, maka *button* `Add Card` dan *table* `Item` tidak akan ditampilkan. Berikut ini adalah *template* `main/templates/index.html` yang telah dimodifikasi:
+```
+...
+    {% if user.is_authenticated %}
+        <h3>User: {{ user.username }}</h3>
+        <a href="{% url "main:add" %}">
+            <button>Add Card</button>
+        </a>
+        <a href="{% url "main:show_xml" %}">
+            <button>Show XML</button>
+        </a>
+        <a href="{% url "main:show_json" %}">
+            <button>Show JSON</button>
+        </a>
+        {% if items %}
+            <h3>Total Cards: {{ items|length }}</h3>
+        {% endif %}
+        {% for item in items %}
+            <div style="border: 1px solid black; padding: 10px; margin: 10px;">
+                <h3>{{ item.name }}</h3>
+                <p>Amount: {{ item.amount }}</p>
+                <p>Description: {{ item.description }}</p>
+                <p>Card Type: {{ item.card_type }}</p>
+                <p>Passcode: {{ item.passcode }}</p>
+                <p>Attribute: {{ item.attribute }}</p>
+                <p>Types: {{ item.types }}</p>
+                <p>Level: {{ item.level }}</p>
+                <p>ATK: {{ item.atk }}</p>
+                <p>DEFF: {{ item.deff }}</p>
+                <p>Effect Type: {{ item.effect_type }}</p>
+                <p>Card Property: {{ item.card_property }}</p>
+                <p>Rulings: {{ item.rulings }}</p>
+                <img src="{{ item.image.url }}" alt="{{ item.name }}" width="200px">
+                <a href="{% url "main:show_xml_by_id" item.id %}">
+                    <button>Show XML by ID</button>
+                </a>
+                <a href="{% url "main:show_json_by_id" item.id %}">
+                    <button>Show JSON by ID</button>
+                </a>
+            </div>
+        {% endfor %}
+    {% endif %}
+...
+```
+Selanjutnya, fungsi-fungsi pada `main/views.py` perlu dimodifikasi terlebih dahulu agar data yang tampil hanya data milik pengguna yang sedang *login*. Berikut ini adalah fungsi-fungsi pada `main/views.py` yang telah dimodifikasi:
+```
+...
+def index(request):
+    if request.user.is_authenticated:
+        items = Item.objects.filter(user=request.user)
+    else:
+        items = []
+    context = {
+        "items": items,
+    }
+    return render(request, "index.html", context)
+
+@login_required(login_url="/login/")
+def add(request):
+    if request.method == "POST":
+        form = ItemForm(request.POST, request.FILES)
+        if form.is_valid():
+            item = form.save(commit=False)
+            item.user = request.user
+            item.save()
+            return redirect("main:index")
+    else:
+        form = ItemForm()
+    context = {
+        "form": form,
+        "items": Item.objects.filter(user=request.user),
+        "user": request.user,
+    }
+    return render(request, "add.html", context)
+
+@login_required(login_url="/login/")
+def show_xml(request):
+    items = Item.objects.filter(user=request.user)
+    data = serializers.serialize("xml", items)
+    return HttpResponse(data, content_type="application/xml")
+
+@login_required(login_url="/login/")
+def show_json(request):
+    items = Item.objects.filter(user=request.user)
+    data = serializers.serialize("json", items)
+    return HttpResponse(data, content_type="application/json")
+
+@login_required(login_url="/login/")
+def show_xml_by_id(request, id):
+    item = Item.objects.get(id=id)
+    if item.user != request.user:
+        return redirect("main:index")
+    data = serializers.serialize("xml", [item])
+    return HttpResponse(data, content_type="application/xml")
+
+@login_required(login_url="/login/")
+def show_json_by_id(request, id):
+    item = Item.objects.get(id=id)
+    if item.user != request.user:
+        return redirect("main:index")
+    data = serializers.serialize("json", [item])
+    return HttpResponse(data, content_type="application/json")
+...
+```
+Dengan ini, model `Item` telah terhubung dengan `User`.
 
 
 # License  

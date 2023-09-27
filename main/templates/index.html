@@ -8,39 +8,41 @@
     <h2>Home</h2>
     {% if user.is_authenticated %}
         <h3>User: {{ user.username }}</h3>
+        <a href="{% url "main:add" %}">
+            <button>Add Card</button>
+        </a>
+        <a href="{% url "main:show_xml" %}">
+            <button>Show XML</button>
+        </a>
+        <a href="{% url "main:show_json" %}">
+            <button>Show JSON</button>
+        </a>
+        {% if items %}
+            <h3>Total Cards: {{ items|length }}</h3>
+        {% endif %}
+        {% for item in items %}
+            <div style="border: 1px solid black; padding: 10px; margin: 10px;">
+                <h3>{{ item.name }}</h3>
+                <p>Amount: {{ item.amount }}</p>
+                <p>Description: {{ item.description }}</p>
+                <p>Card Type: {{ item.card_type }}</p>
+                <p>Passcode: {{ item.passcode }}</p>
+                <p>Attribute: {{ item.attribute }}</p>
+                <p>Types: {{ item.types }}</p>
+                <p>Level: {{ item.level }}</p>
+                <p>ATK: {{ item.atk }}</p>
+                <p>DEFF: {{ item.deff }}</p>
+                <p>Effect Type: {{ item.effect_type }}</p>
+                <p>Card Property: {{ item.card_property }}</p>
+                <p>Rulings: {{ item.rulings }}</p>
+                <img src="{{ item.image.url }}" alt="{{ item.name }}" width="200px">
+                <a href="{% url "main:show_xml_by_id" item.id %}">
+                    <button>Show XML by ID</button>
+                </a>
+                <a href="{% url "main:show_json_by_id" item.id %}">
+                    <button>Show JSON by ID</button>
+                </a>
+            </div>
+        {% endfor %}
     {% endif %}
-    <a href="{% url "main:add" %}">
-        <button>Add Card</button>
-    </a>
-    <a href="{% url "main:show_xml" %}">
-        <button>Show XML</button>
-    </a>
-    <a href="{% url "main:show_json" %}">
-        <button>Show JSON</button>
-    </a>
-    <h3>Total Cards: {{ items|length }}</h3>
-    {% for item in items %}
-        <div style="border: 1px solid black; padding: 10px; margin: 10px;">
-            <h3>{{ item.name }}</h3>
-            <p>Amount: {{ item.amount }}</p>
-            <p>Description: {{ item.description }}</p>
-            <p>Card Type: {{ item.card_type }}</p>
-            <p>Passcode: {{ item.passcode }}</p>
-            <p>Attribute: {{ item.attribute }}</p>
-            <p>Types: {{ item.types }}</p>
-            <p>Level: {{ item.level }}</p>
-            <p>ATK: {{ item.atk }}</p>
-            <p>DEFF: {{ item.deff }}</p>
-            <p>Effect Type: {{ item.effect_type }}</p>
-            <p>Card Property: {{ item.card_property }}</p>
-            <p>Rulings: {{ item.rulings }}</p>
-            <img src="{{ item.image.url }}" alt="{{ item.name }}" width="200px">
-            <a href="{% url "main:show_xml_by_id" item.id %}">
-                <button>Show XML by ID</button>
-            </a>
-            <a href="{% url "main:show_json_by_id" item.id %}">
-                <button>Show JSON by ID</button>
-            </a>
-        </div>
-    {% endfor %}
 {% endblock %}
