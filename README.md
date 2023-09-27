@@ -851,9 +851,9 @@ Mengimplementasikan autentikasi, session, dan cookies pada [Yu-Gi-Oh! Card Colle
 ## Tugas 4 Checklist
 *from* [Tugas 4: Implementasi Autentikasi, Session, dan Cookies pada Django](https://pbp-fasilkom-ui.github.io/ganjil-2024/assignments/individual/assignment-4)
 - [X] Mengimplementasikan fungsi registrasi, login, dan logout untuk memungkinkan pengguna untuk mengakses aplikasi sebelumnya dengan lancar.
-- [ ] Membuat **dua** akun pengguna dengan masing-masing **tiga** *dummy data* menggunakan model yang telah dibuat pada aplikasi sebelumnya untuk setiap akun **di lokal**.
+- [X] Membuat **dua** akun pengguna dengan masing-masing **tiga** *dummy data* menggunakan model yang telah dibuat pada aplikasi sebelumnya untuk setiap akun **di lokal**.
 - [X] Menghubungkan model `Item` dengan `User`.
-- [ ] Menampilkan detail informasi pengguna yang sedang *logged in* seperti *username* dan menerapkan `cookies` seperti `last login` pada halaman utama aplikasi.
+- [X] Menampilkan detail informasi pengguna yang sedang *logged in* seperti *username* dan menerapkan `cookies` seperti `last login` pada halaman utama aplikasi.
 - [ ] Menjawab beberapa pertanyaan berikut pada `README.md` pada *root folder* (silakan modifikasi `README.md` yang telah kamu buat sebelumnya; tambahkan subjudul untuk setiap tugas).
 
     - [ ] Apa itu Django `UserCreationForm`, dan jelaskan apa kelebihan dan kekurangannya?
@@ -1199,6 +1199,19 @@ Lalu, *heading* yang menampilkan waktu terakhir pengguna melakukan *login* ditam
 <h3>Last Login: {{ request.session.last_login }}</h3>
 ```
 Dengan ini, *cookies* `last_login` telah berhasil ditambahkan.
+
+### Membuat **dua** akun pengguna dengan masing-masing **tiga** *dummy data*
+Sebelum melanjutkan ke tugas berikutnya, *database* perlu di-*reset* terlebih dahulu. *Database* di-*reset* dengan menggunakan perintah berikut:
+```
+py manage.py flush
+```
+Setelah itu, dua akun pengguna dengan masing-masing tiga *dummy data* perlu dibuat secara manual. Akun pengguna dengan tiga *dummy data* dibuat dengan menggunakan *form* yang telah dibuat sebelumnya. Berikut ini adalah *screenshot* dari hasil pembuatan dua akun pengguna dengan masing-masing tiga *dummy data*:
+- *Screenshot* dari hasil pembuatan akun pengguna dengan tiga *dummy data* pertama
+![User 1](https://i.postimg.cc/902tnDcg/user1.png)
+- *Screenshot* dari hasil pembuatan akun pengguna dengan tiga *dummy data* kedua
+![User 2](https://i.postimg.cc/d1rj62cT/user2.png)
+
+
 
 # License  
 
