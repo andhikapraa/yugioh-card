@@ -28,6 +28,7 @@ Screenshot:
 - [X] [Tugas 2: Implementasi Model-View-Template (MVT) pada Django](https://pbp-fasilkom-ui.github.io/ganjil-2024/assignments/individual/assignment-2)
 - [X] [Tugas 3: Implementasi Form dan Data Delivery pada Django](https://pbp-fasilkom-ui.github.io/ganjil-2024/assignments/individual/assignment-3)
 - [X] [Tugas 4: Implementasi Autentikasi, Session, dan Cookies pada Django](https://pbp-fasilkom-ui.github.io/ganjil-2024/assignments/individual/assignment-4)
+- [ ] [Tugas 5: Desain Web menggunakan HTML, CSS dan Framework CSS](https://pbp-fasilkom-ui.github.io/ganjil-2024/assignments/individual/assignment-5)
 
 # Table of contents  
         
@@ -1403,6 +1404,27 @@ Django menggunakan cookies untuk mengelola data sesi pengguna dengan cara menyim
 Penggunaan cookie dalam pengembangan web memiliki manfaat dan risiko yang perlu dipertimbangkan. Secara default, cookie tidak dianggap sebagai ancaman untuk privasi dan keamanan website, karena tidak menyimpan data pribadi (tetapi terkadang mereka menyimpan nomor kartu kredit dan alamat IP) dan tidak bisa digunakan untuk mengirim malware atau virus. Namun, cookie dapat menimbulkan risiko keamanan bila digunakan secara tidak benar, misalnya dengan menyimpan informasi sensitif tanpa enkripsi atau dengan membiarkan cookie pihak ketiga mengakses data pengguna. Cookie juga dapat mempengaruhi kinerja situs web, karena meningkatkan data yang dikirim antara browser pengguna dan server web. Selain itu, cookie dapat menimbulkan masalah kompatibilitas, karena tidak semua browser menangani cookie dengan cara yang sama, dan beberapa pengguna mungkin memilih untuk menonaktifkan cookie sepenuhnya.
 
 Oleh karena itu, pengembang web perlu mengikuti praktik terbaik untuk mengelola cookie, seperti menggunakan cookie hanya untuk tujuan yang diperlukan, mengatur masa berlaku cookie yang sesuai, mengenkripsi data cookie yang sensitif, membatasi akses cookie pihak ketiga, dan memberikan informasi dan pilihan kepada pengguna tentang penggunaan cookie. Dengan demikian, penggunaan cookie dalam pengembangan web dapat memberikan manfaat bagi pengalaman pengguna tanpa mengorbankan privasi dan keamanan mereka.
+
+
+# Tugas 5: Desain Web menggunakan HTML, CSS dan Framework CSS
+Mengimplementasi desain web menggunakan HTML, CSS dan framework CSS (Bootstrap, Tailwind, Bulma, dll) dengan memperhatikan *best practices* dan *design principles*.
+
+## Tugas 5 Checklist
+*from* [Tugas 5: Desain Web menggunakan HTML, CSS dan Framework CSS](https://pbp-fasilkom-ui.github.io/ganjil-2024/assignments/individual/assignment-5)
+- [ ] Kustomisasi desain pada template HTML yang telah dibuat pada Tugas 4 dengan menggunakan CSS atau CSS framework (seperti Bootstrap, Tailwind, Bulma) dengan ketentuan sebagai berikut
+    - [ ] Kustomisasi halaman *login*, *register*, dan tambah inventori semenarik mungkin.
+    - [ ] Kustomisasi halaman daftar inventori menjadi lebih berwarna maupun menggunakan *apporach* lain seperti menggunakan **Card**. 
+
+- [ ] Menjawab beberapa pertanyaan berikut pada `README.md` pada *root folder* (silakan modifikasi `README.md` yang telah kamu buat sebelumnya; tambahkan subjudul untuk setiap tugas).
+    - [ ] Jelaskan manfaat dari setiap *element selector* dan kapan waktu yang tepat untuk menggunakannya. 
+    - [ ] Jelaskan HTML5 Tag yang kamu ketahui.
+    - [ ] Jelaskan perbedaan antara *margin* dan *padding*.
+    - [ ] Jelaskan perbedaan antara *framework* CSS Tailwind dan Bootstrap. Kapan sebaiknya kita menggunakan Bootstrap daripada Tailwind, dan sebaliknya?
+    - [ ] Jelaskan bagaimana cara kamu mengimplementasikan *checklist* di atas secara *step-by-step* (bukan hanya sekadar mengikuti tutorial).
+- [ ] Melakukan `add`-`commit`-`push` ke GitHub.
+- [ ] **Bonus**: Memberikan warna yang berbeda (teks atau background) pada baris terakhir dari *item* pada inventori anda **menggunakan CSS**.
+
+
 
 # License  
 
