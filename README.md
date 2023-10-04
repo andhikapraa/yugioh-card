@@ -28,7 +28,7 @@ Screenshot:
 - [X] [Tugas 2: Implementasi Model-View-Template (MVT) pada Django](https://pbp-fasilkom-ui.github.io/ganjil-2024/assignments/individual/assignment-2)
 - [X] [Tugas 3: Implementasi Form dan Data Delivery pada Django](https://pbp-fasilkom-ui.github.io/ganjil-2024/assignments/individual/assignment-3)
 - [X] [Tugas 4: Implementasi Autentikasi, Session, dan Cookies pada Django](https://pbp-fasilkom-ui.github.io/ganjil-2024/assignments/individual/assignment-4)
-- [ ] [Tugas 5: Desain Web menggunakan HTML, CSS dan Framework CSS](https://pbp-fasilkom-ui.github.io/ganjil-2024/assignments/individual/assignment-5)
+- [X] [Tugas 5: Desain Web menggunakan HTML, CSS dan Framework CSS](https://pbp-fasilkom-ui.github.io/ganjil-2024/assignments/individual/assignment-5)
 
 # Table of contents  
         
@@ -1415,11 +1415,11 @@ Mengimplementasi desain web menggunakan HTML, CSS dan framework CSS (Bootstrap, 
     - [X] Kustomisasi halaman *login*, *register*, dan tambah inventori semenarik mungkin.
     - [X] Kustomisasi halaman daftar inventori menjadi lebih berwarna maupun menggunakan *apporach* lain seperti menggunakan **Card**. 
 
-- [ ] Menjawab beberapa pertanyaan berikut pada `README.md` pada *root folder* (silakan modifikasi `README.md` yang telah kamu buat sebelumnya; tambahkan subjudul untuk setiap tugas).
-    - [ ] Jelaskan manfaat dari setiap *element selector* dan kapan waktu yang tepat untuk menggunakannya. 
-    - [ ] Jelaskan HTML5 Tag yang kamu ketahui.
-    - [ ] Jelaskan perbedaan antara *margin* dan *padding*.
-    - [ ] Jelaskan perbedaan antara *framework* CSS Tailwind dan Bootstrap. Kapan sebaiknya kita menggunakan Bootstrap daripada Tailwind, dan sebaliknya?
+- [X] Menjawab beberapa pertanyaan berikut pada `README.md` pada *root folder* (silakan modifikasi `README.md` yang telah kamu buat sebelumnya; tambahkan subjudul untuk setiap tugas).
+    - [X] Jelaskan manfaat dari setiap *element selector* dan kapan waktu yang tepat untuk menggunakannya. 
+    - [X] Jelaskan HTML5 Tag yang kamu ketahui.
+    - [X] Jelaskan perbedaan antara *margin* dan *padding*.
+    - [X] Jelaskan perbedaan antara *framework* CSS Tailwind dan Bootstrap. Kapan sebaiknya kita menggunakan Bootstrap daripada Tailwind, dan sebaliknya?
     - [X] Jelaskan bagaimana cara kamu mengimplementasikan *checklist* di atas secara *step-by-step* (bukan hanya sekadar mengikuti tutorial).
 - [X] Melakukan `add`-`commit`-`push` ke GitHub.
 - [X] **Bonus**: Memberikan warna yang berbeda (teks atau background) pada baris terakhir dari *item* pada inventori anda **menggunakan CSS**.
@@ -1884,7 +1884,111 @@ Selanjutnya, *template* `index.html` dikustomisasi menggunakan *framework* Boots
 ```
 Desain Web menggunakan HTML, CSS dan Framework CSS telah berhasil diimplementasikan.
 
+### Menjawab pertanyaan terkait tugas 5
+#### Jelaskan manfaat dari setiap element selector dan kapan waktu yang tepat untuk menggunakannya.
+Element selector adalah jenis selector CSS yang digunakan untuk memilih elemen HTML berdasarkan tag name-nya. Element selector memiliki beberapa manfaat, antara lain:
 
+- **Mudah digunakan.** Element selector hanya memerlukan satu kata untuk memilih elemen HTML, sehingga mudah untuk diingat dan digunakan.
+- **Efektif.** Element selector dapat digunakan untuk memilih elemen HTML secara spesifik, sehingga CSS rule yang diterapkan akan lebih efektif.
+
+Ada beberapa jenis element selector, antara lain:
+
+- **Type selector:** Type selector digunakan untuk memilih elemen HTML berdasarkan tag name-nya. Misalnya, `h1` untuk memilih elemen `<h1>`.
+- **Combinator selector:** Combinator selector digunakan untuk menggabungkan dua atau lebih element selector. Misalnya, `h1 > p` untuk memilih elemen `<p>` yang berada di bawah elemen `<h1>`.
+- **Pseudo-class selector:** Pseudo-class selector digunakan untuk memilih elemen HTML berdasarkan kondisi tertentu. Misalnya, `:hover` untuk memilih elemen HTML saat dihover.
+
+Waktu yang tepat untuk menggunakan element selector adalah saat kita ingin memilih elemen HTML secara spesifik. Misalnya, kita ingin mengubah warna semua elemen `<h1>` menjadi biru, maka kita dapat menggunakan type selector `h1`.
+
+#### Jelaskan HTML5 Tag yang kamu ketahui.
+HTML5 Tag adalah tag-tag yang digunakan untuk membuat dokumen HTML. HTML5 memiliki 145 tag, yang dapat dikelompokkan menjadi beberapa kategori, antara lain:
+
+* **Structural Tags:** Tag-tag yang digunakan untuk menentukan struktur dokumen HTML. Misalnya, `<html>`, `<body>`, `<head>`, `<title>`, `<div>`, `<ul>`, `<ol>`, `<li>`.
+* **Content Tags:** Tag-tag yang digunakan untuk menampilkan konten. Misalnya, `<p>`, `<img>`, `<a>`, `<b>`, `<strong>`, `<i>`, `<em>`.
+* **Form Tags:** Tag-tag yang digunakan untuk membuat formulir. Misalnya, `<form>`, `<input>`, `<label>`, `<select>`, `<option>`, `<textarea>`.
+* **Multimedia Tags:** Tag-tag yang digunakan untuk menampilkan multimedia. Misalnya, `<audio>`, `<video>`, `<canvas>`.
+* **Other Tags:** Tag-tag yang digunakan untuk berbagai keperluan. Misalnya, `<hr>`, `<br>`, `<abbr>`, `<time>`, `<article>`, `<section>`.
+
+Berikut adalah beberapa contoh HTML5 Tag:
+
+* **Tag `<html>`:** Tag ini digunakan untuk menandai awal dan akhir dokumen HTML.
+* **Tag `<body>`:** Tag ini digunakan untuk menandai konten dokumen HTML.
+* **Tag `<head>`:** Tag ini digunakan untuk menampung informasi tentang dokumen HTML, seperti judul, meta data, dan gaya CSS.
+* **Tag `<title>`:** Tag ini digunakan untuk menampilkan judul dokumen HTML di tab browser.
+* **Tag `<div>`:** Tag ini digunakan untuk membuat blok konten.
+* **Tag `<ul>`:** Tag ini digunakan untuk membuat daftar tidak berurutan.
+* **Tag `<ol>`:** Tag ini digunakan untuk membuat daftar berurutan.
+* **Tag `<li>`:** Tag ini digunakan untuk membuat item daftar.
+* **Tag `<p>`:** Tag ini digunakan untuk membuat paragraf.
+* **Tag `<img>`:** Tag ini digunakan untuk menampilkan gambar.
+* **Tag `<a>`:** Tag ini digunakan untuk membuat tautan.
+* **Tag `<b>`:** Tag ini digunakan untuk membuat teks tebal.
+* **Tag `<strong>`:** Tag ini digunakan untuk membuat teks penting.
+* **Tag `<i>`:** Tag ini digunakan untuk membuat teks miring.
+* **Tag `<em>`:** Tag ini digunakan untuk membuat teks penekanan.
+* **Tag `<form>`:** Tag ini digunakan untuk membuat formulir.
+* **Tag `<input>`:** Tag ini digunakan untuk membuat input formulir.
+* **Tag `<label>`:** Tag ini digunakan untuk memberi label pada input formulir.
+* **Tag `<select>`:** Tag ini digunakan untuk membuat menu tarik-turun.
+* **Tag `<option>`:** Tag ini digunakan untuk membuat item menu tarik-turun.
+* **Tag `<textarea>`:** Tag ini digunakan untuk membuat kotak teks.
+* **Tag `<audio>`:** Tag ini digunakan untuk menampilkan file audio.
+* **Tag `<video>`:** Tag ini digunakan untuk menampilkan file video.
+* **Tag `<canvas>`:** Tag ini digunakan untuk membuat grafik dan animasi.
+
+HTML5 Tag dapat digunakan untuk membuat berbagai jenis dokumen HTML, mulai dari situs web sederhana hingga aplikasi web kompleks.
+
+#### Jelaskan perbedaan antara margin dan padding.
+Margin dan padding adalah dua properti CSS yang digunakan untuk mengatur ruang kosong di sekitar elemen HTML. Perbedaan utama antara margin dan padding adalah bahwa margin mengatur jarak antara elemen HTML dan elemen lainnya, sedangkan padding mengatur jarak antara elemen HTML dan kontennya.
+
+**Margin**
+
+Margin mengatur jarak antara elemen HTML dan elemen lainnya. Margin dapat diterapkan pada semua sisi elemen HTML, yaitu atas, bawah, kiri, dan kanan. Margin juga dapat diterapkan pada semua elemen HTML secara bersamaan, atau pada elemen HTML tertentu saja.
+
+**Padding**
+
+Padding mengatur jarak antara elemen HTML dan kontennya. Padding dapat diterapkan pada semua sisi elemen HTML, yaitu atas, bawah, kiri, dan kanan. Padding juga dapat diterapkan pada semua elemen HTML secara bersamaan, atau pada elemen HTML tertentu saja.
+
+**Kesimpulan**
+
+Margin dan padding adalah dua properti CSS yang penting untuk mengatur ruang kosong di sekitar elemen HTML. Margin mengatur jarak antara elemen HTML dan elemen lainnya, sedangkan padding mengatur jarak antara elemen HTML dan kontennya.
+
+#### Jelaskan perbedaan antara *framework* CSS Bootstrap dan Tailwind. Kapan sebaiknya kita menggunakan Bootstrap daripada Tailwind, dan sebaliknya?
+
+Bootstrap dan Tailwind adalah dua framework CSS yang populer untuk pengembangan web. Kedua framework ini memiliki kelebihan dan kekurangannya masing-masing.
+
+**Bootstrap**
+
+* Kelebihan:
+    * Memiliki komponen dan fitur yang lengkap, sehingga dapat digunakan untuk membuat berbagai jenis situs web dan aplikasi web.
+    * Mudah digunakan, karena menyediakan komponen dan fitur yang siap pakai.
+    * Responsive, sehingga dapat digunakan untuk membuat situs web yang responsif terhadap berbagai ukuran layar.
+* Kekurangan:
+    * Ukurannya relatif besar, sehingga dapat memperlambat waktu loading halaman.
+    * Kurang fleksibel, karena komponen dan fiturnya sudah ditetapkan.
+
+**Tailwind**
+
+* Kelebihan:
+    * Sangat fleksibel, karena memungkinkan kita untuk membuat gaya CSS sesuai kebutuhan.
+    * Ukurannya relatif kecil, sehingga dapat mempercepat waktu loading halaman.
+    * Mudah digunakan, karena menggunakan sintaks yang sederhana.
+* Kekurangan:
+    * Membutuhkan waktu untuk mempelajari sintaksnya.
+    * Tidak memiliki komponen dan fitur yang lengkap, sehingga kita perlu membuat sendiri komponen dan fitur yang dibutuhkan.
+
+**Kapan sebaiknya menggunakan Bootstrap daripada Tailwind?**
+
+* **Jika Anda membutuhkan framework CSS yang lengkap dan mudah digunakan, maka Bootstrap adalah pilihan yang tepat.** Bootstrap memiliki komponen dan fitur yang lengkap, sehingga dapat digunakan untuk membuat berbagai jenis situs web dan aplikasi web. Bootstrap juga mudah digunakan, karena menyediakan komponen dan fitur yang siap pakai.
+* **Jika Anda membutuhkan framework CSS yang fleksibel dan ringan, maka Tailwind adalah pilihan yang tepat.** Tailwind sangat fleksibel, karena memungkinkan kita untuk membuat gaya CSS sesuai kebutuhan. Tailwind juga berukuran relatif kecil, sehingga dapat mempercepat waktu loading halaman.
+
+**Kapan sebaiknya menggunakan Tailwind daripada Bootstrap?**
+
+* **Jika Anda membutuhkan framework CSS yang sangat fleksibel, maka Tailwind adalah pilihan yang tepat.** Tailwind memungkinkan kita untuk membuat gaya CSS sesuai kebutuhan, sehingga kita dapat menyesuaikan gaya CSS dengan kebutuhan spesifik situs web atau aplikasi web kita.
+* **Jika Anda membutuhkan framework CSS yang ringan, maka Tailwind adalah pilihan yang tepat.** Tailwind berukuran relatif kecil, sehingga dapat mempercepat waktu loading halaman.
+
+**Kesimpulan**
+
+Bootstrap dan Tailwind adalah dua framework CSS yang memiliki kelebihan dan kekurangannya masing-masing. Pilihan framework CSS yang tepat tergantung pada kebutuhan dan preferensi Anda.
 
 # License  
 
