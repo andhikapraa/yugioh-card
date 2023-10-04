@@ -1494,7 +1494,7 @@ Selanjutnya untuk `footer` akan dikustomisasi menggunakan *framework* Bootstrap.
 Selanjutnya untuk `body` akan dikustomisasi menggunakan *framework* Bootstrap. Berikut ini adalah `body` yang telah dimodifikasi:
 ```
 ...
-<body style="background-color: #001b35;">
+<body style="background-color: #001b35;" class="text-light">
 ...
 <div class="container-fluid">
     {% block content %}{% endblock %}
@@ -1505,7 +1505,297 @@ Selanjutnya untuk `body` akan dikustomisasi menggunakan *framework* Bootstrap. B
 ```
 Dengan ini *template* `templates/base.html` telah berhasil dikustomisasi menggunakan *framework* Bootstrap.
 
+### Kustomisasi *template* `login.html`, `register.html`, dan `add.html` menggunakan *framework* Bootstrap
+Selanjutnya, *template* `login.html`, `register.html`, dan `add.html` akan dimodifikasi. Untuk *template* `login.html` dikustomisasi menggunakan *framework* Bootstrap. Berikut ini adalah *template* `login.html` yang telah dimodifikasi:
+```
+{% extends "base.html" %}
 
+{% block title %}Login{% endblock %}
+
+{% block description %}Login to Yu-Gi-Oh! Card Collection.{% endblock %}
+
+{% block content %}
+    {% if messages %} 
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+    <section class="vh-100">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+              <div class="card bg-dark text-white" style="border-radius: 1rem;">
+                <div class="card-body p-5 text-center">
+      
+                  <form class="mb-md-5 mt-md-4 pb-5" method="POST">
+                    {% csrf_token %}
+      
+                    <h2 class="fw-bold mb-4 text-uppercase">Login</h2>
+      
+                    <div class="form-outline form-white mb-4">
+                        <label class="form-label" for="username">Username</label>
+                      <input type="username" name="username" id="username" class="form-control form-control-lg" />
+                    </div>
+      
+                    <div class="form-outline form-white mb-4">
+                        <label class="form-label" for="password">Password</label>
+                      <input type="password" name="password" id="password" class="form-control form-control-lg" />
+                    </div>
+
+                    <button class="btn btn-outline-light btn-lg px-5" type="submit">Login</button>
+      
+                  </form>
+      
+                  <div>
+                    <p class="mb-0">Don't have an account? <a href="{% url "main:register" %}" class="text-white-50 fw-bold">Sign Up</a>
+                    </p>
+                  </div>
+      
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+{% endblock %}
+```
+Selanjutnya untuk *template* `register.html` juga dikustomisasi menggunakan *framework* Bootstrap. Berikut ini adalah *template* `register.html` yang telah dimodifikasi:
+```
+{% extends "base.html" %}
+
+{% block title %}Register{% endblock %}
+
+{% block description %}Register to Yu-Gi-Oh! Card Collection.{% endblock %}
+
+{% block content %}
+    {% if messages %} 
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+    <section class="vh-100">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+              <div class="card bg-dark text-white" style="border-radius: 1rem;">
+                <div class="card-body p-5 text-center">
+      
+                  <form class="mb-md-5 mt-md-4 pb-5" method="POST">
+                    {% csrf_token %}
+      
+                    <h2 class="fw-bold mb-4 text-uppercase">Register</h2>
+      
+                    <div class="form-outline form-white mb-4">
+                        <label class="form-label" for="username">Username</label>
+                      <input type="text" name="username" id="username" class="form-control form-control-lg" />
+                    </div>
+      
+                    <div class="form-outline form-white mb-4">
+                        <label class="form-label" for="password">Password</label>
+                      <input type="password" name="password" id="password" class="form-control form-control-lg" />
+                    </div>
+
+                    <div class="form-outline form-white mb-4">
+                        <label class="form-label" for="password2">Verify Password</label>
+                      <input type="password" name="password2" id="password2" class="form-control form-control-lg" />
+                    </div>
+
+                    <button class="btn btn-outline-light btn-lg px-5" type="submit">Register</button>
+      
+                  </form>
+      
+                  <div>
+                    <p class="mb-0">Already have an account? <a href="{%  url "main:login"  %}" class="text-white-50 fw-bold">Login</a>
+                    </p>
+                  </div>
+      
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+{% endblock %}
+```
+Selanjutnya, fungsi login dan register pada `views.py` perlu dimodifikasi untuk mengambil data dari *form* yang telah dibuat secara manual. Berikut ini adalah fungsi login dan register yang telah dimodifikasi:
+```
+...
+def register(request):
+    if request.method == "POST":
+        username = request.POST["username"]
+        password = request.POST["password"]
+        password2 = request.POST["password2"]
+        if password == password2:
+            if not User.objects.filter(username=username).exists():
+                user = User.objects.create_user(username=username, password=password)
+                user.save()
+                messages.info(request, "Successfully registered as " + username)
+                return redirect("main:index")
+            else:
+                messages.info(request, "Username already exists")
+        else:
+            messages.info(request, "Passwords do not match")
+    return render(request, "register.html")
+
+
+def login_user(request):
+    if request.method == "POST":
+        username = request.POST["username"]
+        password = request.POST["password"]
+        user = authenticate(request, username=username, password=password)
+        print(user)
+        if user is not None:
+            login(request, user)
+            messages.info(request, "Successfully logged in as " + username)
+            request.session["last_login"] = str(timezone.now())
+            return redirect("main:index")
+        else:
+            messages.info(request, "Invalid credentials")
+    return render(request, "login.html")
+...
+```
+Selanjutnya untuk *template* `add.html` juga dikustomisasi menggunakan *framework* Bootstrap. Berikut ini adalah *template* `add.html` yang telah dimodifikasi:
+```
+{% extends "base.html" %}
+
+{% block title %}Add Item{% endblock %}
+
+{% block description %}Add a new item to the collection.{% endblock %}
+
+{% block content %}
+{% if messages %} 
+    {% for message in messages %}
+        <div class="alert alert-{{ message.tags }}">
+            {{ message }}
+        </div>
+    {% endfor %}
+{% endif %}
+<section class="vh-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+          <div class="card bg-dark text-white" style="border-radius: 1rem;">
+            <div class="card-body p-5 text-center">
+  
+              <form class="mb-md-3 mt-md-2" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+  
+                <h2 class="fw-bold mb-2 text-uppercase">Add Item</h2>
+                <h5 class="mb-2">User: {{ user.username }}</h5> 
+                <h5 class="mb-4">Last Login: {{ request.session.last_login }}</h5>
+  
+                <div class="form-outline form-white mb-2">
+                    <label class="form-label" for="name">Name</label>
+                  <input type="text" name="name" id="id_name" class="form-control form-control-lg" />
+                </div>
+  
+                <div class="form-outline form-white mb-2">
+                    <label class="form-label" for="amount">Amount</label>
+                  <input type="number" name="amount" id="id_amount" class="form-control form-control-lg" />
+                </div>
+  
+                <div class="form-outline form-white mb-2">
+                    <label class="form-label" for="description">Description</label>
+                  <textarea name="description" id="id_description" class="form-control form-control-lg"></textarea>
+                </div>
+  
+                <div class="form-outline form-white mb-2">
+                    <label class="form-label" for="card_type">Card Type</label>
+                  <input type="text" name="card_type" id="id_card_type" class="form-control form-control-lg" />
+                </div>
+  
+                <div class="form-outline form-white mb-2">
+                    <label class="form-label" for="passcode">Passcode</label>
+                  <input type="number" name="passcode" id="id_passcode" class="form-control form-control-lg" />
+                </div>
+  
+                <div class="form-outline form-white mb-2">
+                    <label class="form-label" for="attribute">Attribute</label>
+                  <input type="text" name="attribute" id="id_attribute" class="form-control form-control-lg" />
+                </div>
+  
+                <div class="form-outline form-white mb-2">
+                    <label class="form-label" for="types">Types</label>
+                  <input type="text" name="types" id="id_types" class="form-control form-control-lg" />
+                </div>
+  
+                <div class="form-outline form-white mb-2">
+                    <label class="form-label" for="level">Level</label>
+                  <input type="number" name="level" id="id_level" class="form-control form-control-lg" />
+                </div>
+  
+                <div class="form-outline form-white mb-2">
+                    <label class="form-label" for="atk">Attack</label>
+                  <input type="number" name="atk" id="id_atk" class="form-control form-control-lg" />
+                </div>
+  
+                <div class="form-outline form-white mb-2">
+                    <label class="form-label" for="deff">Deffend</label>
+                  <input type="number" name="deff" id="id_deff" class="form-control form-control-lg" />
+                </div>
+  
+                <div class="form-outline form-white mb-2">
+                    <label class="form-label" for="effect_type">Effect Type</label>
+                  <input type="text" name="effect_type" id="id_effect_type" class="form-control form-control-lg" />
+                </div>
+  
+                <div class="form-outline form-white mb-2">
+                    <label class="form-label" for="card_property">Card Property</label>
+                  <input type="text" name="card_property" id="id_card_property" class="form-control form-control-lg" />
+                </div>
+  
+                <div class="form-outline form-white mb-2">
+                    <label class="form-label" for="rulings">Rulings</label>
+                  <textarea name="rulings" id="id_rulings" class="form-control form-control-lg" ></textarea>
+                </div>
+  
+                <div class="form-outline form-white mb-4">
+                    <label class="form-label" for="image">Image</label>
+                  <input type="file" name="image" accept="image/*" id="id_image" class="form-control form-control-lg" />
+                </div>
+
+                <button class="btn btn-outline-light btn-lg" type="submit">Add Card</button>
+  
+              </form>  
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+{% endblock %}
+```
+Lalu untuk fungsi `add` pada `views.py` perlu dimodifikasi untuk mengambil data dari *form* yang telah dibuat secara manual. Berikut ini adalah fungsi `add` yang telah dimodifikasi:
+```
+...
+@login_required(login_url="/login/")
+def add(request):
+    if request.method == "POST":
+        data = request.POST.copy()
+        data["user"] = request.user.id
+        form = ItemForm(data, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect("main:index")
+        else:
+            print(form.errors)
+            messages.error(request, "Invalid form")
+    return render(request, "add.html")
+...
+```
+Dan untuk `ItemForm` pada `forms.py` perlu dimodifikasi. Berikut ini adalah `ItemForm` yang telah dimodifikasi:
+```
+from django.forms import ModelForm
+from .models import Item
+
+class ItemForm(ModelForm):
+    class Meta:
+        model = Item
+        fields = "__all__"
+```
+Dengan ini *template* `login.html`, `register.html`, dan `add.html` telah berhasil dikustomisasi menggunakan *framework* Bootstrap.
 
 
 

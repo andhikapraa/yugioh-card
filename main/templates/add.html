@@ -5,66 +5,103 @@
 {% block description %}Add a new item to the collection.{% endblock %}
 
 {% block content %}
-    <h2>Add Item</h2>
-    <h3>User: {{ user.username }}</h3>
-    <h3>Last Login: {{ request.session.last_login }}</h3>
-    <a href="{% url "main:show_xml" %}">
-        <button>Show XML</button>
-    </a>
-    <a href="{% url "main:show_json" %}">
-        <button>Show JSON</button>
-    </a>
-    <form method="POST" enctype="multipart/form-data">
-        {% csrf_token %}
-        <table>
-            {{ form.as_table }}
-            <tr>
-                <td></td>
-                <td><input type="submit" value="Add Item" /></td>
-        </table>
-    </form>
-    <br></br>
-    {% if items %}
-        <h3>Total Cards: {{ items|length }}</h3>
-        <a href="{% url "main:delete_all" %}">
-            <button>Delete All Cards</button>
-        </a>
-    {% endif %}
-    {% for item in items %}
-        <div style="border: 1px solid black; padding: 10px; margin: 10px;">
-            <h3>{{ item.name }}</h3>
-            <p>Amount: {{ item.amount }}</p>
-            <p>Description: {{ item.description }}</p>
-            <p>Card Type: {{ item.card_type }}</p>
-            <p>Passcode: {{ item.passcode }}</p>
-            <p>Attribute: {{ item.attribute }}</p>
-            <p>Types: {{ item.types }}</p>
-            <p>Level: {{ item.level }}</p>
-            <p>ATK: {{ item.atk }}</p>
-            <p>DEFF: {{ item.deff }}</p>
-            <p>Effect Type: {{ item.effect_type }}</p>
-            <p>Card Property: {{ item.card_property }}</p>
-            <p>Rulings: {{ item.rulings }}</p>
-            <img src="{{ item.image.url }}" alt="{{ item.name }}" width="200px">
-            <a href="{% url "main:show_xml_by_id" item.id %}">
-                <button>Show XML by ID</button>
-            </a>
-            <a href="{% url "main:show_json_by_id" item.id %}">
-                <button>Show JSON by ID</button>
-            </a>
-            {% if item.amount > 0 %}
-                <a href="{% url "main:add_amount" item.id %}">
-                    <button>Add Amount</button>
-                </a>
-            {% endif %}
-            {% if item.amount > 1 %}
-                <a href="{% url "main:reduce_amount" item.id %}">
-                    <button>Reduce Amount</button>
-                </a>
-            {% endif %}
-            <a href="{% url "main:delete" item.id %}">
-                <button>Delete Card</button>
-            </a>
+{% if messages %} 
+    {% for message in messages %}
+        <div class="alert alert-{{ message.tags }}">
+            {{ message }}
         </div>
     {% endfor %}
+{% endif %}
+<section class="vh-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+          <div class="card bg-dark text-white" style="border-radius: 1rem;">
+            <div class="card-body p-5 text-center">
+  
+              <form class="mb-md-3 mt-md-2" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+  
+                <h2 class="fw-bold mb-2 text-uppercase">Add Item</h2>
+                <h5 class="mb-2">User: {{ user.username }}</h5> 
+                <h5 class="mb-4">Last Login: {{ request.session.last_login }}</h5>
+  
+                <div class="form-outline form-white mb-2">
+                    <label class="form-label" for="name">Name</label>
+                  <input type="text" name="name" required id="id_name" class="form-control form-control-lg" />
+                </div>
+  
+                <div class="form-outline form-white mb-2">
+                    <label class="form-label" for="amount">Amount</label>
+                  <input type="number" name="amount" required id="id_amount" class="form-control form-control-lg" />
+                </div>
+  
+                <div class="form-outline form-white mb-2">
+                    <label class="form-label" for="description">Description</label>
+                  <textarea name="description" required id="id_description" class="form-control form-control-lg" cols="30" rows="10"></textarea>
+                </div>
+  
+                <div class="form-outline form-white mb-2">
+                    <label class="form-label" for="card_type">Card Type</label>
+                  <input type="text" name="card_type" required id="id_card_type" class="form-control form-control-lg" />
+                </div>
+  
+                <div class="form-outline form-white mb-2">
+                    <label class="form-label" for="passcode">Passcode</label>
+                  <input type="number" name="passcode" required id="id_passcode" class="form-control form-control-lg" />
+                </div>
+  
+                <div class="form-outline form-white mb-2">
+                    <label class="form-label" for="attribute">Attribute</label>
+                  <input type="text" name="attribute" required id="id_attribute" class="form-control form-control-lg" />
+                </div>
+  
+                <div class="form-outline form-white mb-2">
+                    <label class="form-label" for="types">Types</label>
+                  <input type="text" name="types" required id="id_types" class="form-control form-control-lg" />
+                </div>
+  
+                <div class="form-outline form-white mb-2">
+                    <label class="form-label" for="level">Level</label>
+                  <input type="number" name="level" required id="id_level" class="form-control form-control-lg" />
+                </div>
+  
+                <div class="form-outline form-white mb-2">
+                    <label class="form-label" for="atk">Attack</label>
+                  <input type="number" name="atk" required id="id_atk" class="form-control form-control-lg" />
+                </div>
+  
+                <div class="form-outline form-white mb-2">
+                    <label class="form-label" for="deff">Deffend</label>
+                  <input type="number" name="deff" required id="id_deff" class="form-control form-control-lg" />
+                </div>
+  
+                <div class="form-outline form-white mb-2">
+                    <label class="form-label" for="effect_type">Effect Type</label>
+                  <input type="text" name="effect_type" required id="id_effect_type" class="form-control form-control-lg" />
+                </div>
+  
+                <div class="form-outline form-white mb-2">
+                    <label class="form-label" for="card_property">Card Property</label>
+                  <input type="text" name="card_property" required id="id_card_property" class="form-control form-control-lg" />
+                </div>
+  
+                <div class="form-outline form-white mb-2">
+                    <label class="form-label" for="rulings">Rulings</label>
+                  <textarea name="rulings" required id="id_rulings" class="form-control form-control-lg" cols="30" rows="10"></textarea>
+                </div>
+  
+                <div class="form-outline form-white mb-4">
+                    <label class="form-label" for="image">Image</label>
+                  <input type="file" name="image" accept="image/*" required id="id_image" class="form-control form-control-lg" />
+                </div>
+
+                <button class="btn btn-outline-light btn-lg" type="submit">Add Card</button>
+  
+              </form>  
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 {% endblock %}

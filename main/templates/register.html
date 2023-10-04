@@ -5,16 +5,53 @@
 {% block description %}Register to Yu-Gi-Oh! Card Collection.{% endblock %}
 
 {% block content %}
-    <h2>Register</h2>
-    <form method="POST">
-        {% csrf_token %}
-        <table>
-            {{ form.as_table }}
-            <tr>
-                <td></td>
-                <td><input type="submit" value="Register" /></td>
-        </table>
-    </form>
+    {% if messages %} 
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+    <section class="vh-100">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+              <div class="card bg-dark text-white" style="border-radius: 1rem;">
+                <div class="card-body p-5 text-center">
+      
+                  <form class="mb-md-5 mt-md-4 pb-5" method="POST">
+                    {% csrf_token %}
+      
+                    <h2 class="fw-bold mb-4 text-uppercase">Register</h2>
+      
+                    <div class="form-outline form-white mb-4">
+                        <label class="form-label" for="username">Username</label>
+                      <input type="text" name="username" id="username" class="form-control form-control-lg" />
+                    </div>
+      
+                    <div class="form-outline form-white mb-4">
+                        <label class="form-label" for="password">Password</label>
+                      <input type="password" name="password" id="password" class="form-control form-control-lg" />
+                    </div>
 
-    <p>Already have an account? <a href="{% url "main:login" %}">Login</a></p>
+                    <div class="form-outline form-white mb-4">
+                        <label class="form-label" for="password2">Verify Password</label>
+                      <input type="password" name="password2" id="password2" class="form-control form-control-lg" />
+                    </div>
+
+                    <button class="btn btn-outline-light btn-lg px-5" type="submit">Register</button>
+      
+                  </form>
+      
+                  <div>
+                    <p class="mb-0">Already have an account? <a href="{%  url "main:login"  %}" class="text-white-50 fw-bold">Login</a>
+                    </p>
+                  </div>
+      
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
 {% endblock %}

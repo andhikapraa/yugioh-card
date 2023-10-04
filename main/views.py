@@ -2,8 +2,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.core import serializers
 from .forms import ItemForm
-from .models import Item
-from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from .models import Item, User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
@@ -23,20 +22,17 @@ def index(request):
 @login_required(login_url="/login/")
 def add(request):
     if request.method == "POST":
-        form = ItemForm(request.POST, request.FILES)
+        data = request.POST.copy()
+        data["user"] = request.user.id
+        form = ItemForm(data, request.FILES)
         if form.is_valid():
-            item = form.save(commit=False)
-            item.user = request.user
-            item.save()
+            form.save()
             return redirect("main:index")
-    else:
-        form = ItemForm()
-    context = {
-        "form": form,
-        "items": Item.objects.filter(user=request.user),
-        "user": request.user,
-    }
-    return render(request, "add.html", context)
+        else:
+            print(form.errors)
+            messages.error(request, "Invalid form")
+    return render(request, "add.html")
+        
 
 @login_required(login_url="/login/")
 def show_xml(request):
@@ -68,42 +64,43 @@ def show_json_by_id(request, id):
 
 def register(request):
     if request.method == "POST":
-        form = UserCreationForm(request.POST)
-        if form.is_valid():
-            form.save()
-            user = form.cleaned_data.get("username")
-            messages.success(request, "Account was created for " + user)
-            return redirect("main:login")
-    else:
-        form = UserCreationForm()
-    context = {
-        "form": form,
-    }
-    return render(request, "register.html", context)
+        print(request.POST)
+        username = request.POST["username"]
+        password = request.POST["password"]
+        password2 = request.POST["password2"]
+        if password == password2:
+            if not User.objects.filter(username=username).exists():
+                user = User.objects.create_user(username=username, password=password)
+                user.save()
+                messages.info(request, "Successfully registered as " + username)
+                return redirect("main:login_user")
+            else:
+                messages.info(request, "Username already exists")
+        else:
+            messages.info(request, "Passwords do not match")
+    return render(request, "register.html")
+
 
 def login_user(request):
     if request.method == "POST":
-        form = AuthenticationForm(request, data=request.POST)
-        if form.is_valid():
-            user = form.cleaned_data.get("username")
-            password = form.cleaned_data.get("password")
-            user = authenticate(username=user, password=password)
-            if user is not None:
-                login(request, user)
-                messages.info(request, "Successfully logged in as " + user.username)
-                request.session["last_login"] = str(timezone.now())
-                return redirect("main:index")
+        print(request.POST)
+        username = request.POST["username"]
+        password = request.POST["password"]
+        user = authenticate(request, username=username, password=password)
+        print(user)
+        if user is not None:
+            login(request, user)
+            request.session["last_login"] = str(timezone.now())
+            messages.info(request, "Successfully logged in as " + username)
+            return redirect("main:index")
         else:
-            messages.info(request, "Username OR password is incorrect")
-    else:
-        form = AuthenticationForm()
-    context = {
-        "form": form,
-    }
-    return render(request, "login.html", context)
+            messages.info(request, "Invalid credentials")
+    return render(request, "login.html")
+
 
 def logout_user(request):
     logout(request)
+    request.session.flush()
     return redirect("main:index")
 
 @login_required(login_url="/login/")

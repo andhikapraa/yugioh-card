@@ -5,4 +5,3 @@ class ItemForm(ModelForm):
     class Meta:
         model = Item
         fields = "__all__"
-        exclude = ["user"]
