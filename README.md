@@ -1424,6 +1424,89 @@ Mengimplementasi desain web menggunakan HTML, CSS dan framework CSS (Bootstrap, 
 - [ ] Melakukan `add`-`commit`-`push` ke GitHub.
 - [ ] **Bonus**: Memberikan warna yang berbeda (teks atau background) pada baris terakhir dari *item* pada inventori anda **menggunakan CSS**.
 
+### Kustomisasi *template* `templates/base.html` menggunakan *framework* Bootstrap
+Sebelum melanjutkan, *template* `templates/base.html` perlu dimodifikasi terlebih dahulu. *Template* `templates/base.html` dimodifikasi dengan menambahkan *link* ke *framework* Bootstrap pada `templates/base.html`. Berikut ini adalah *template* `templates/base.html` yang telah dimodifikasi:
+```
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+    ...
+    <!-- Bootstrap CSS & JS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
+    ...
+    </head>
+...
+</html>
+```
+Selanjunya pada bagian `body`, bagian `header` dan `main` akan dilebur menjadi satu bagian `navbar` yang bersamaan dengan `footer` akan dikustomisasi menggunakan *framework* Bootstrap. Berikut ini adalah bagian `body` yang telah dimodifikasi:
+```
+...
+<nav class="navbar navbar-expand-lg sticky-top" data-bs-theme="dark" style="background-color: #001427;">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="{% url "main:index" %}">
+            Yu-Gi-Oh! Card Collection
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarDark" aria-controls="navbarDark" aria-expanded="false" aria-label="Toggle navigation" style="background-color: #001427;">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarDark">
+            <ul class="navbar-nav flex-row flex-wrap bd-navbar-nav">
+                <li class="nav-item">
+                    <a href="{% url "main:index" %}" class="nav-link">Home</a>
+                </li>
+                {% if user.is_authenticated %}
+                    <li class="nav-item">
+                        <a href="{% url "main:add" %}" class="nav-link">Add Card</a>
+                    </li>
+                {% endif %}
+            </ul>
+            <ul class="navbar-nav flex-row flex-wrap ms-md-auto">
+                {% if user.is_authenticated %}
+                    <li class="nav-item">
+                        <button class="btn btn-outline-danger" type="button" onclick="location.href='{% url "main:logout" %}'">Logout</button>
+                    </li>
+                {% else %}
+                    <li class="nav-item">
+                        <button class="btn btn-outline-success me-2" type="button" onclick="location.href='{% url "main:register" %}'">Register</button>
+                    </li>
+                    <li class="nav-item">
+                        <button class="btn btn-outline-primary" type="button" onclick="location.href='{% url "main:login" %}'">Login</button>
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</nav>
+...
+```
+Selanjutnya untuk `footer` akan dikustomisasi menggunakan *framework* Bootstrap. Berikut ini adalah `footer` yang telah dimodifikasi:
+```
+...
+<footer class="text-light text-center text-lg-start fixed-bottom" style="background-color: #001427;">
+    <p>&copy; 2023 Muhammad Andhika Prasetya - 2206031302 - PBP C</p>
+</footer>
+...
+```
+Selanjutnya untuk `body` akan dikustomisasi menggunakan *framework* Bootstrap. Berikut ini adalah `body` yang telah dimodifikasi:
+```
+...
+<body style="background-color: #001b35;">
+...
+<div class="container-fluid">
+    {% block content %}{% endblock %}
+</div>
+...
+</body>
+...
+```
+Dengan ini *template* `templates/base.html` telah berhasil dikustomisasi menggunakan *framework* Bootstrap.
+
+
+
 
 
 # License  
