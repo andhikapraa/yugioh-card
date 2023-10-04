@@ -1411,18 +1411,18 @@ Mengimplementasi desain web menggunakan HTML, CSS dan framework CSS (Bootstrap, 
 
 ## Tugas 5 Checklist
 *from* [Tugas 5: Desain Web menggunakan HTML, CSS dan Framework CSS](https://pbp-fasilkom-ui.github.io/ganjil-2024/assignments/individual/assignment-5)
-- [ ] Kustomisasi desain pada template HTML yang telah dibuat pada Tugas 4 dengan menggunakan CSS atau CSS framework (seperti Bootstrap, Tailwind, Bulma) dengan ketentuan sebagai berikut
-    - [ ] Kustomisasi halaman *login*, *register*, dan tambah inventori semenarik mungkin.
-    - [ ] Kustomisasi halaman daftar inventori menjadi lebih berwarna maupun menggunakan *apporach* lain seperti menggunakan **Card**. 
+- [X] Kustomisasi desain pada template HTML yang telah dibuat pada Tugas 4 dengan menggunakan CSS atau CSS framework (seperti Bootstrap, Tailwind, Bulma) dengan ketentuan sebagai berikut
+    - [X] Kustomisasi halaman *login*, *register*, dan tambah inventori semenarik mungkin.
+    - [X] Kustomisasi halaman daftar inventori menjadi lebih berwarna maupun menggunakan *apporach* lain seperti menggunakan **Card**. 
 
 - [ ] Menjawab beberapa pertanyaan berikut pada `README.md` pada *root folder* (silakan modifikasi `README.md` yang telah kamu buat sebelumnya; tambahkan subjudul untuk setiap tugas).
     - [ ] Jelaskan manfaat dari setiap *element selector* dan kapan waktu yang tepat untuk menggunakannya. 
     - [ ] Jelaskan HTML5 Tag yang kamu ketahui.
     - [ ] Jelaskan perbedaan antara *margin* dan *padding*.
     - [ ] Jelaskan perbedaan antara *framework* CSS Tailwind dan Bootstrap. Kapan sebaiknya kita menggunakan Bootstrap daripada Tailwind, dan sebaliknya?
-    - [ ] Jelaskan bagaimana cara kamu mengimplementasikan *checklist* di atas secara *step-by-step* (bukan hanya sekadar mengikuti tutorial).
-- [ ] Melakukan `add`-`commit`-`push` ke GitHub.
-- [ ] **Bonus**: Memberikan warna yang berbeda (teks atau background) pada baris terakhir dari *item* pada inventori anda **menggunakan CSS**.
+    - [X] Jelaskan bagaimana cara kamu mengimplementasikan *checklist* di atas secara *step-by-step* (bukan hanya sekadar mengikuti tutorial).
+- [X] Melakukan `add`-`commit`-`push` ke GitHub.
+- [X] **Bonus**: Memberikan warna yang berbeda (teks atau background) pada baris terakhir dari *item* pada inventori anda **menggunakan CSS**.
 
 ### Kustomisasi *template* `templates/base.html` menggunakan *framework* Bootstrap
 Sebelum melanjutkan, *template* `templates/base.html` perlu dimodifikasi terlebih dahulu. *Template* `templates/base.html` dimodifikasi dengan menambahkan *link* ke *framework* Bootstrap pada `templates/base.html`. Berikut ini adalah *template* `templates/base.html` yang telah dimodifikasi:
@@ -1796,6 +1796,93 @@ class ItemForm(ModelForm):
         fields = "__all__"
 ```
 Dengan ini *template* `login.html`, `register.html`, dan `add.html` telah berhasil dikustomisasi menggunakan *framework* Bootstrap.
+
+### Kustomisasi *template* `index.html` menggunakan *framework* Bootstrap
+Selanjutnya, *template* `index.html` dikustomisasi menggunakan *framework* Bootstrap. Berikut ini adalah *template* `index.html` yang telah dimodifikasi:
+```
+{% extends "base.html" %}
+
+{% block title %}Yu-Gi-Oh! Card Collection{% endblock %}
+
+{% block description %}Yu-Gi-Oh! Card Collection is a website to collect Yu-Gi-Oh! cards.{% endblock %}
+
+{% block content %}
+<section class="text-center">
+    <div class="container">
+        <h1 class="jumbotron-heading">Yu-Gi-Oh! Card Collection</h1>
+        <p class="lead">Yu-Gi-Oh! Card Collection is a website to collect Yu-Gi-Oh! cards.</p>
+        <p>
+            {% if user.is_authenticated %}
+                <p class="lead">User: {{ user.username }}<br/>
+                Last Login: {{ request.session.last_login }}</p>
+                <a href="{% url "main:logout" %}" class="btn btn-primary my-2">Logout</a>
+            {% else %}
+                <a href="{% url "main:register" %}" class="btn btn-primary my-2">Register</a>
+                <a href="{% url "main:login" %}" class="btn btn-secondary my-2">Login</a>
+            {% endif %}
+        </p>
+    </div>
+</section>
+{% if user.is_authenticated %}
+    <div class="container">
+        {% if items %}
+            <p>
+                <p class="lead">Total Cards: {{ items|length }}</p>
+                <a href="{% url "main:delete_all" %}" class="btn btn-danger my-2">Delete All Cards</a>
+            </p>
+        {% endif %}
+        <div class="row row-cols-4">
+            {% for item in items %}
+                <div class="col-md-6 col-lg-4 mb-5">
+                    <div class="card text-white" style="border-radius: 3px; background-color: #000016b9; border: 1px solid #1D3E67;">
+                        <img src="{{ item.image.url }}" class="card-img-top" alt="Image" style="border-radius: 3px 3px 0 0;">
+                        <div class="card-body">
+                            <h3 class="card-title">{{ item.name }}</h3>
+                            <p class="card-text">Amount: {{ item.amount }}</p>
+                            <p class="card-text">Description: {{ item.description }}</p>
+                            <p class="card-text">Card Type: {{ item.card_type }}</p>
+                            <p class="card-text">Passcode: {{ item.passcode }}</p>
+                            <p class="card-text">Attribute: {{ item.attribute }}</p>
+                            <p class="card-text">Types: {{ item.types }}</p>
+                            <p class="card-text">Level: {{ item.level }}</p>
+                            <p class="card-text">ATK: {{ item.atk }}</p>
+                            <p class="card-text">DEF: {{ item.deff }}</p>
+                            <p class="card-text">Effect Type: {{ item.effect_type }}</p>
+                            <p class="card-text">Card Property: {{ item.card_property }}</p>
+                            <p class="card-text" style="color: #FFFF00" >Rulings: {{ item.rulings }}</p>
+                            <div class="row m-2">
+                                <div class="col-md-6">
+                                    <a href="{% url "main:show_xml_by_id" item.id %}" class="btn btn-primary">Show XML by ID</a>
+                                </div>
+                                <div class="col-md-6">
+                                    <a href="{% url "main:show_json_by_id" item.id %}" class="btn btn-primary">Show JSON by ID</a>
+                                </div>
+                            </div>
+                            <div class="row m-2">
+                                <div class="col-md-4">
+                                    {% if item.amount > 0 %}
+                                        <a href="{% url "main:add_amount" item.id %}" class="btn btn-success">Add Amount</a>
+                                    {% endif %}
+                                </div>
+                                <div class="col-md-4">
+                                    {% if item.amount > 1 %}
+                                        <a href="{% url "main:reduce_amount" item.id %}" class="btn btn-secondary">Reduce Amount</a>
+                                    {% endif %}
+                                </div>
+                                <div class="col-md-4">
+                                    <a href="{% url "main:delete" item.id %}" class="btn btn-danger">Delete Card</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endif %}
+{% endblock %}
+```
+Desain Web menggunakan HTML, CSS dan Framework CSS telah berhasil diimplementasikan.
 
 
 

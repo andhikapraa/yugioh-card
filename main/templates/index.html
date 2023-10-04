@@ -5,61 +5,77 @@
 {% block description %}Yu-Gi-Oh! Card Collection is a website to collect Yu-Gi-Oh! cards.{% endblock %}
 
 {% block content %}
-    <h2>Home</h2>
-    {% if user.is_authenticated %}
-        <h3>User: {{ user.username }}</h3>
-        <h3>Last Login: {{ request.session.last_login }}</h3>
-        <a href="{% url "main:add" %}">
-            <button>Add Card</button>
-        </a>
-        <a href="{% url "main:show_xml" %}">
-            <button>Show XML</button>
-        </a>
-        <a href="{% url "main:show_json" %}">
-            <button>Show JSON</button>
-        </a>
+<section class="text-center">
+    <div class="container">
+        <h1 class="jumbotron-heading">Yu-Gi-Oh! Card Collection</h1>
+        <p class="lead">Yu-Gi-Oh! Card Collection is a website to collect Yu-Gi-Oh! cards.</p>
+        <p>
+            {% if user.is_authenticated %}
+                <p class="lead">User: {{ user.username }}<br/>
+                Last Login: {{ request.session.last_login }}</p>
+                <a href="{% url "main:logout" %}" class="btn btn-primary my-2">Logout</a>
+            {% else %}
+                <a href="{% url "main:register" %}" class="btn btn-primary my-2">Register</a>
+                <a href="{% url "main:login" %}" class="btn btn-secondary my-2">Login</a>
+            {% endif %}
+        </p>
+    </div>
+</section>
+{% if user.is_authenticated %}
+    <div class="container">
         {% if items %}
-            <h3>Total Cards: {{ items|length }}</h3>
-            <a href="{% url "main:delete_all" %}">
-                <button>Delete All Cards</button>
-            </a>
+            <p>
+                <p class="lead">Total Cards: {{ items|length }}</p>
+                <a href="{% url "main:delete_all" %}" class="btn btn-danger my-2">Delete All Cards</a>
+            </p>
         {% endif %}
-        {% for item in items %}
-            <div style="border: 1px solid black; padding: 10px; margin: 10px;">
-                <h3>{{ item.name }}</h3>
-                <p>Amount: {{ item.amount }}</p>
-                <p>Description: {{ item.description }}</p>
-                <p>Card Type: {{ item.card_type }}</p>
-                <p>Passcode: {{ item.passcode }}</p>
-                <p>Attribute: {{ item.attribute }}</p>
-                <p>Types: {{ item.types }}</p>
-                <p>Level: {{ item.level }}</p>
-                <p>ATK: {{ item.atk }}</p>
-                <p>DEFF: {{ item.deff }}</p>
-                <p>Effect Type: {{ item.effect_type }}</p>
-                <p>Card Property: {{ item.card_property }}</p>
-                <p>Rulings: {{ item.rulings }}</p>
-                <img src="{{ item.image.url }}" alt="{{ item.name }}" width="200px">
-                <a href="{% url "main:show_xml_by_id" item.id %}">
-                    <button>Show XML by ID</button>
-                </a>
-                <a href="{% url "main:show_json_by_id" item.id %}">
-                    <button>Show JSON by ID</button>
-                </a>
-                {% if item.amount > 0 %}
-                    <a href="{% url "main:add_amount" item.id %}">
-                        <button>Add Amount</button>
-                    </a>
-                {% endif %}
-                {% if item.amount > 1 %}
-                    <a href="{% url "main:reduce_amount" item.id %}">
-                        <button>Reduce Amount</button>
-                    </a>
-                {% endif %}
-                <a href="{% url "main:delete" item.id %}">
-                    <button>Delete Card</button>
-                </a>
-            </div>
-        {% endfor %}
-    {% endif %}
+        <div class="row row-cols-4">
+            {% for item in items %}
+                <div class="col-md-6 col-lg-4 mb-5">
+                    <div class="card text-white" style="border-radius: 3px; background-color: #000016b9; border: 1px solid #1D3E67;">
+                        <img src="{{ item.image.url }}" class="card-img-top" alt="Image" style="border-radius: 3px 3px 0 0;">
+                        <div class="card-body">
+                            <h3 class="card-title">{{ item.name }}</h3>
+                            <p class="card-text">Amount: {{ item.amount }}</p>
+                            <p class="card-text">Description: {{ item.description }}</p>
+                            <p class="card-text">Card Type: {{ item.card_type }}</p>
+                            <p class="card-text">Passcode: {{ item.passcode }}</p>
+                            <p class="card-text">Attribute: {{ item.attribute }}</p>
+                            <p class="card-text">Types: {{ item.types }}</p>
+                            <p class="card-text">Level: {{ item.level }}</p>
+                            <p class="card-text">ATK: {{ item.atk }}</p>
+                            <p class="card-text">DEF: {{ item.deff }}</p>
+                            <p class="card-text">Effect Type: {{ item.effect_type }}</p>
+                            <p class="card-text">Card Property: {{ item.card_property }}</p>
+                            <p class="card-text" style="color: #FFFF00" >Rulings: {{ item.rulings }}</p>
+                            <div class="row m-2">
+                                <div class="col-md-6">
+                                    <a href="{% url "main:show_xml_by_id" item.id %}" class="btn btn-primary">Show XML by ID</a>
+                                </div>
+                                <div class="col-md-6">
+                                    <a href="{% url "main:show_json_by_id" item.id %}" class="btn btn-primary">Show JSON by ID</a>
+                                </div>
+                            </div>
+                            <div class="row m-2">
+                                <div class="col-md-4">
+                                    {% if item.amount > 0 %}
+                                        <a href="{% url "main:add_amount" item.id %}" class="btn btn-success">Add Amount</a>
+                                    {% endif %}
+                                </div>
+                                <div class="col-md-4">
+                                    {% if item.amount > 1 %}
+                                        <a href="{% url "main:reduce_amount" item.id %}" class="btn btn-secondary">Reduce Amount</a>
+                                    {% endif %}
+                                </div>
+                                <div class="col-md-4">
+                                    <a href="{% url "main:delete" item.id %}" class="btn btn-danger">Delete Card</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endif %}
 {% endblock %}
