@@ -134,3 +134,9 @@ def delete_all(request):
     items = Item.objects.filter(user=request.user)
     items.delete()
     return render(request, "index.html")
+
+@login_required(login_url="/login/")
+def get_items_json(request):
+    items = Item.objects.filter(user=request.user)
+    data = serializers.serialize("json", items)
+    return HttpResponse(data, content_type="application/json")

@@ -2036,6 +2036,18 @@ Menambahkan JavaScript dan Asynchronous JavaScript ke dalam aplikasi [Yu-Gi-Oh! 
       > Ubah juga tanda titik menjadi tanda strip. Contoh: `muhammad-iqbal111-tugas`.
 - [ ] **BONUS**: Menambahkan fungsionalitas hapus dengan menggunakan AJAX DELETE.
 
+### Menambahkan fungsi untuk mengembalikan data dalam format JSON
+Pertama-tama, kita perlu menambahkan fungsi untuk mengembalikan data dalam format JSON. Berikut ini adalah fungsi yang telah ditambahkan pada `views.py`:
+```
+...
+@login_required(login_url="/login/")
+def get_items_json(request):
+    items = Item.objects.filter(user=request.user)
+    data = serializers.serialize("json", items)
+    return HttpResponse(data, content_type="application/json")
+```
+Fungsi ini akan mengambil semua item yang dimiliki oleh user yang sedang login, kemudian mengembalikan data dalam format JSON.
+
 
 # License  
 
