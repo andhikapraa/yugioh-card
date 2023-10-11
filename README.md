@@ -66,6 +66,12 @@ Screenshot:
 &emsp;&emsp;[Menambahkan tombol dan fungsi untuk menambahkan `amount` suatu objek sebanyak satu](<#Menambahkan-tombol-dan-fungsi-untuk-menambahkan-amount-suatu-objek-sebanyak-satu>)<br />
 &emsp;&emsp;[Menambahkan tombol dan fungsi untuk menghapus suatu objek dari inventori](<#Menambahkan-tombol-dan-fungsi-untuk-menghapus-suatu-objek-dari-inventori>)<br />
 &emsp;&emsp;[Menjawab beberapa pertanyaan terkait tugas 4](<#Menjawab-beberapa-pertanyaan-terkait-tugas-4>)<br />
+[**Tugas 5: Desain Web menggunakan HTML, CSS dan Framework CSS**](<#Tugas-5-Desain-Web-menggunakan-HTML-CSS-dan-Framework-CSS>)<br />
+&emsp;[**Tugas 5 Checklist**](<#Tugas-5-Checklist>)<br />
+&emsp;&emsp;[Kustomisasi *template* `templates/base.html` menggunakan *framework* Bootstrap](<#Kustomisasi-template-templates-base-html-menggunakan-framework-Bootstrap>)<br />
+&emsp;&emsp;[Kustomisasi *template* `login.html`, `register.html`, dan `add.html` menggunakan *framework* Bootstrap](<#Kustomisasi-template-loginhtml-registerhtml-dan-addhtml-menggunakan-framework-Bootstrap>)<br />
+&emsp;&emsp;[Kustomisasi *template* `index.html` menggunakan *framework* Bootstrap](<#Kustomisasi-template-indexhtml-menggunakan-framework-Bootstrap>)<br />
+&emsp;&emsp;[Menjawab beberapa pertanyaan terkait tugas 5](<#Menjawab-beberapa-pertanyaan-terkait-tugas-5>)<br />
 [**License**](<#License>)<br />
 
 # Tugas 2: Implementasi Model-View-Template (MVT) pada Django
