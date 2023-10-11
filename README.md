@@ -29,6 +29,7 @@ Screenshot:
 - [X] [Tugas 3: Implementasi Form dan Data Delivery pada Django](https://pbp-fasilkom-ui.github.io/ganjil-2024/assignments/individual/assignment-3)
 - [X] [Tugas 4: Implementasi Autentikasi, Session, dan Cookies pada Django](https://pbp-fasilkom-ui.github.io/ganjil-2024/assignments/individual/assignment-4)
 - [X] [Tugas 5: Desain Web menggunakan HTML, CSS dan Framework CSS](https://pbp-fasilkom-ui.github.io/ganjil-2024/assignments/individual/assignment-5)
+- [ ] [Tugas 6: JavaScript dan Asynchronous JavaScript](https://pbp-fasilkom-ui.github.io/ganjil-2024/assignments/individual/assignment-6)
 
 # Table of contents  
         
@@ -72,6 +73,8 @@ Screenshot:
 &emsp;&emsp;[Kustomisasi *template* `login.html`, `register.html`, dan `add.html` menggunakan *framework* Bootstrap](<#Kustomisasi-template-loginhtml-registerhtml-dan-addhtml-menggunakan-framework-Bootstrap>)<br />
 &emsp;&emsp;[Kustomisasi *template* `index.html` menggunakan *framework* Bootstrap](<#Kustomisasi-template-indexhtml-menggunakan-framework-Bootstrap>)<br />
 &emsp;&emsp;[Menjawab pertanyaan terkait tugas 5](<#Menjawab-pertanyaan-terkait-tugas-5>)<br />
+[**Tugas 6: JavaScript dan Asynchronous JavaScript**](<#Tugas-6-JavaScript-dan-Asynchronous-JavaScript>)<br />
+&emsp;[**Tugas 4 Checklist**](<#Tugas-6-Checklist>)<br />
 [**License**](<#License>)<br />
 
 
@@ -1996,6 +1999,43 @@ Bootstrap dan Tailwind adalah dua framework CSS yang populer untuk pengembangan 
 **Kesimpulan**
 
 Bootstrap dan Tailwind adalah dua framework CSS yang memiliki kelebihan dan kekurangannya masing-masing. Pilihan framework CSS yang tepat tergantung pada kebutuhan dan preferensi Anda.
+
+# Tugas 6: JavaScript dan Asynchronous JavaScript
+Menambahkan JavaScript dan Asynchronous JavaScript ke dalam aplikasi [Yu-Gi-Oh! Card Collection](https://pras-yugioh-card.onrender.com/) dan menjawab pertanyaan terkait tugas 6.
+
+## Tugas 6 Checklist
+*from* [Tugas 6: JavaScript dan Asynchronous JavaScript](https://pbp-fasilkom-ui.github.io/ganjil-2024/assignments/individual/assignment-6)
+- [ ] Mengubah tugas 5 yang telah dibuat sebelumnya menjadi menggunakan AJAX.
+  - [ ] AJAX GET
+    - [ ] Ubahlah kode _cards_ data item agar dapat mendukung AJAX GET.
+    - [ ] Lakukan pengambilan task menggunakan AJAX GET.
+  - [ ] AJAX POST
+    - [ ] Buatlah sebuah tombol yang membuka sebuah modal dengan form untuk menambahkan item.
+
+        > Modal di-*trigger* dengan menekan suatu tombol pada halaman utama. Saat penambahan item berhasil, modal harus ditutup dan input form harus dibersihkan dari data yang sudah dimasukkan ke dalam form sebelumnya.
+
+    - [ ] Buatlah fungsi *view* baru untuk menambahkan item baru ke dalam basis data.
+    - [ ] Buatlah *path* `/create-ajax/` yang mengarah ke fungsi *view* yang baru kamu buat.
+    - [ ] Hubungkan form yang telah kamu buat di dalam modal kamu ke *path* `/create-ajax/`.
+    - [ ] Lakukan *refresh* pada halaman utama secara asinkronus untuk menampilkan daftar item terbaru tanpa *reload* halaman utama secara keseluruhan.
+  - [ ] Melakukan perintah `collectstatic`.
+    - Perintah ini bertujuan untuk mengumpulkan *file static* dari setiap aplikasi kamu ke dalam suatu *folder* yang dapat dengan mudah disajikan pada produksi.
+
+- [ ] Menjawab beberapa pertanyaan berikut pada `README.md` pada *root folder* (silakan modifikasi `README.md` yang telah kamu buat sebelumnya; tambahkan subjudul untuk setiap tugas).
+    - Jelaskan perbedaan antara *asynchronous programming* dengan *synchronous programming*.
+    - Dalam penerapan JavaScript dan AJAX, terdapat penerapan paradigma *event-driven programming*. Jelaskan maksud dari paradigma tersebut dan sebutkan salah satu contoh penerapannya pada tugas ini.
+    - Jelaskan penerapan *asynchronous programming* pada AJAX.
+    - Pada PBP kali ini, penerapan AJAX dilakukan dengan menggunakan Fetch API daripada *library* jQuery. Bandingkanlah kedua teknologi tersebut dan tuliskan pendapat kamu teknologi manakah yang lebih baik untuk digunakan.
+    - Jelaskan bagaimana cara kamu mengimplementasikan *checklist* di atas secara *step-by-step* (bukan hanya sekadar mengikuti tutorial).
+
+- [ ] Melakukan `add`-`commit`-`push` ke GitHub.
+
+- [ ] Melakukan *deployment* ke PaaS PBP Fasilkom UI dan sertakan tautan aplikasi pada file `README.md`.
+    - DOKKU_APP_NAME = `UsernameSSO-tugas`
+
+      > Ubah juga tanda titik menjadi tanda strip. Contoh: `muhammad-iqbal111-tugas`.
+- [ ] **BONUS**: Menambahkan fungsionalitas hapus dengan menggunakan AJAX DELETE.
+
 
 # License  
 
