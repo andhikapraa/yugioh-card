@@ -32,11 +32,11 @@ Screenshot:
 
 # Table of contents  
         
-[**Yu-Gi-Oh! Card Collection Project**](<#Yu-Gi-Oh!-Card-Collection-Project>)<br />
+[**Yu-Gi-Oh! Card Collection Project**](<#Yu-Gi-Oh-Card-Collection-Project>)<br />
 &emsp;[**Demo**](<#Demo>)<br />
 &emsp;[**Task Checklist**](<#Task-Checklist>)<br />
 [**Table of contents**](<#Table-of-contents>)<br />
-[**Tugas 2: Implementasi Model-View-Template (MVT) pada Django**](<#Tugas-2-Implementasi-Model-View-Template-(MVT)-pada-Django>)<br />
+[**Tugas 2: Implementasi Model-View-Template (MVT) pada Django**](<#Tugas-2-Implementasi-Model-View-Template-MVT-pada-Django>)<br />
 &emsp;[**Tugas 2 Checklist**](<#Tugas-2-Checklist>)<br />
 &emsp;&emsp;[Membuat proyek Django dan konfigurasi proyek](<#Membuat-proyek-Django-dan-konfigurasi-proyek>)<br />
 &emsp;&emsp;[Membuat aplikasi dengan nama `main`](<#Membuat-aplikasi-dengan-nama-main>)<br />
@@ -71,8 +71,9 @@ Screenshot:
 &emsp;&emsp;[Kustomisasi *template* `templates/base.html` menggunakan *framework* Bootstrap](<#Kustomisasi-template-templates-base-html-menggunakan-framework-Bootstrap>)<br />
 &emsp;&emsp;[Kustomisasi *template* `login.html`, `register.html`, dan `add.html` menggunakan *framework* Bootstrap](<#Kustomisasi-template-loginhtml-registerhtml-dan-addhtml-menggunakan-framework-Bootstrap>)<br />
 &emsp;&emsp;[Kustomisasi *template* `index.html` menggunakan *framework* Bootstrap](<#Kustomisasi-template-indexhtml-menggunakan-framework-Bootstrap>)<br />
-&emsp;&emsp;[Menjawab beberapa pertanyaan terkait tugas 5](<#Menjawab-beberapa-pertanyaan-terkait-tugas-5>)<br />
+&emsp;&emsp;[Menjawab pertanyaan terkait tugas 5](<#Menjawab-pertanyaan-terkait-tugas-5>)<br />
 [**License**](<#License>)<br />
+
 
 # Tugas 2: Implementasi Model-View-Template (MVT) pada Django
 Mengimplementasi Model-View-Template (MVT) Django pada 
