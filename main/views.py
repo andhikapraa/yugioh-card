@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseNotFound
 from django.core import serializers
 from .forms import ItemForm
 from .models import Item, User
@@ -7,6 +7,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
+from django.views.decorators.csrf import csrf_exempt
 
 # Create your views here.
 def index(request):
@@ -143,3 +144,27 @@ def get_items_json(request):
     items = Item.objects.filter(user=request.user)
     data = serializers.serialize("json", items)
     return HttpResponse(data, content_type="application/json")
+
+@login_required(login_url="/login/")
+def create_item_ajax(request):
+    if request.method == "POST":
+        new_item = Item.objects.create(
+            user=request.user,
+            name=request.POST["name"],
+            amount=request.POST["amount"],
+            description=request.POST["description"],
+            card_type=request.POST["card_type"],
+            passcode=request.POST["passcode"],
+            attribute=request.POST["attribute"],
+            types=request.POST["types"],
+            level=request.POST["level"],
+            atk=request.POST["atk"],
+            deff=request.POST["deff"],
+            effect_type=request.POST["effect_type"],
+            card_property=request.POST["card_property"],
+            rulings=request.POST["rulings"],
+            image=request.FILES["image"]
+        )
+        new_item.save()
+        return HttpResponse('Card added successfully', status=201)
+    return HttpResponseNotFound()

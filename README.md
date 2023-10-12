@@ -2005,19 +2005,19 @@ Menambahkan JavaScript dan Asynchronous JavaScript ke dalam aplikasi [Yu-Gi-Oh! 
 
 ## Tugas 6 Checklist
 *from* [Tugas 6: JavaScript dan Asynchronous JavaScript](https://pbp-fasilkom-ui.github.io/ganjil-2024/assignments/individual/assignment-6)
-- [ ] Mengubah tugas 5 yang telah dibuat sebelumnya menjadi menggunakan AJAX.
-  - [ ] AJAX GET
-    - [ ] Ubahlah kode _cards_ data item agar dapat mendukung AJAX GET.
-    - [ ] Lakukan pengambilan task menggunakan AJAX GET.
-  - [ ] AJAX POST
-    - [ ] Buatlah sebuah tombol yang membuka sebuah modal dengan form untuk menambahkan item.
+- [X] Mengubah tugas 5 yang telah dibuat sebelumnya menjadi menggunakan AJAX.
+  - [X] AJAX GET
+    - [X] Ubahlah kode _cards_ data item agar dapat mendukung AJAX GET.
+    - [X] Lakukan pengambilan task menggunakan AJAX GET.
+  - [X] AJAX POST
+    - [X] Buatlah sebuah tombol yang membuka sebuah modal dengan form untuk menambahkan item.
 
         > Modal di-*trigger* dengan menekan suatu tombol pada halaman utama. Saat penambahan item berhasil, modal harus ditutup dan input form harus dibersihkan dari data yang sudah dimasukkan ke dalam form sebelumnya.
 
-    - [ ] Buatlah fungsi *view* baru untuk menambahkan item baru ke dalam basis data.
-    - [ ] Buatlah *path* `/create-ajax/` yang mengarah ke fungsi *view* yang baru kamu buat.
-    - [ ] Hubungkan form yang telah kamu buat di dalam modal kamu ke *path* `/create-ajax/`.
-    - [ ] Lakukan *refresh* pada halaman utama secara asinkronus untuk menampilkan daftar item terbaru tanpa *reload* halaman utama secara keseluruhan.
+    - [X] Buatlah fungsi *view* baru untuk menambahkan item baru ke dalam basis data.
+    - [X] Buatlah *path* `/create-ajax/` yang mengarah ke fungsi *view* yang baru kamu buat.
+    - [X] Hubungkan form yang telah kamu buat di dalam modal kamu ke *path* `/create-ajax/`.
+    - [X] Lakukan *refresh* pada halaman utama secara asinkronus untuk menampilkan daftar item terbaru tanpa *reload* halaman utama secara keseluruhan.
   - [ ] Melakukan perintah `collectstatic`.
     - Perintah ini bertujuan untuk mengumpulkan *file static* dari setiap aplikasi kamu ke dalam suatu *folder* yang dapat dengan mudah disajikan pada produksi.
 
@@ -2259,6 +2259,176 @@ Selanjutnya, tambahkan *block* `script` pada *template* `index.html` dengan isi 
 Dengan ini, *cards* data item akan diubah menggunakan data yang telah diambil menggunakan AJAX GET.
 > NOTE: Pada *commit* ini, terdapat cukup banyak perubahan pada *template* `index.html` karena *template* `index.html` dimodifikasi untuk menampilkan *cards* data item menggunakan modal. Selain itu, terdapat beberapa *bug* yang ditemukan dan diperbaiki pada *commit* ini. Untuk melihat perubahan yang terjadi, dapat dilihat pada *commit* [b2f2906](https://github.com/andhikapraa/yugioh-card/commit/b2f290610ca55089f3c0ecdaee8b745aa808c672).
 
+### Menambahkan fungsi untuk menambahkan item baru ke dalam basis data untuk AJAX POST
+Pertama-tama, fungsi `create_item_ajax` akan dibuat untuk menambahkan item baru ke dalam basis data. Berikut ini adalah fungsi `create_item_ajax` yang telah dibuat:
+```
+from django.http import HttpResponse, HttpResponseNotFound
+from django.views.decorators.csrf import csrf_exempt
+...
+@login_required(login_url="/login/")
+@csrf_exempt
+def create_item_ajax(request):
+    if request.method == "POST":
+        new_item = Item.objects.create(
+            user=request.user,
+            name=request.POST["name"],
+            amount=request.POST["amount"],
+            description=request.POST["description"],
+            card_type=request.POST["card_type"],
+            passcode=request.POST["passcode"],
+            attribute=request.POST["attribute"],
+            types=request.POST["types"],
+            level=request.POST["level"],
+            atk=request.POST["atk"],
+            deff=request.POST["deff"],
+            effect_type=request.POST["effect_type"],
+            card_property=request.POST["card_property"],
+            rulings=request.POST["rulings"],
+            image=request.FILES["image"]
+        )
+        new_item.save()
+        return HttpResponse('Card added successfully', status=201)
+    return HttpResponseNotFound()
+```
+Fungsi ini akan menambahkan item baru ke dalam basis data menggunakan data yang dikirimkan melalui AJAX POST.
+Selanjutnya, *path* `/create-ajax/` akan ditambahkan pada `urls.py` untuk mengarahkan ke fungsi `create_item_ajax`. Berikut ini adalah *path* `/create-ajax/` yang telah ditambahkan:
+```
+...
+urlpatterns = [
+    ...
+    path("create-ajax/", views.create_item_ajax, name="create_item_ajax"),
+]
+```
+
+### Mengubah *template* `index.html` untuk menambahkan item baru ke dalam basis data menggunakan AJAX POST
+Selanjutnya, *template* `index.html` dimodifikasi untuk menambahkan item baru ke dalam basis data menggunakan AJAX POST dengan menambahkan modal yang akan muncul saat tombol `Add Card` di-*click*. Berikut ini adalah isi *block* `content` pada *template* `index.html` yang telah dimodifikasi:
+```
+{% block content %}
+...
+<p class="lead">User: {{ user.username }}<br/>
+Last Login: {{ request.session.last_login }}</p>
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalAddCard">Add Card</button>
+<a href="{% url "main:logout" %}" class="btn btn-secondary my-2">Logout</a>
+...
+<div class="modal fade" id="modalAddCard" tabindex="-1" aria-labelledby="modalAddCardLabel" aria-hidden="true">
+        <div class="modal-dialog modal-fullscreen-md-down modal-lg">
+            <div class="modal-content bg-dark text-center text-white" style="border-radius: 1rem;">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalAddCardLabel">Add Card</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="addCardForm" onsubmit="return false;">
+                        {% csrf_token %}
+                        <div class="form-outline form-white mb-2">
+                            <label class="form-label" for="name">Name</label>
+                          <input type="text" name="name" required id="id_name" class="form-control form-control-lg" />
+                        </div>
+          
+                        <div class="form-outline form-white mb-2">
+                            <label class="form-label" for="amount">Amount</label>
+                          <input type="number" name="amount" required id="id_amount" class="form-control form-control-lg" />
+                        </div>
+          
+                        <div class="form-outline form-white mb-2">
+                            <label class="form-label" for="description">Description</label>
+                          <textarea name="description" required id="id_description" class="form-control form-control-lg" cols="30" rows="10"></textarea>
+                        </div>
+          
+                        <div class="form-outline form-white mb-2">
+                            <label class="form-label" for="card_type">Card Type</label>
+                          <input type="text" name="card_type" required id="id_card_type" class="form-control form-control-lg" />
+                        </div>
+          
+                        <div class="form-outline form-white mb-2">
+                            <label class="form-label" for="passcode">Passcode</label>
+                          <input type="number" name="passcode" required id="id_passcode" class="form-control form-control-lg" />
+                        </div>
+          
+                        <div class="form-outline form-white mb-2">
+                            <label class="form-label" for="attribute">Attribute</label>
+                          <input type="text" name="attribute" required id="id_attribute" class="form-control form-control-lg" />
+                        </div>
+          
+                        <div class="form-outline form-white mb-2">
+                            <label class="form-label" for="types">Types</label>
+                          <input type="text" name="types" required id="id_types" class="form-control form-control-lg" />
+                        </div>
+          
+                        <div class="form-outline form-white mb-2">
+                            <label class="form-label" for="level">Level</label>
+                          <input type="number" name="level" required id="id_level" class="form-control form-control-lg" />
+                        </div>
+          
+                        <div class="form-outline form-white mb-2">
+                            <label class="form-label" for="atk">Attack</label>
+                          <input type="number" name="atk" required id="id_atk" class="form-control form-control-lg" />
+                        </div>
+          
+                        <div class="form-outline form-white mb-2">
+                            <label class="form-label" for="deff">Defend</label>
+                          <input type="number" name="deff" required id="id_deff" class="form-control form-control-lg" />
+                        </div>
+          
+                        <div class="form-outline form-white mb-2">
+                            <label class="form-label" for="effect_type">Effect Type</label>
+                          <input type="text" name="effect_type" required id="id_effect_type" class="form-control form-control-lg" />
+                        </div>
+          
+                        <div class="form-outline form-white mb-2">
+                            <label class="form-label" for="card_property">Card Property</label>
+                          <input type="text" name="card_property" required id="id_card_property" class="form-control form-control-lg" />
+                        </div>
+          
+                        <div class="form-outline form-white mb-2">
+                            <label class="form-label" for="rulings">Rulings</label>
+                          <textarea name="rulings" required id="id_rulings" class="form-control form-control-lg" cols="30" rows="10"></textarea>
+                        </div>
+          
+                        <div class="form-outline form-white mb-2">
+                            <label class="form-label" for="image">Image</label>
+                          <input type="file" name="image" accept="image/*" required id="id_image" class="form-control form-control-lg" />
+                        </div>
+
+                    </form>
+                </div>
+                <div class="modal-footer justify-content-center">
+                    <button type="button" class="btn btn-outline-light btn-lg" id="addCardButton" data-bs-dismiss="modal">Add Card</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endif %}
+{% endblock %}
+```
+> Di sini, terdapat tambahan seperti modal yang akan muncul saat tombol `Add Card` di-*click*.
+
+Selanjutnya, berikut *script* yang ditambahkan pada *block* `script` pada *template* `index.html`:
+```
+{% block script %}
+...
+    <!-- Add Card -->
+    function addCard() {
+        fetch("{% url "main:create_item_ajax" %}", {
+            method: "POST",
+            body: new FormData(document.getElementById("addCardForm")),
+            headers: {
+                "X-CSRFToken": "{{ csrf_token }}"
+            }
+        }).then(() => {
+            refreshCards()
+        })
+
+        document.getElementById("addCardForm").reset()
+        return false
+    }
+    document.getElementById("addCardButton").addEventListener("click", addCard)
+    <!-- End Add Card -->
+{% endif %}
+{% endblock %}
+```
+Dengan ini, item baru bisa ditambahkan ke dalam basis data menggunakan AJAX POST sehingga *refresh* halaman utama tidak perlu dilakukan secara keseluruhan.
 
 
 # License  

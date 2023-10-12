@@ -18,4 +18,5 @@ urlpatterns = [
     path("delete/<int:id>", views.delete, name="delete"),
     path("delete_all/", views.delete_all, name="delete_all"),
     path("get-items-json/", views.get_items_json, name="get_items_json"),
+    path("create-ajax/", views.create_item_ajax, name="create_item_ajax"),
 ]
