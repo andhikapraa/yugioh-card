@@ -2115,6 +2115,7 @@ Selanjutnya, *template* `index.html` dimodifikasi untuk menambahkan *script* yan
 {% endblock %}
 ```
 > Di sini, terdapat perubahan tampilan *template* `index.html` di mana informasi yang ditampilkan pada *cards* data item akan ditampilkan pada modal yang akan muncul saat *card* di-*click*.
+
 Selanjutnya, tambahkan *block* `script` pada *template* `index.html` dengan isi sebagai berikut:
 ```
 {% block script %}
@@ -2254,8 +2255,11 @@ Selanjutnya, tambahkan *block* `script` pada *template* `index.html` dengan isi 
 {% endblock %}
 ```
 > Di sini, terdapat tambahan seperti fungsi `tooltip`, fungsi `limitText`, dan fungsi `confirmDelete` untuk menampilkan *tooltip*, membatasi jumlah karakter yang ditampilkan, dan memunculkan *confirm dialog* saat *card* di-*click*.
+
 Dengan ini, *cards* data item akan diubah menggunakan data yang telah diambil menggunakan AJAX GET.
-> NOTE: Pada *commit* ini, terdapat cukup banyak perubahan pada *template* `index.html` karena *template* `index.html` dimodifikasi untuk menampilkan *cards* data item menggunakan modal. Selain itu, terdapat beberapa *bug* yang ditemukan dan diperbaiki pada *commit* ini. Untuk melihat perubahan yang terjadi, dapat dilihat pada *commit*.
+> NOTE: Pada *commit* ini, terdapat cukup banyak perubahan pada *template* `index.html` karena *template* `index.html` dimodifikasi untuk menampilkan *cards* data item menggunakan modal. Selain itu, terdapat beberapa *bug* yang ditemukan dan diperbaiki pada *commit* ini. Untuk melihat perubahan yang terjadi, dapat dilihat pada *commit* [b2f2906](https://github.com/andhikapraa/yugioh-card/commit/b2f290610ca55089f3c0ecdaee8b745aa808c672).
+
+
 
 # License  
 
