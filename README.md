@@ -2037,7 +2037,7 @@ Menambahkan JavaScript dan Asynchronous JavaScript ke dalam aplikasi [Yu-Gi-Oh! 
 - [ ] **BONUS**: Menambahkan fungsionalitas hapus dengan menggunakan AJAX DELETE.
 
 ### Menambahkan fungsi untuk mengembalikan data dalam format JSON
-Pertama-tama, kita perlu menambahkan fungsi untuk mengembalikan data dalam format JSON. Berikut ini adalah fungsi yang telah ditambahkan pada `views.py`:
+Pertama-tama, fungsi `get_items_json` pada `views.py` akan dibuat untuk mengembalikan data dalam format JSON. Berikut ini adalah fungsi `get_items_json` yang telah dibuat:
 ```
 ...
 @login_required(login_url="/login/")
@@ -2047,7 +2047,215 @@ def get_items_json(request):
     return HttpResponse(data, content_type="application/json")
 ```
 Fungsi ini akan mengambil semua item yang dimiliki oleh user yang sedang login, kemudian mengembalikan data dalam format JSON.
+Selanjutnya, *path* `/get-items-json/` akan ditambahkan pada `urls.py` untuk mengarahkan ke fungsi `get_items_json`. Berikut ini adalah *path* `/get-items-json/` yang telah ditambahkan:
+```
+...
+urlpatterns = [
+    ...
+    path("get-items-json/", views.get_items_json, name="get_items_json"),
+]
+```
 
+### Mengubah *cards* data item agar dapat mendukung AJAX GET (+ *revamp* *template* `index.html`)
+Sebelumnya, *template* `base.html` dimodifikasi terlebih dahulu untuk menambahkan *block* `scripts`. Berikut ini adalah *template* `base.html` yang telah dimodifikasi di bagian bawah `footer`:
+```
+<script>
+    {% block script %}{% endblock %}
+</script>
+```
+Selanjutnya, *template* `index.html` dimodifikasi untuk menambahkan *script* yang akan mengambil data item dalam format JSON menggunakan AJAX GET serta mengubah isi dari *cards* data item menggunakan data yang telah diambil. Berikut ini adalah isi *block* `content` pada *template* `index.html` yang telah dimodifikasi:
+```
+{% block content %}
+...
+{% if user.is_authenticated %}
+    <section id="item-cards"></section>
+    
+    <div class="modal fade" id="modalCard" tabindex="-1" aria-labelledby="modalCardLabel" aria-hidden="true">
+        <div class="modal-dialog modal-fullscreen-md modal-lg">
+            <div class="modal-content text-white" style="border-radius: 5px; background-color: #000016b9;">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalCardLabel">Name Card</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <img id="modalCardImage" src="" class="img-fluid" alt="Image" style="border-radius: 5px;">
+                        </div>
+                        <div class="col-md-6">
+                            <p id="modalCardAmount" data-bs-toggle="tooltip" data-bs-placement="top" title="Amount">Amount</p>
+                            <p id="modalCardType" data-bs-toggle="tooltip" data-bs-placement="top" title="Type | Attribute | Level">Type | Attribute | Level</p>
+                            <p id="modalCardEffectType" style="font-style: italic;" data-bs-toggle="tooltip" data-bs-placement="top" title="Effect Type">Effect Type</p>
+                            <p id="modalCardTypes" style="font-weight: bold;" data-bs-toggle="tooltip" data-bs-placement="top" title="Types">[Types]</p>
+                            <p id="modalCardDesc" style="text-align: justify; font-size: 14px;" data-bs-toggle="tooltip" data-bs-placement="top" title="Description">Description</p>
+                            <p id="modalCardAtkDef">ATK/DEF</p>
+                            <p id="modalCardPasscode" data-bs-toggle="tooltip" data-bs-placement="top" title="Passcode">Passcode</p>
+                            <p id="modalCardProperty" data-bs-toggle="tooltip" data-bs-placement="top" title="Property">Property</p>
+                            <p id="modalCardRulings" style="color: #FFFF00; text-align: justify; font-size: 14px;" data-bs-toggle="tooltip" data-bs-placement="top" title="Rulings">Rulings</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-center">
+                    <section id="show-data">
+                        <a id="modalCardXML" href="" class="btn btn-primary">Show XML</a>
+                        <a id="modalCardJSON" href="" class="btn btn-primary">Show JSON</a>
+                    </section>
+                    <section id="edit-data">
+                        <a id="modalCardAddAmount" href="" class="btn btn-success">Add Amount</a>
+                        <a id="modalCardReduceAmount" href="" class="btn btn-secondary">Reduce Amount</a>
+                        <a id="modalCardDelete" href="" class="btn btn-danger" onclick="return confirmDelete()">Delete Card</a>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+{% endif %}
+{% endblock %}
+```
+> Di sini, terdapat perubahan tampilan *template* `index.html` di mana informasi yang ditampilkan pada *cards* data item akan ditampilkan pada modal yang akan muncul saat *card* di-*click*.
+Selanjutnya, tambahkan *block* `script` pada *template* `index.html` dengan isi sebagai berikut:
+```
+{% block script %}
+{% if user.is_authenticated %}
+    <!-- Get Cards -->
+    async function getCards() {
+        return fetch("{% url "main:get_items_json" %}")
+            .then(response => response.json())
+    }
+    <!-- End Get Cards -->
+
+    <!-- Refresh Cards -->
+    async function refreshCards() {
+        document.getElementById("item-cards").innerHTML = ""
+        const cards = await getCards()
+        let html = ""
+        html += `
+            <div class="container">
+                <p>
+                    <p class="lead">Total Cards: ${cards.length}</p>
+                    <a id="delete-all" href="{% url "main:delete_all" %}" class="btn btn-danger my-2" onclick="return confirmDeleteAll()">Delete All</a>
+                </p>
+                <div class="row row-cols-lg-4 row-cols-md-3 row-cols-sm-2 row-cols-1 pt-2" style="justify-content: center; background-color: #000016b9; border-radius: 5px; border: 1px solid #1D3E67;">
+        `
+        cards.forEach((card) => {
+            html += `
+            <div class="col mb-5">
+                <div id="card-${ card.pk }" class="card text-white" style="border-radius: 5px; background-color: #2a3650; border: 1px solid #1D3E67;">
+                    <div>
+                        <p class="lead mb-0" style="position: absolute; bottom: 5rem; left: 1rem; justify-content: center; display: flex; font-size: 1.5rem; font-weight: bold; color: #FFFF00; background-color: #000016b9; border-radius: 50%; height: 38px; width: 38px;" data-bs-toggle="tooltip" data-bs-placement="top" title="Amount">${ card.fields.amount }</p>
+                    </div>
+                    <img src="/media/${ card.fields.image }" class="card-img-top" alt="Image" style="border-radius: 5px 5px 0 0;">
+                        <div class="row text-center py-2">
+                            <div class="col-4">
+                                <a href="/add_amount/${ card.pk }" class="btn btn-success" style="border-radius: 50%; height: 38px; width: 38px;" data-bs-toggle="tooltip" data-bs-placement="top" title="Add Amount">+</a>
+                            </div>
+                            <div class="col-4">
+            `
+            if (card.fields.amount > 1) {
+                html += `
+                    <a href="/reduce_amount/${ card.pk }" class="btn btn-secondary" style="border-radius: 50%; height: 38px; width: 38px;" data-bs-toggle="tooltip" data-bs-placement="top" title="Reduce Amount">-</a>
+                `
+            }
+            html += `
+                            </div>
+                            <div class="col-4">
+                                <a href="/delete/${ card.pk }" class="btn btn-danger" style="border-radius: 50%; height: 38px; width: 38px;" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete Card" onclick="return confirmDelete()">X</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `
+        })
+        html += `
+                </div>
+            </div>
+        `
+        document.getElementById("item-cards").innerHTML = html
+        cards.forEach((card) => {
+            document.getElementById(`card-${ card.pk }`).addEventListener("click", () => {
+                showModalCard(card)
+            })
+        })
+    }
+    refreshCards()
+    <!-- End Refresh Cards -->
+
+    <!-- Trigger Modal -->
+    const modalCard = new bootstrap.Modal(document.getElementById('modalCard'), {
+        keyboard: false
+    })
+    function showModalCard(card) {
+        document.getElementById("modalCardLabel").innerHTML = card.fields.name
+        document.getElementById("modalCardImage").src = `/media/${ card.fields.image }`
+        document.getElementById("modalCardAmount").innerHTML = `Amount: ${ card.fields.amount }`
+        document.getElementById("modalCardType").innerHTML = `${ card.fields.card_type } | ${ card.fields.attribute } | ${ card.fields.level }`
+        document.getElementById("modalCardEffectType").innerHTML = `${ card.fields.effect_type }`
+        document.getElementById("modalCardTypes").innerHTML = `[${ card.fields.types }]`
+        document.getElementById("modalCardDesc").innerHTML = `${ card.fields.description }`
+        document.getElementById("modalCardAtkDef").innerHTML = `<b>ATK/ </b>${ card.fields.atk }  <b>DEF/ </b>${ card.fields.deff }`
+        document.getElementById("modalCardPasscode").innerHTML = `#${ card.fields.passcode }`
+        document.getElementById("modalCardProperty").innerHTML = `${ card.fields.card_property }`
+        document.getElementById("modalCardRulings").innerHTML = `${ card.fields.rulings }`
+        document.getElementById("modalCardXML").href = `/xml/${ card.pk }`
+        document.getElementById("modalCardJSON").href = `/json/${ card.pk }`
+        document.getElementById("modalCardAddAmount").href = `/add_amount/${ card.pk }`
+        document.getElementById("modalCardReduceAmount").href = `/reduce_amount/${ card.pk }`
+        document.getElementById("modalCardDelete").href = `/delete/${ card.pk }`
+        limitText("#modalCardDesc", 300)
+        limitText("#modalCardRulings", 300)
+        modalCard.show()
+    }
+    <!-- End Trigger Modal -->
+
+    <!-- Tooltip -->
+    const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+    const tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl)
+    })
+    <!-- End Tooltip -->
+
+    <!-- Limit Text + Expand -->
+    function limitText(selector, maxLength) {
+        let element = document.querySelector(selector)
+        let text = element.innerHTML
+        let truncated = text
+        let expand = document.createElement('span');
+        console.log(text)
+
+        if (text.length > maxLength) {
+            truncated = text.substr(0,maxLength) + '...';
+            expand.setAttribute('class', 'expandText');
+            expand.setAttribute('style', 'color: cyan');
+            expand.innerHTML = 'more';
+            expand.onclick = function() {
+                expand.parentNode.removeChild(expand);
+                element.innerHTML = text;
+            };
+        }
+        element.innerHTML = truncated;
+        element.appendChild(expand);
+    }
+    <!-- End Limit Text + Expand -->
+
+    <!-- Confirm Delete -->
+    function confirmDelete() {
+        return confirm("Are you sure you want to delete this card?")
+    }
+    <!-- End Confirm Delete -->
+
+    <!-- Confirm Delete All -->
+    function confirmDeleteAll() {
+        return confirm("Are you sure you want to delete all cards?")
+    }
+    <!-- End Confirm Delete All -->
+{% endif %}
+{% endblock %}
+```
+> Di sini, terdapat tambahan seperti fungsi `tooltip`, fungsi `limitText`, dan fungsi `confirmDelete` untuk menampilkan *tooltip*, membatasi jumlah karakter yang ditampilkan, dan memunculkan *confirm dialog* saat *card* di-*click*.
+Dengan ini, *cards* data item akan diubah menggunakan data yang telah diambil menggunakan AJAX GET.
+> NOTE: Pada *commit* ini, terdapat cukup banyak perubahan pada *template* `index.html` karena *template* `index.html` dimodifikasi untuk menampilkan *cards* data item menggunakan modal. Selain itu, terdapat beberapa *bug* yang ditemukan dan diperbaiki pada *commit* ini. Untuk melihat perubahan yang terjadi, dapat dilihat pada *commit*.
 
 # License  
 

@@ -6,7 +6,7 @@
 
 {% block content %}
 <section class="text-center">
-    <div class="container">
+    <div class="container pt-4">
         <h1 class="jumbotron-heading">Yu-Gi-Oh! Card Collection</h1>
         <p class="lead">Yu-Gi-Oh! Card Collection is a website to collect Yu-Gi-Oh! cards.</p>
         <p>
@@ -22,60 +22,184 @@
     </div>
 </section>
 {% if user.is_authenticated %}
-    <div class="container">
-        {% if items %}
-            <p>
-                <p class="lead">Total Cards: {{ items|length }}</p>
-                <a href="{% url "main:delete_all" %}" class="btn btn-danger my-2">Delete All Cards</a>
-            </p>
-        {% endif %}
-        <div class="row row-cols-4">
-            {% for item in items %}
-                <div class="col-md-6 col-lg-4 mb-5">
-                    <div class="card text-white" style="border-radius: 3px; background-color: #000016b9; border: 1px solid #1D3E67;">
-                        <img src="{{ item.image.url }}" class="card-img-top" alt="Image" style="border-radius: 3px 3px 0 0;">
-                        <div class="card-body">
-                            <h3 class="card-title">{{ item.name }}</h3>
-                            <p class="card-text">Amount: {{ item.amount }}</p>
-                            <p class="card-text">Description: {{ item.description }}</p>
-                            <p class="card-text">Card Type: {{ item.card_type }}</p>
-                            <p class="card-text">Passcode: {{ item.passcode }}</p>
-                            <p class="card-text">Attribute: {{ item.attribute }}</p>
-                            <p class="card-text">Types: {{ item.types }}</p>
-                            <p class="card-text">Level: {{ item.level }}</p>
-                            <p class="card-text">ATK: {{ item.atk }}</p>
-                            <p class="card-text">DEF: {{ item.deff }}</p>
-                            <p class="card-text">Effect Type: {{ item.effect_type }}</p>
-                            <p class="card-text">Card Property: {{ item.card_property }}</p>
-                            <p class="card-text" style="color: #FFFF00" >Rulings: {{ item.rulings }}</p>
-                            <div class="row m-2">
-                                <div class="col-md-6">
-                                    <a href="{% url "main:show_xml_by_id" item.id %}" class="btn btn-primary">Show XML by ID</a>
-                                </div>
-                                <div class="col-md-6">
-                                    <a href="{% url "main:show_json_by_id" item.id %}" class="btn btn-primary">Show JSON by ID</a>
-                                </div>
+    <section id="item-cards"></section>
+    
+    <div class="modal fade" id="modalCard" tabindex="-1" aria-labelledby="modalCardLabel" aria-hidden="true">
+        <div class="modal-dialog modal-fullscreen-md modal-lg">
+            <div class="modal-content text-white" style="border-radius: 5px; background-color: #000016b9;">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalCardLabel">Name Card</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <img id="modalCardImage" src="" class="img-fluid" alt="Image" style="border-radius: 5px;">
+                        </div>
+                        <div class="col-md-6">
+                            <p id="modalCardAmount" data-bs-toggle="tooltip" data-bs-placement="top" title="Amount">Amount</p>
+                            <p id="modalCardType" data-bs-toggle="tooltip" data-bs-placement="top" title="Type | Attribute | Level">Type | Attribute | Level</p>
+                            <p id="modalCardEffectType" style="font-style: italic;" data-bs-toggle="tooltip" data-bs-placement="top" title="Effect Type">Effect Type</p>
+                            <p id="modalCardTypes" style="font-weight: bold;" data-bs-toggle="tooltip" data-bs-placement="top" title="Types">[Types]</p>
+                            <p id="modalCardDesc" style="text-align: justify; font-size: 14px;" data-bs-toggle="tooltip" data-bs-placement="top" title="Description">Description</p>
+                            <p id="modalCardAtkDef">ATK/DEF</p>
+                            <p id="modalCardPasscode" data-bs-toggle="tooltip" data-bs-placement="top" title="Passcode">Passcode</p>
+                            <p id="modalCardProperty" data-bs-toggle="tooltip" data-bs-placement="top" title="Property">Property</p>
+                            <p id="modalCardRulings" style="color: #FFFF00; text-align: justify; font-size: 14px;" data-bs-toggle="tooltip" data-bs-placement="top" title="Rulings">Rulings</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-center">
+                    <section id="show-data">
+                        <a id="modalCardXML" href="" class="btn btn-primary">Show XML</a>
+                        <a id="modalCardJSON" href="" class="btn btn-primary">Show JSON</a>
+                    </section>
+                    <section id="edit-data">
+                        <a id="modalCardAddAmount" href="" class="btn btn-success">Add Amount</a>
+                        <a id="modalCardReduceAmount" href="" class="btn btn-secondary">Reduce Amount</a>
+                        <a id="modalCardDelete" href="" class="btn btn-danger" onclick="return confirmDelete()">Delete Card</a>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+{% endif %}
+{% endblock %}
+
+{% block script %}
+{% if user.is_authenticated %}
+    <!-- Get Cards -->
+    async function getCards() {
+        return fetch("{% url "main:get_items_json" %}")
+            .then(response => response.json())
+    }
+    <!-- End Get Cards -->
+
+    <!-- Refresh Cards -->
+    async function refreshCards() {
+        document.getElementById("item-cards").innerHTML = ""
+        const cards = await getCards()
+        let html = ""
+        html += `
+            <div class="container">
+                <p>
+                    <p class="lead">Total Cards: ${cards.length}</p>
+                    <a id="delete-all" href="{% url "main:delete_all" %}" class="btn btn-danger my-2" onclick="return confirmDeleteAll()">Delete All</a>
+                </p>
+                <div class="row row-cols-lg-4 row-cols-md-3 row-cols-sm-2 row-cols-1 pt-2" style="justify-content: center; background-color: #000016b9; border-radius: 5px; border: 1px solid #1D3E67;">
+        `
+        cards.forEach((card) => {
+            html += `
+            <div class="col mb-5">
+                <div id="card-${ card.pk }" class="card text-white" style="border-radius: 5px; background-color: #2a3650; border: 1px solid #1D3E67;">
+                    <div>
+                        <p class="lead mb-0" style="position: absolute; bottom: 5rem; left: 1rem; justify-content: center; display: flex; font-size: 1.5rem; font-weight: bold; color: #FFFF00; background-color: #000016b9; border-radius: 50%; height: 38px; width: 38px;" data-bs-toggle="tooltip" data-bs-placement="top" title="Amount">${ card.fields.amount }</p>
+                    </div>
+                    <img src="/media/${ card.fields.image }" class="card-img-top" alt="Image" style="border-radius: 5px 5px 0 0;">
+                        <div class="row text-center py-2">
+                            <div class="col-4">
+                                <a href="/add_amount/${ card.pk }" class="btn btn-success" style="border-radius: 50%; height: 38px; width: 38px;" data-bs-toggle="tooltip" data-bs-placement="top" title="Add Amount">+</a>
                             </div>
-                            <div class="row m-2">
-                                <div class="col-md-4">
-                                    {% if item.amount > 0 %}
-                                        <a href="{% url "main:add_amount" item.id %}" class="btn btn-success">Add Amount</a>
-                                    {% endif %}
-                                </div>
-                                <div class="col-md-4">
-                                    {% if item.amount > 1 %}
-                                        <a href="{% url "main:reduce_amount" item.id %}" class="btn btn-secondary">Reduce Amount</a>
-                                    {% endif %}
-                                </div>
-                                <div class="col-md-4">
-                                    <a href="{% url "main:delete" item.id %}" class="btn btn-danger">Delete Card</a>
-                                </div>
+                            <div class="col-4">
+            `
+            if (card.fields.amount > 1) {
+                html += `
+                    <a href="/reduce_amount/${ card.pk }" class="btn btn-secondary" style="border-radius: 50%; height: 38px; width: 38px;" data-bs-toggle="tooltip" data-bs-placement="top" title="Reduce Amount">-</a>
+                `
+            }
+            html += `
+                            </div>
+                            <div class="col-4">
+                                <a href="/delete/${ card.pk }" class="btn btn-danger" style="border-radius: 50%; height: 38px; width: 38px;" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete Card" onclick="return confirmDelete()">X</a>
                             </div>
                         </div>
                     </div>
                 </div>
-            {% endfor %}
-        </div>
-    </div>
+            `
+        })
+        html += `
+                </div>
+            </div>
+        `
+        document.getElementById("item-cards").innerHTML = html
+        cards.forEach((card) => {
+            document.getElementById(`card-${ card.pk }`).addEventListener("click", () => {
+                showModalCard(card)
+            })
+        })
+    }
+    refreshCards()
+    <!-- End Refresh Cards -->
+
+    <!-- Trigger Modal -->
+    const modalCard = new bootstrap.Modal(document.getElementById('modalCard'), {
+        keyboard: false
+    })
+    function showModalCard(card) {
+        document.getElementById("modalCardLabel").innerHTML = card.fields.name
+        document.getElementById("modalCardImage").src = `/media/${ card.fields.image }`
+        document.getElementById("modalCardAmount").innerHTML = `Amount: ${ card.fields.amount }`
+        document.getElementById("modalCardType").innerHTML = `${ card.fields.card_type } | ${ card.fields.attribute } | ${ card.fields.level }`
+        document.getElementById("modalCardEffectType").innerHTML = `${ card.fields.effect_type }`
+        document.getElementById("modalCardTypes").innerHTML = `[${ card.fields.types }]`
+        document.getElementById("modalCardDesc").innerHTML = `${ card.fields.description }`
+        document.getElementById("modalCardAtkDef").innerHTML = `<b>ATK/ </b>${ card.fields.atk }  <b>DEF/ </b>${ card.fields.deff }`
+        document.getElementById("modalCardPasscode").innerHTML = `#${ card.fields.passcode }`
+        document.getElementById("modalCardProperty").innerHTML = `${ card.fields.card_property }`
+        document.getElementById("modalCardRulings").innerHTML = `${ card.fields.rulings }`
+        document.getElementById("modalCardXML").href = `/xml/${ card.pk }`
+        document.getElementById("modalCardJSON").href = `/json/${ card.pk }`
+        document.getElementById("modalCardAddAmount").href = `/add_amount/${ card.pk }`
+        document.getElementById("modalCardReduceAmount").href = `/reduce_amount/${ card.pk }`
+        document.getElementById("modalCardDelete").href = `/delete/${ card.pk }`
+        limitText("#modalCardDesc", 300)
+        limitText("#modalCardRulings", 300)
+        modalCard.show()
+    }
+    <!-- End Trigger Modal -->
+
+    <!-- Tooltip -->
+    const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+    const tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl)
+    })
+    <!-- End Tooltip -->
+
+    <!-- Limit Text + Expand -->
+    function limitText(selector, maxLength) {
+        let element = document.querySelector(selector)
+        let text = element.innerHTML
+        let truncated = text
+        let expand = document.createElement('span');
+        console.log(text)
+
+        if (text.length > maxLength) {
+            truncated = text.substr(0,maxLength) + '...';
+            expand.setAttribute('class', 'expandText');
+            expand.setAttribute('style', 'color: cyan');
+            expand.innerHTML = 'more';
+            expand.onclick = function() {
+                expand.parentNode.removeChild(expand);
+                element.innerHTML = text;
+            };
+        }
+        element.innerHTML = truncated;
+        element.appendChild(expand);
+    }
+    <!-- End Limit Text + Expand -->
+
+    <!-- Confirm Delete -->
+    function confirmDelete() {
+        return confirm("Are you sure you want to delete this card?")
+    }
+    <!-- End Confirm Delete -->
+
+    <!-- Confirm Delete All -->
+    function confirmDeleteAll() {
+        return confirm("Are you sure you want to delete all cards?")
+    }
+    <!-- End Confirm Delete All -->
 {% endif %}
 {% endblock %}

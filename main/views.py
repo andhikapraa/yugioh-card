@@ -73,7 +73,7 @@ def register(request):
                 user = User.objects.create_user(username=username, password=password)
                 user.save()
                 messages.info(request, "Successfully registered as " + username)
-                return redirect("main:login_user")
+                return redirect("main:login")
             else:
                 messages.info(request, "Username already exists")
         else:
@@ -125,6 +125,7 @@ def reduce_amount(request, id):
 def delete(request, id):
     item = Item.objects.get(id=id)
     if item.user == request.user:
+        item.image.delete()
         item.delete()
         return redirect("main:index")
     return render(request, "index.html")
@@ -132,6 +133,8 @@ def delete(request, id):
 @login_required(login_url="/login/")
 def delete_all(request):
     items = Item.objects.filter(user=request.user)
+    for item in items:
+        item.image.delete()
     items.delete()
     return render(request, "index.html")
 
