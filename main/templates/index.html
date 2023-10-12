@@ -56,8 +56,8 @@
                         <a id="modalCardJSON" href="" class="btn btn-primary">Show JSON</a>
                     </section>
                     <section id="edit-data">
-                        <a id="modalCardAddAmount" href="" class="btn btn-success">Add Amount</a>
-                        <a id="modalCardReduceAmount" href="" class="btn btn-secondary">Reduce Amount</a>
+                        <button type="button" id="modalCardAddAmount" class="btn btn-success">Add Amount</button>
+                        <button type="button" id="modalCardReduceAmount" class="btn btn-secondary">Reduce Amount</button>
                         <button type="button" id="modalCardDelete" class="btn btn-danger">Delete Card</button>
                     </section>
                 </div>
@@ -189,13 +189,13 @@
                     <img id="card-${ card.pk }-image" src="/media/${ card.fields.image }" class="card-img-top" alt="Image" style="border-radius: 5px 5px 0 0;">
                         <div class="row text-center py-2">
                             <div class="col-4">
-                                <a href="/add_amount/${ card.pk }" class="btn btn-success" style="border-radius: 50%; height: 38px; width: 38px;" data-bs-toggle="tooltip" data-bs-placement="top" title="Add Amount">+</a>
+                                <button type="button" class="btn btn-success" style="border-radius: 50%; height: 38px; width: 38px;" data-bs-toggle="tooltip" data-bs-placement="top" title="Add Amount" onclick="addAmount(${ card.pk })">+</button>
                             </div>
                             <div class="col-4">
             `
             if (card.fields.amount > 1) {
                 html += `
-                    <a href="/reduce_amount/${ card.pk }" class="btn btn-secondary" style="border-radius: 50%; height: 38px; width: 38px;" data-bs-toggle="tooltip" data-bs-placement="top" title="Reduce Amount">-</a>
+                    <button type="button" class="btn btn-secondary" style="border-radius: 50%; height: 38px; width: 38px;" data-bs-toggle="tooltip" data-bs-placement="top" title="Reduce Amount" onclick="reduceAmount(${ card.pk })">-</button>
                 `
             }
             html += `
@@ -240,8 +240,12 @@
         document.getElementById("modalCardRulings").innerHTML = `${ card.fields.rulings }`
         document.getElementById("modalCardXML").href = `/xml/${ card.pk }`
         document.getElementById("modalCardJSON").href = `/json/${ card.pk }`
-        document.getElementById("modalCardAddAmount").href = `/add_amount/${ card.pk }`
-        document.getElementById("modalCardReduceAmount").href = `/reduce_amount/${ card.pk }`
+        document.getElementById("modalCardAddAmount").addEventListener("click", () => {
+            addAmount(card.pk)
+        })
+        document.getElementById("modalCardReduceAmount").addEventListener("click", () => {
+            reduceAmount(card.pk)
+        })
         document.getElementById("modalCardDelete").addEventListener("click", () => {
             deleteCard(card.pk)
         })
@@ -326,5 +330,31 @@
         }
     }
     <!-- End Delete Card -->
+
+    <!-- Add Amount -->
+    function addAmount(id) {
+        fetch(`/add_amount/${ id }`, {
+            method: "PUT",
+            headers: {
+                "X-CSRFToken": "{{ csrf_token }}"
+            }
+        }).then(() => {
+            refreshCards()
+        })
+    }
+    <!-- End Add Amount -->
+
+    <!-- Reduce Amount -->
+    function reduceAmount(id) {
+        fetch(`/reduce_amount/${ id }`, {
+            method: "PUT",
+            headers: {
+                "X-CSRFToken": "{{ csrf_token }}"
+            }
+        }).then(() => {
+            refreshCards()
+        })
+    }
+    <!-- End Reduce Amount -->
 {% endif %}
 {% endblock %}

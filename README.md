@@ -2493,7 +2493,10 @@ Selanjutnya, modifikasi *button* `Delete Card` pada *template* `index.html` sepe
 > Di sini, terdapat tambahan perubahan pada *script* di mana *button* `Delete Card` akan memanggil fungsi `deleteCard` dengan parameter `card.pk` saat *button* di-*click*.
 
 Dengan ini, kartu bisa dihapus dari basis data menggunakan AJAX DELETE sehingga *refresh* halaman utama tidak perlu dilakukan secara keseluruhan.
-> NOTE: Pada *commit* ini, terdapat beberapa *bug* yang ditemukan dan diperbaiki. Selain itu, terdapat perubahan pada *template* `index.html` di mana modal *card* hanya muncul jika *image* *card* di-*click*.
+> NOTE: Pada *commit* ini, terdapat beberapa *bug* yang ditemukan dan diperbaiki. Selain itu, terdapat perubahan pada *template* `index.html` di mana modal *card* hanya muncul jika *image* *card* di-*click*. Untuk melihat perubahan yang terjadi, dapat dilihat pada *commit* [f3071a0](https://github.com/andhikapraa/yugioh-card/commit/f3071a0c0d680522b1356f67b367fd34dbaed693)
+
+### Menambahkan fungsi untuk menambahkan dan mengurangi jumlah item dari basis data untuk AJAX PUT
+Karena fitur ini tidak diminta pada tugas, maka implementasi dilakukan tanpa dokumentasi di sini. Implementasi yang dilakukan kurang lebih sama dengan implementasi AJAX DELETE.
 
 
 # License  

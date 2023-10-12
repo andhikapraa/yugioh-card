@@ -177,3 +177,25 @@ def delete_item_ajax(request, id):
             return HttpResponse("Card deleted successfully", status=204)
         return HttpResponse("You are not allowed to delete this card", status=403)
     return HttpResponseNotFound()
+
+@login_required(login_url="/login/")
+def add_amount_ajax(request, id):
+    if request.method == "PUT":
+        item = Item.objects.get(id=id)
+        if item.user == request.user:
+            item.amount += 1
+            item.save()
+            return HttpResponse("Amount increased successfully", status=200)
+        return HttpResponse("You are not allowed to increase the amount of this card", status=403)
+    return HttpResponseNotFound()
+
+@login_required(login_url="/login/")
+def reduce_amount_ajax(request, id):
+    if request.method == "PUT":
+        item = Item.objects.get(id=id)
+        if item.user == request.user:
+            item.amount -= 1
+            item.save()
+            return HttpResponse("Amount decreased successfully", status=200)
+        return HttpResponse("You are not allowed to decrease the amount of this card", status=403)
+    return HttpResponseNotFound()
