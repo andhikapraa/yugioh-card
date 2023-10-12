@@ -7,7 +7,6 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
-from django.views.decorators.csrf import csrf_exempt
 
 # Create your views here.
 def index(request):
@@ -167,4 +166,14 @@ def create_item_ajax(request):
         )
         new_item.save()
         return HttpResponse('Card added successfully', status=201)
+    return HttpResponseNotFound()
+
+@login_required(login_url="/login/")
+def delete_item_ajax(request, id):
+    if request.method == "DELETE":
+        item = Item.objects.get(id=id)
+        if item.user == request.user:
+            item.delete()
+            return HttpResponse("Card deleted successfully", status=204)
+        return HttpResponse("You are not allowed to delete this card", status=403)
     return HttpResponseNotFound()

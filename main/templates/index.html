@@ -58,7 +58,7 @@
                     <section id="edit-data">
                         <a id="modalCardAddAmount" href="" class="btn btn-success">Add Amount</a>
                         <a id="modalCardReduceAmount" href="" class="btn btn-secondary">Reduce Amount</a>
-                        <a id="modalCardDelete" href="" class="btn btn-danger" onclick="return confirmDelete()">Delete Card</a>
+                        <button type="button" id="modalCardDelete" class="btn btn-danger">Delete Card</button>
                     </section>
                 </div>
             </div>
@@ -186,7 +186,7 @@
                     <div>
                         <p class="lead mb-0" style="position: absolute; bottom: 5rem; left: 1rem; justify-content: center; display: flex; font-size: 1.5rem; font-weight: bold; color: #FFFF00; background-color: #000016b9; border-radius: 50%; height: 38px; width: 38px;" data-bs-toggle="tooltip" data-bs-placement="top" title="Amount">${ card.fields.amount }</p>
                     </div>
-                    <img src="/media/${ card.fields.image }" class="card-img-top" alt="Image" style="border-radius: 5px 5px 0 0;">
+                    <img id="card-${ card.pk }-image" src="/media/${ card.fields.image }" class="card-img-top" alt="Image" style="border-radius: 5px 5px 0 0;">
                         <div class="row text-center py-2">
                             <div class="col-4">
                                 <a href="/add_amount/${ card.pk }" class="btn btn-success" style="border-radius: 50%; height: 38px; width: 38px;" data-bs-toggle="tooltip" data-bs-placement="top" title="Add Amount">+</a>
@@ -201,7 +201,7 @@
             html += `
                             </div>
                             <div class="col-4">
-                                <a href="/delete/${ card.pk }" class="btn btn-danger" style="border-radius: 50%; height: 38px; width: 38px;" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete Card" onclick="return confirmDelete()">X</a>
+                                <button type="button" class="btn btn-danger" style="border-radius: 50%; height: 38px; width: 38px;" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete Card" onclick="deleteCard(${ card.pk })">X</button>
                             </div>
                         </div>
                     </div>
@@ -214,7 +214,7 @@
         `
         document.getElementById("item-cards").innerHTML = html
         cards.forEach((card) => {
-            document.getElementById(`card-${ card.pk }`).addEventListener("click", () => {
+            document.getElementById(`card-${ card.pk }-image`).addEventListener("click", () => {
                 showModalCard(card)
             })
         })
@@ -242,7 +242,9 @@
         document.getElementById("modalCardJSON").href = `/json/${ card.pk }`
         document.getElementById("modalCardAddAmount").href = `/add_amount/${ card.pk }`
         document.getElementById("modalCardReduceAmount").href = `/reduce_amount/${ card.pk }`
-        document.getElementById("modalCardDelete").href = `/delete/${ card.pk }`
+        document.getElementById("modalCardDelete").addEventListener("click", () => {
+            deleteCard(card.pk)
+        })
         limitText("#modalCardDesc", 300)
         limitText("#modalCardRulings", 300)
         modalCard.show()
@@ -308,5 +310,21 @@
     }
     document.getElementById("addCardButton").addEventListener("click", addCard)
     <!-- End Add Card -->
+
+    <!-- Delete Card -->
+    function deleteCard(id) {
+        let confirm = confirmDelete()
+        if (confirm) {
+            fetch(`/delete/${ id }`, {
+                method: "DELETE",
+                headers: {
+                    "X-CSRFToken": "{{ csrf_token }}"
+                }
+            }).then(() => {
+                refreshCards()
+            })
+        }
+    }
+    <!-- End Delete Card -->
 {% endif %}
 {% endblock %}

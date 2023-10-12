@@ -2428,7 +2428,72 @@ Selanjutnya, berikut *script* yang ditambahkan pada *block* `script` pada *templ
 {% endif %}
 {% endblock %}
 ```
-Dengan ini, item baru bisa ditambahkan ke dalam basis data menggunakan AJAX POST sehingga *refresh* halaman utama tidak perlu dilakukan secara keseluruhan.
+Dengan ini, kartu baru bisa ditambahkan ke dalam basis data menggunakan AJAX POST sehingga *refresh* halaman utama tidak perlu dilakukan secara keseluruhan.
+
+### Menambahkan fungsi untuk menghapus item dari basis data untuk AJAX DELETE
+Pertama-tama, fungsi `delete_item_ajax` akan dibuat untuk menghapus item dari basis data. Berikut ini adalah fungsi `delete_item_ajax` yang telah dibuat:
+```
+...
+@login_required(login_url="/login/")
+def delete_item_ajax(request, id):
+    if request.method == "DELETE":
+        item = Item.objects.get(id=id)
+        if item.user == request.user:
+            item.delete()
+            return HttpResponse("Card deleted successfully", status=204)
+        return HttpResponse("You are not allowed to delete this card", status=403)
+    return HttpResponseNotFound()
+```
+Fungsi ini akan menghapus item dari basis data menggunakan data yang dikirimkan melalui AJAX DELETE.
+Selanjutnya, *path* `/delete-ajax/<int:id>/` akan ditambahkan pada `urls.py` untuk mengarahkan ke fungsi `delete_item_ajax`. Berikut ini adalah *path* `/delete-ajax/<int:id>/` yang telah ditambahkan:
+```
+...
+urlpatterns = [
+    ...
+    path("delete-ajax/<int:id>/", views.delete_item_ajax, name="delete_item_ajax"),
+]
+```
+
+### Mengubah *template* `index.html` untuk menghapus item dari basis data menggunakan AJAX DELETE
+Untuk menghapus item dari basis data menggunakan AJAX DELETE, tambahkan *script* berikut pada *block* `script` pada *template* `index.html`:
+```
+{% block script %}
+...
+    <!-- Delete Card -->
+    function deleteCard(id) {
+        let confirm = confirmDelete()
+        if (confirm) {
+            fetch(`/delete/${ id }`, {
+                method: "POST",
+                headers: {
+                    "X-CSRFToken": "{{ csrf_token }}"
+                }
+            }).then(() => {
+                refreshCards()
+            })
+        }
+    }
+    <!-- End Delete Card -->
+{% endif %}
+{% endblock %}
+```
+Selanjutnya, modifikasi *button* `Delete Card` pada *template* `index.html` seperti berikut:
+```
+> Sebelum dimodifikasi
+- <a href="/delete/{{ card.pk }}" class="btn btn-danger" style="border-radius: 50%; height: 38px; width: 38px;" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete Card" onclick="return confirmDelete()">X</a>
+- <a id="modalCardDelete" href="" class="btn btn-danger" onclick="return confirmDelete()">Delete Card</a>
+- document.getElementById("modalCardDelete").href = `/delete/${ card.pk }`
+> Setelah dimodifikasi
+- <button type="button" class="btn btn-danger" style="border-radius: 50%; height: 38px; width: 38px;" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete Card" onclick="deleteCard(${ card.pk })">X</button>
+- <button type="button" id="modalCardDelete" class="btn btn-danger">Delete Card</button>
+- document.getElementById("modalCardDelete").addEventListener("click", () => {
+    deleteCard(card.pk)
+})
+```
+> Di sini, terdapat tambahan perubahan pada *script* di mana *button* `Delete Card` akan memanggil fungsi `deleteCard` dengan parameter `card.pk` saat *button* di-*click*.
+
+Dengan ini, kartu bisa dihapus dari basis data menggunakan AJAX DELETE sehingga *refresh* halaman utama tidak perlu dilakukan secara keseluruhan.
+> NOTE: Pada *commit* ini, terdapat beberapa *bug* yang ditemukan dan diperbaiki. Selain itu, terdapat perubahan pada *template* `index.html` di mana modal *card* hanya muncul jika *image* *card* di-*click*.
 
 
 # License  
