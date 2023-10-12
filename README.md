@@ -3,6 +3,7 @@
 ![Django version](https://img.shields.io/static/v1?label=Django&message==4.2.5&logo=django&color=092e20)
 [![Official Website](https://img.shields.io/static/v1?label=Website&message=pras-yugioh-card.onrender.com&logo=googlechrome&color=blue)](https://pras-yugioh-card.onrender.com/)
 [![College Version](https://img.shields.io/static/v1?label=College&message=muhammad-andhika21-tugas.pbp.cs.ui.ac.id&logo=googlechrome&color=yellow)](https://muhammad-andhika21-tugas.pbp.cs.ui.ac.id/)
+[![Deploy](https://github.com/andhikapraa/yugioh-card/actions/workflows/pbp-deploy.yml/badge.svg)](https://github.com/andhikapraa/yugioh-card/actions/workflows/pbp-deploy.yml)
 [![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](https://choosealicense.com/licenses/mit/)
 
 Proyek ini dibuat untuk menyelesaikan tugas mata kuliah
