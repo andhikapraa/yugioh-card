@@ -29,7 +29,7 @@ Screenshot:
 - [X] [Tugas 3: Implementasi Form dan Data Delivery pada Django](https://pbp-fasilkom-ui.github.io/ganjil-2024/assignments/individual/assignment-3)
 - [X] [Tugas 4: Implementasi Autentikasi, Session, dan Cookies pada Django](https://pbp-fasilkom-ui.github.io/ganjil-2024/assignments/individual/assignment-4)
 - [X] [Tugas 5: Desain Web menggunakan HTML, CSS dan Framework CSS](https://pbp-fasilkom-ui.github.io/ganjil-2024/assignments/individual/assignment-5)
-- [ ] [Tugas 6: JavaScript dan Asynchronous JavaScript](https://pbp-fasilkom-ui.github.io/ganjil-2024/assignments/individual/assignment-6)
+- [X] [Tugas 6: JavaScript dan Asynchronous JavaScript](https://pbp-fasilkom-ui.github.io/ganjil-2024/assignments/individual/assignment-6)
 
 # Table of contents  
         
@@ -74,7 +74,17 @@ Screenshot:
 &emsp;&emsp;[Kustomisasi *template* `index.html` menggunakan *framework* Bootstrap](<#Kustomisasi-template-indexhtml-menggunakan-framework-Bootstrap>)<br />
 &emsp;&emsp;[Menjawab pertanyaan terkait tugas 5](<#Menjawab-pertanyaan-terkait-tugas-5>)<br />
 [**Tugas 6: JavaScript dan Asynchronous JavaScript**](<#Tugas-6-JavaScript-dan-Asynchronous-JavaScript>)<br />
-&emsp;[**Tugas 4 Checklist**](<#Tugas-6-Checklist>)<br />
+&emsp;[**Tugas 6 Checklist**](<#Tugas-6-Checklist>)<br />
+&emsp;&emsp;[Menambahkan fungsi untuk mengembalikan data dalam format JSON](<#Menambahkan-fungsi-untuk-mengembalikan-data-dalam-format-JSON>)<br />
+&emsp;&emsp;[Mengubah *cards* data item agar dapat mendukung AJAX GET (+ *revamp* *template* `index.html`)](<#Mengubah-cards-data-item-agar-dapat-mendukung-AJAX-GET--revamp-template-indexhtml>)<br />
+&emsp;&emsp;[Menambahkan fungsi untuk menambahkan item baru ke dalam basis data untuk AJAX POST](<#Menambahkan-fungsi-untuk-menambahkan-item-baru-ke-dalam-basis-data-untuk-AJAX-POST>)<br />
+&emsp;&emsp;[Mengubah *template* `index.html` untuk menambahkan item baru ke dalam basis data menggunakan AJAX POST](<#Mengubah-template-indexhtml-untuk-menambahkan-item-baru-ke-dalam-basis-data-menggunakan-AJAX-POST>)<br />
+&emsp;&emsp;[Menambahkan fungsi untuk menghapus item dari basis data untuk AJAX DELETE](<#Menambahkan-fungsi-untuk-menghapus-item-dari-basis-data-untuk-AJAX-DELETE>)<br />
+&emsp;&emsp;[Mengubah *template* `index.html` untuk menghapus item dari basis data menggunakan AJAX DELETE](<#Mengubah-template-indexhtml-untuk-menghapus-item-dari-basis-data-menggunakan-AJAX-DELETE>)<br />
+&emsp;&emsp;[Menambahkan fungsi untuk menambahkan dan mengurangi jumlah item dari basis data untuk AJAX PUT](<#Menambahkan-fungsi-untuk-menambahkan-dan-mengurangi-jumlah-item-dari-basis-data-untuk-AJAX-PUT>)<br />
+&emsp;&emsp;[Melakukan perintah `collectstatic`](<#Melakukan-perintah-collectstatic>)<br />
+&emsp;&emsp;[Menjawab beberapa pertanyaan terkait tugas 6](<#Menjawab-beberapa-pertanyaan-terkait-tugas-6>)<br />
+&emsp;&emsp;[Melakukan *deployment* aplikasi ke PaaS PBP Fasilkom UI](<#Melakukan-deployment-aplikasi-ke-PaaS-PBP-Fasilkom-UI>)<br />
 [**License**](<#License>)<br />
 
 
@@ -2018,23 +2028,23 @@ Menambahkan JavaScript dan Asynchronous JavaScript ke dalam aplikasi [Yu-Gi-Oh! 
     - [X] Buatlah *path* `/create-ajax/` yang mengarah ke fungsi *view* yang baru kamu buat.
     - [X] Hubungkan form yang telah kamu buat di dalam modal kamu ke *path* `/create-ajax/`.
     - [X] Lakukan *refresh* pada halaman utama secara asinkronus untuk menampilkan daftar item terbaru tanpa *reload* halaman utama secara keseluruhan.
-  - [ ] Melakukan perintah `collectstatic`.
+  - [X] Melakukan perintah `collectstatic`.
     - Perintah ini bertujuan untuk mengumpulkan *file static* dari setiap aplikasi kamu ke dalam suatu *folder* yang dapat dengan mudah disajikan pada produksi.
 
-- [ ] Menjawab beberapa pertanyaan berikut pada `README.md` pada *root folder* (silakan modifikasi `README.md` yang telah kamu buat sebelumnya; tambahkan subjudul untuk setiap tugas).
+- [X] Menjawab beberapa pertanyaan berikut pada `README.md` pada *root folder* (silakan modifikasi `README.md` yang telah kamu buat sebelumnya; tambahkan subjudul untuk setiap tugas).
     - Jelaskan perbedaan antara *asynchronous programming* dengan *synchronous programming*.
     - Dalam penerapan JavaScript dan AJAX, terdapat penerapan paradigma *event-driven programming*. Jelaskan maksud dari paradigma tersebut dan sebutkan salah satu contoh penerapannya pada tugas ini.
     - Jelaskan penerapan *asynchronous programming* pada AJAX.
     - Pada PBP kali ini, penerapan AJAX dilakukan dengan menggunakan Fetch API daripada *library* jQuery. Bandingkanlah kedua teknologi tersebut dan tuliskan pendapat kamu teknologi manakah yang lebih baik untuk digunakan.
     - Jelaskan bagaimana cara kamu mengimplementasikan *checklist* di atas secara *step-by-step* (bukan hanya sekadar mengikuti tutorial).
 
-- [ ] Melakukan `add`-`commit`-`push` ke GitHub.
+- [X] Melakukan `add`-`commit`-`push` ke GitHub.
 
-- [ ] Melakukan *deployment* ke PaaS PBP Fasilkom UI dan sertakan tautan aplikasi pada file `README.md`.
+- [X] Melakukan *deployment* ke PaaS PBP Fasilkom UI dan sertakan tautan aplikasi pada file `README.md`.
     - DOKKU_APP_NAME = `UsernameSSO-tugas`
 
       > Ubah juga tanda titik menjadi tanda strip. Contoh: `muhammad-iqbal111-tugas`.
-- [ ] **BONUS**: Menambahkan fungsionalitas hapus dengan menggunakan AJAX DELETE.
+- [X] **BONUS**: Menambahkan fungsionalitas hapus dengan menggunakan AJAX DELETE.
 
 ### Menambahkan fungsi untuk mengembalikan data dalam format JSON
 Pertama-tama, fungsi `get_items_json` pada `views.py` akan dibuat untuk mengembalikan data dalam format JSON. Berikut ini adalah fungsi `get_items_json` yang telah dibuat:
@@ -2496,7 +2506,206 @@ Dengan ini, kartu bisa dihapus dari basis data menggunakan AJAX DELETE sehingga 
 > NOTE: Pada *commit* ini, terdapat beberapa *bug* yang ditemukan dan diperbaiki. Selain itu, terdapat perubahan pada *template* `index.html` di mana modal *card* hanya muncul jika *image* *card* di-*click*. Untuk melihat perubahan yang terjadi, dapat dilihat pada *commit* [f3071a0](https://github.com/andhikapraa/yugioh-card/commit/f3071a0c0d680522b1356f67b367fd34dbaed693)
 
 ### Menambahkan fungsi untuk menambahkan dan mengurangi jumlah item dari basis data untuk AJAX PUT
-Karena fitur ini tidak diminta pada tugas, maka implementasi dilakukan tanpa dokumentasi di sini. Implementasi yang dilakukan kurang lebih sama dengan implementasi AJAX DELETE.
+Karena fitur ini tidak diminta pada tugas, maka implementasi dilakukan tanpa dokumentasi di sini. Implementasi yang dilakukan kurang lebih sama dengan implementasi AJAX DELETE. Lebih lengkapnya dapat dilihat pada *commit* [80fd3a9](https://github.com/andhikapraa/yugioh-card/commit/80fd3a9709a1a3a59399b32faa2160fa8d4eb4c7)
+
+### Melakukan perintah `collectstatic`
+Sebelum melakukan perintah `collectstatic`, tambahkan *path* `/static/` pada `settings.py` untuk mengarahkan ke *folder* `static` yang berisi *file static* dari setiap aplikasi. Berikut ini adalah *path* `/static/` yang telah ditambahkan:
+```
+...
+STATIC_ROOT = BASE_DIR / "static"
+```
+Selanjutnya, jalankan perintah `collectstatic` pada *root folder*:
+```
+python manage.py collectstatic
+```
+> Perintah ini akan mengumpulkan *file static* dari setiap aplikasi ke dalam *folder* `static` yang telah ditentukan pada `settings.py`.
+
+### Menjawab beberapa pertanyaan terkait tugas 6
+
+#### Jelaskan perbedaan antara *asynchronous programming* dengan *synchronous programming*.
+*Asynchronous programming* dan *synchronous programming* adalah dua pendekatan yang berbeda dalam pemrograman komputer. Perbedaan utama antara kedua pendekatan ini adalah cara mereka menangani tugas-tugas yang berjalan secara bersamaan.
+
+*Asynchronous programming* adalah pendekatan yang memungkinkan tugas-tugas berjalan secara bersamaan tanpa harus menunggu satu sama lain untuk selesai. Dalam pendekatan ini, tugas-tugas dijadwalkan untuk dijalankan secara bersamaan, tetapi tidak perlu menunggu satu sama lain untuk selesai sebelum melanjutkan.
+Manfaat utama dari pendekatan ini adalah peningkatan efisiensi dan kinerja, karena beberapa tugas dapat dieksekusi secara bersamaan. Namun, pendekatan ini menuntut penanganan yang lebih kompleks, terutama dalam hal penanganan kesalahan dan sinkronisasi data.
+
+*Synchronous programming* adalah pendekatan yang mengharuskan tugas-tugas diselesaikan secara berurutan. Dalam pendekatan ini, tugas-tugas dijalankan satu per satu, dan tugas selanjutnya tidak akan dijalankan sampai tugas sebelumnya selesai.
+Kelemahan utama dari pendekatan ini adalah jika ada satu tugas yang membutuhkan waktu lama untuk diselesaikan, tugas lain harus menunggu, yang mengakibatkan proses menjadi lambat atau *block*. Pada kasus tertentu, hal ini tidak efisien.
+
+#### Dalam penerapan JavaScript dan AJAX, terdapat penerapan paradigma *event-driven programming*. Jelaskan maksud dari paradigma tersebut dan sebutkan salah satu contoh penerapannya pada tugas ini.
+Paradigma *Event-Driven Programming* adalah paradigma pemrograman di mana alur program ditentukan oleh kejadian atau *event*. Kejadian ini bisa beragam, misalnya input pengguna seperti klik *mouse* atau ketukan *keyboard*, respon dari server, atau perubahan status pada elemen dalam aplikasi.
+
+Dalam paradigma ini, kode biasanya akan membuat pemantau (*listeners*) untuk kejadian tertentu dan menentukan respon apa yang akan dijalankan bila kejadian tersebut terjadi. Ini memungkinkan kode untuk merespons secara dinamis terhadap interaksi pengguna atau situasi lain di lingkungan pelaksanaan program.
+
+Contoh penerapan paradigma *Event-Driven Programming* pada tugas ini adalah saat *button* `Add Card` di-*click*, maka akan muncul modal yang memungkinkan pengguna untuk menambahkan kartu baru ke dalam basis data. Selain itu, saat *card* di-*click*, maka akan muncul modal yang memungkinkan pengguna untuk melihat informasi lebih lanjut mengenai kartu tersebut.
+
+#### Jelaskan penerapan *asynchronous programming* pada AJAX.
+AJAX, yang merupakan singkatan dari *Asynchronous* *JavaScript* and XML, adalah teknik yang digunakan dalam pengembangan web untuk membuat aplikasi web interaktif. Dengan AJAX, Anda dapat mengirim dan menerima data dari server setelah halaman web selesai dimuat. Yang penting adalah bahwa ini dilakukan *asynchronously*, yang berarti halaman web tidak perlu dimuat ulang saat data diterima/dikirim dari server.
+
+Pada AJAX, *asynchronous programming* digunakan untuk mengirim dan menerima data dari server tanpa harus menunggu satu sama lain untuk selesai. Dengan ini, pengguna dapat terus berinteraksi dengan halaman web tanpa harus menunggu proses pengiriman dan penerimaan data dari server selesai.
+
+#### Pada PBP kali ini, penerapan AJAX dilakukan dengan menggunakan Fetch API daripada *library* jQuery. Bandingkanlah kedua teknologi tersebut dan tuliskan pendapat kamu teknologi manakah yang lebih baik untuk digunakan.
+Fetch API dan jQuery AJAX adalah teknologi yang memungkinkan kita melakukan permintaan HTTP asinkron dalam peramban web. Keduanya memiliki fitur yang serupa, tetapi juga memiliki perbedaan yang signifikan. Berikut ini adalah perbandingan antara Fetch API dan jQuery AJAX:
+
+1. **jQuery AJAX:**
+    
+    Kelebihan jQuery AJAX adalah:
+
+    - jQuery adalah library JavaScript yang populer dan telah digunakan banyak orang selama lebih dari satu dekade, sehingga mendapatkan dukungan komunitas yang besar. 
+    - jQuery AJAX memiliki fitur yang kaya dan mudah digunakan, dengan metode seperti $.get, $.post, dan $.ajax, yang membuat sintaks menjadi lebih singkat dan lebih mudah dibaca.
+    - jQuery menawarkan kompatibilitas lintas peramban yang baik, termasuk dukungan untuk Internet Explorer versi lama.
+
+   Namun, jQuery memiliki kelemahan, yaitu:
+   
+    - Ukuran library jQuery cukup besar, yang penting untuk dipertimbangkan dalam pengembangan front-end, terutama pada aplikasi mobile atau lingkungan dengan koneksi internet lambat.
+    - jQuery menjadi semakin kurang relevan dengan kemajuan fitur bawaan JavaScript, termasuk Fetch API.
+
+2. **Fetch API:**
+
+    Kelebihan Fetch API adalah:
+
+    - Fetch API adalah standar modern untuk melakukan permintaan HTTP asinkron, dan menjadi fitur bawaan kebanyakan peramban modern.
+    - Fetch API menawarkan sintaks yang lebih bersih dan lebih terstruktur dibandingkan dengan jQuery AJAX, termasuk dukungan built-in untuk `Promises`.
+    - Fetch API juga lebih fleksibel dan memiliki kontrol yang lebih baik terhadap respon HTTP, seperti akses langsung ke `Headers` dan method HTTP lainnya yang tidak tersedia dalam jQuery AJAX.
+
+   Namun, Fetch API juga memiliki kekurangan, yaitu:
+   
+    - Fetch API tidak mendukung peramban lama seperti Internet Explorer.
+    - Fetch API memberikan respon `Promise` bahkan saat permintaan gagal, sehingga error perlu ditangani secara manual dalam `Promise`.
+
+3. **Kesimpulan:**
+
+    Pada umumnya, jika kita berada dalam lingkungan pengembangan modern dan tidak perlu mendukung peramban lama seperti Internet Explorer, Fetch API adalah solusi yang baik dengan sintaksnya yang langsing dan fitur modern. Namun, untuk kompatibilitas lintas peramban yang lebih luas dan dukungan komunitas yang besar, jQuery AJAX masih menjadi pilihan yang solid.
+
+### Melakukan *deployment* aplikasi ke PaaS PBP Fasilkom UI
+Berikut ini adalah langkah-langkah yang dilakukan untuk melakukan *deployment* aplikasi ke PaaS PBP Fasilkom UI:
+1. Menambahkan `django-environ` pada `requirements.txt` untuk mengatur *environment variables*.
+2. Membuat *file* `Procfile` untuk mengatur *process* yang akan dijalankan pada *deployment* dengan isi sebagai berikut:
+    ```
+    release: django-admin migrate --noinput
+    web: gunicorn yugioh_card.wsgi
+    ```
+    > Di sini, *process* `release` akan menjalankan *command* `migrate` untuk melakukan *migration* basis data, sedangkan *process* `web` akan menjalankan *command* `gunicorn` untuk menjalankan aplikasi menggunakan *web server* `gunicorn`.
+3. Membuat direktori `.github/workflows` untuk menyimpan *file* konfigurasi *workflow* GitHub Actions dengan nama *file* `pbp-deploy.yml` dengan isi sebagai berikut:
+    ```
+    name: Deploy
+
+    on:
+    push:
+        branches:
+        - main
+        - master
+
+    jobs:
+    Deployment:
+        if: github.ref == 'refs/heads/main'
+        runs-on: ubuntu-latest
+        steps:
+        - name: Cloning repo
+        uses: actions/checkout@v4
+        with:
+            fetch-depth: 0
+
+        - name: Push to Dokku server
+        uses: dokku/github-action@master
+        with:
+            branch: 'main'
+            git_remote_url: ssh://dokku@${{ secrets.DOKKU_SERVER_IP }}/${{ secrets.DOKKU_APP_NAME }}
+            ssh_private_key: ${{ secrets.DOKKU_SSH_PRIVATE_KEY }}
+    ```
+    > Di sini, *workflow* ini akan di-*trigger* saat *push* ke *branch* `main` atau `master`. Selain itu, *workflow* ini akan menjalankan *job* `Deployment` yang akan melakukan *checkout* *repository* dan melakukan *push* ke *Dokku server* menggunakan *SSH private key* yang telah disimpan sebagai *secret* pada *repository*.
+4. Membuat *file* `.dockerignore` untuk meng-*ignore* *file* yang tidak perlu di-*build* pada *Docker* dengan isi sebagai berikut:
+    ```
+    **/*.pyc
+    **/*.pyo
+    **/*.mo
+    **/*.db
+    **/*.css.map
+    **/*.egg-info
+    **/*.sql.gz
+    **/__pycache__/
+    .cache
+    .project
+    .idea
+    .pydevproject
+    .idea/workspace.xml
+    .DS_Store
+    .git/
+    .sass-cache
+    .vagrant/
+    dist
+    docs
+    env
+    logs
+    src/{{ project_name }}/settings/local.py
+    src/node_modules
+    web/media
+    web/static/CACHE
+    stats
+    Dockerfile
+    .gitignore
+    Dockerfile
+    db.sqlite3
+    **/*.md
+    logs/
+    ```
+    > Di sini, *file* yang tidak perlu di-*build* pada *Docker* akan di-*ignore*.
+5. Membuat *file* `Dockerfile` untuk mengatur *build* *image* pada *Docker* dengan isi sebagai berikut:
+    ```
+    FROM python:3.10-slim-buster
+
+    WORKDIR /app
+
+    ENV PYTHONUNBUFFERED=1 \
+        PYTHONPATH=/app \
+        DJANGO_SETTINGS_MODULE=yugioh_card.settings \
+        PORT=8000 \
+        WEB_CONCURRENCY=2
+
+    # Install system packages required Django.
+    RUN apt-get update --yes --quiet && apt-get install --yes --quiet --no-install-recommends \
+    && rm -rf /var/lib/apt/lists/*
+
+    RUN addgroup --system django \
+        && adduser --system --ingroup django django
+
+    # Requirements are installed here to ensure they will be cached.
+    COPY ./requirements.txt /requirements.txt
+    RUN pip install -r /requirements.txt
+
+    # Copy project code
+    COPY . .
+
+    RUN python manage.py collectstatic --noinput --clear
+
+    # Run as non-root user
+    RUN chown -R django:django /app
+    USER django
+
+    # Run application
+    # CMD gunicorn yugioh_card.wsgi:application
+    ```
+    > Di sini, *image* akan menggunakan *base image* `python:3.10-slim-buster` dan akan meng-*install* *package* yang dibutuhkan oleh Django. Selain itu, *image* akan menyalin *file* `requirements.txt` dan meng-*install* *package* yang dibutuhkan oleh aplikasi. Selanjutnya, *image* akan menyalin seluruh *file* yang ada pada *root folder* dan menjalankan *command* `collectstatic` untuk mengumpulkan *file static* dari setiap aplikasi ke dalam *folder* `static`. Terakhir, *image* akan menjalankan aplikasi menggunakan *web server* `gunicorn`.
+6. Memodifikasi *file* `settings.py` untuk mengatur *environment variables* dengan isi sebagai berikut:
+    ```
+    ...
+    import environ
+    import os
+    ...
+    env = environ.Env()
+    ...
+    PRODUCTION = env.bool("PRODUCTION", default=False)
+    ...
+    if PRODUCTION:
+        DATABASES = {
+            "default": env.db("DATABASE_URL")
+        }
+        DATABASES["default"]["ATOMIC_REQUESTS"] = True
+    ```
+    > Di sini, *environment variables* akan diatur menggunakan *package* `django-environ` dan *environment variables* yang digunakan adalah `PRODUCTION` dan `DATABASE_URL`. Selain itu, *environment variable* `PRODUCTION` akan diatur sebagai *boolean* dengan nilai *default* `False` dan *environment variable* `DATABASE_URL` akan diatur sebagai *database URL*.
+7. Menambahkan *environment variables* pada *GitHub repository* dengan nama `DOKKU_APP_NAME`, `DOKKU_SERVER_IP`, dan `DOKKU_SSH_PRIVATE_KEY` dengan nilai yang sesuai.
+8. Menjalankan perintah `git push` untuk melakukan *push* ke *GitHub repository*. Setelah itu, *GitHub Actions* akan menjalankan *workflow* `pbp-deploy.yml` dan melakukan *deployment* aplikasi ke PaaS PBP Fasilkom UI.
+
+Dengan ini, aplikasi telah berhasil di-*deploy* ke PaaS PBP Fasilkom UI. Aplikasi dapat diakses pada [https://muhammad-andhika21-tugas.pbp.cs.ui.ac.id/](https://muhammad-andhika21-tugas.pbp.cs.ui.ac.id/).
 
 
 # License  
