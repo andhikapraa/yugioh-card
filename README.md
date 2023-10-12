@@ -2,6 +2,7 @@
 # Yu-Gi-Oh! Card Collection Project
 ![Django version](https://img.shields.io/static/v1?label=Django&message==4.2.5&logo=django&color=092e20)
 [![Official Website](https://img.shields.io/static/v1?label=Website&message=pras-yugioh-card.onrender.com&logo=googlechrome&color=blue)](https://pras-yugioh-card.onrender.com/)
+[![College Version](https://img.shields.io/static/v1?label=College&message=muhammad-andhika21-tugas.pbp.cs.ui.ac.id&logo=googlechrome&color=yellow)](https://muhammad-andhika21-tugas.pbp.cs.ui.ac.id/)
 [![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](https://choosealicense.com/licenses/mit/)
 
 Proyek ini dibuat untuk menyelesaikan tugas mata kuliah
@@ -20,10 +21,11 @@ NPM    : 2206031302
 Kelas  : PBP C
 ```
 ## Demo
-Aplikasi ini dapat diakses melalui [https://pras-yugioh-card.onrender.com/](https://pras-yugioh-card.onrender.com/)
+Aplikasi ini dapat diakses melalui [https://pras-yugioh-card.onrender.com/](https://pras-yugioh-card.onrender.com/) atau [https://muhammad-andhika21-tugas.pbp.cs.ui.ac.id/](https://muhammad-andhika21-tugas.pbp.cs.ui.ac.id/).
 
 Screenshot:
-![Screenshot](https://i.postimg.cc/25stKj25/demo.jpg)
+[![Home](https://i.postimg.cc/sXT6LGby/Home.png)](https://i.postimg.cc/sXT6LGby/Home.png)
+[![Card](https://i.postimg.cc/d1sNnjH4/Card.png)](https://i.postimg.cc/d1sNnjH4/Card.png)
 ## Task Checklist 
 - [X] [Tugas 2: Implementasi Model-View-Template (MVT) pada Django](https://pbp-fasilkom-ui.github.io/ganjil-2024/assignments/individual/assignment-2)
 - [X] [Tugas 3: Implementasi Form dan Data Delivery pada Django](https://pbp-fasilkom-ui.github.io/ganjil-2024/assignments/individual/assignment-3)
