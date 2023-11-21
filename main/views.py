@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponse, HttpResponseNotFound
+from django.http import HttpResponse, HttpResponseNotFound, JsonResponse
 from django.core import serializers
 from .forms import ItemForm
 from .models import Item, User
@@ -7,6 +7,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
+from django.views.decorators.csrf import csrf_exempt
 
 # Create your views here.
 def index(request):
@@ -40,7 +41,6 @@ def show_xml(request):
     data = serializers.serialize("xml", items)
     return HttpResponse(data, content_type="application/xml")
 
-@login_required(login_url="/login/")
 def show_json(request):
     items = Item.objects.filter(user=request.user)
     data = serializers.serialize("json", items)
@@ -199,3 +199,31 @@ def reduce_amount_ajax(request, id):
             return HttpResponse("Amount decreased successfully", status=200)
         return HttpResponse("You are not allowed to decrease the amount of this card", status=403)
     return HttpResponseNotFound()
+
+@login_required(login_url="/login/")
+@csrf_exempt
+def create_item_flutter(request):
+    if request.method == "POST":
+        new_item = Item.objects.create(
+            user=request.user,
+            name=request.POST["name"],
+            amount=request.POST["amount"],
+            description=request.POST["description"],
+            card_type=request.POST["card_type"],
+            passcode=request.POST["passcode"],
+            attribute=request.POST["attribute"],
+            types=request.POST["types"],
+            level=request.POST["level"],
+            atk=request.POST["atk"],
+            deff=request.POST["deff"],
+            effect_type=request.POST["effect_type"],
+            card_property=request.POST["card_property"],
+            rulings=request.POST["rulings"],
+            image=request.FILES["image"]
+        )
+        new_item.save()
+        return JsonResponse({
+            "status": True,
+            "message": "Card added successfully"
+        }, status=201)
+    return JsonResponse({"status": False, "message": "Invalid request"}, status=400)
