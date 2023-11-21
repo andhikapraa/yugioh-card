@@ -42,9 +42,11 @@ def show_xml(request):
     return HttpResponse(data, content_type="application/xml")
 
 def show_json(request):
-    items = Item.objects.filter(user=request.user)
-    data = serializers.serialize("json", items)
-    return HttpResponse(data, content_type="application/json")
+    if request.user.is_authenticated:
+        items = Item.objects.filter(user=request.user)
+        data = serializers.serialize("json", items)
+        return HttpResponse(data, content_type="application/json")
+    return HttpResponseNotFound()
 
 @login_required(login_url="/login/")
 def show_xml_by_id(request, id):
